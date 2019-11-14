@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fr.adaming.entity.Bien;
 import com.fr.adaming.service.IBienService;
 import com.fr.adaming.web.controller.IBienController;
-import com.fr.adaming.web.dto.BienConverter;
+import com.fr.adaming.web.dto.converters.BienConverter;
 import com.fr.adaming.web.dto.BienDto;
 
 @RestController

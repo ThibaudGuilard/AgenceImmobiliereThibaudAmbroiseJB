@@ -1,10 +1,11 @@
-package com.fr.adaming.web.dto;
+package com.fr.adaming.web.dto.converters;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.fr.adaming.entity.Bien;
 import com.fr.adaming.entity.Client;
+import com.fr.adaming.web.dto.BienDto;
 
 public class BienConverter {
 

@@ -1,4 +1,4 @@
-package com.fr.adaming.web.dto;
+package com.fr.adaming.web.dto.converters;
 
 import javax.validation.constraints.Email;
 
