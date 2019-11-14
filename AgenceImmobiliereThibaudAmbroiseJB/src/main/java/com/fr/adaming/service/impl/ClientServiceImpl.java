@@ -1,4 +1,4 @@
-package com.fr.adaming.entity.service;
+package com.fr.adaming.service.impl;
 
 import java.util.List;
 
@@ -7,18 +7,21 @@ import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.entity.Client;
-import com.fr.adaming.entity.repository.ClientRepository;
+import com.fr.adaming.repository.ClientRepository;
+import com.fr.adaming.service.IClientService;
 
 @Service
-public class ClientService {
+public class ClientServiceImpl implements IClientService{
 	
 	@Autowired
 	private ClientRepository repository;
 	
-	/**Saves a given client in the database
-	 * @param client - the given entity
-	 * @return client if the given client didn't exist in the database - else, returns null
+
+	/*
+	 * (non-Javadoc)
+	 * @see com.fr.adaming.entity.service.IClientService#save()
 	 */
+	@Override
 	public Client save(Client client) {
 		
 		// Vérifier si le client existe dans la BD (email)
@@ -37,18 +40,15 @@ public class ClientService {
 		}
 		
 	}
-	
-	/** Finds all clients in database
-	 * @return List of clients - in case no clients has been inserted, it returns an empty list
-	 */
+
+
+	@Override
 	public List<Client> findAll(){
 		return repository.findAll();
 	}
 	
-	/**Updates the values of a given client
-	 * @param client - the given entity
-	 * @return true if the given client has been modified - else, returns false
-	 */
+
+	@Override
 	public boolean updateClient(Client client) {
 		
 		// Chercher client par id
@@ -61,10 +61,8 @@ public class ClientService {
 		}
 	}
 	
-	/**Modifies attribute "deleted" from given client in database
-	 * @param client
-	 * @return client - the given client
-	 */
+
+	@Override
 	public Client deleteClient(Client client) {
 		// Changer la valeur de l'attribut "deleted"
 		client.setDeleted(true);
