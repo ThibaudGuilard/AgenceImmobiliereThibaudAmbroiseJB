@@ -14,7 +14,7 @@ import com.fr.adaming.entity.enume.TypeClient;
  */
 public class ClientConverter {
 	
-	public Client convertToClass (ClientDto dto) {
+	public static Client convertToClass (ClientDto dto) {
 		String email = dto.getEmail();
 		long id = dto.getId();
 		String fullName = dto.getFullName();
@@ -26,7 +26,7 @@ public class ClientConverter {
 		return client;
 	}
 	
-	public ClientDto convertToDto (Client client) {
+	public static ClientDto convertToDto (Client client) {
 		String email = client.getEmail();
 		long id = client.getId();
 		String fullName = client.getFullName();
@@ -38,7 +38,7 @@ public class ClientConverter {
 		return dto;
 	}
 	
-	public List<Client> convertListToClass(List<ClientDto> dtos){
+	public static List<Client> convertListToClass(List<ClientDto> dtos){
 		List<Client> clients = new ArrayList<Client>();
 		for (ClientDto dto : dtos) {
 			Client client = convertToClass(dto);
@@ -47,7 +47,7 @@ public class ClientConverter {
 		return clients;
 	}
 	
-	public List<ClientDto> convertListToDto(List<Client> clients){
+	public static List<ClientDto> convertListToDto(List<Client> clients){
 		List<ClientDto> dtos = new ArrayList<ClientDto>();
 		for (Client client : clients) {
 			ClientDto dto = convertToDto(client);

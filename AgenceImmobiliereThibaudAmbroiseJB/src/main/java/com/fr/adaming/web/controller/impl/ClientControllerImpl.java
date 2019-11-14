@@ -26,8 +26,6 @@ public class ClientControllerImpl implements IClientController {
 
 	@Autowired
 	private IClientService service;
-	@Autowired
-	ClientConverter converter;
 	
 	/*
 	 * (non-Javadoc)
@@ -35,7 +33,7 @@ public class ClientControllerImpl implements IClientController {
 	 */
 	@PostMapping(path = "/create_client") @Override
 	public String create(@RequestBody ClientDto dto) {
-		Client client = converter.convertToClass(dto);
+		Client client = ClientConverter.convertToClass(dto);
 		service.save(client);
 		return "client created";
 	}
@@ -57,7 +55,7 @@ public class ClientControllerImpl implements IClientController {
 	 */
 	@PostMapping(path = "{Client}/update_client") @Override
 	public String updateClient(@PathVariable ClientDto dto) {
-		Client client = converter.convertToClass(dto);
+		Client client = ClientConverter.convertToClass(dto);
 		service.updateClient(client);
 		return "Client updated";
 	}
