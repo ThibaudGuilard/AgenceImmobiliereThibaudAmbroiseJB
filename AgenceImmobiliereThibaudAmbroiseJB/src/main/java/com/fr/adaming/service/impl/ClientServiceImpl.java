@@ -10,6 +10,10 @@ import com.fr.adaming.entity.Client;
 import com.fr.adaming.repository.ClientRepository;
 import com.fr.adaming.service.IClientService;
 
+/**
+ * @author Thibaud
+ *
+ */
 @Service
 public class ClientServiceImpl implements IClientService{
 	
@@ -79,6 +83,15 @@ public class ClientServiceImpl implements IClientService{
 		// Changer la valeur de l'attribut "deleted"
 		client.setDeleted(true);
 		return repository.save(client);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.fr.adaming.service.IClientService#findById()
+	 */
+	@Override
+	public Client findById(long id) {
+		return repository.findById(id).get();
 	}
 
 }

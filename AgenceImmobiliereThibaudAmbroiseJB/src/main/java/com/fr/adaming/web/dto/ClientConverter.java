@@ -8,6 +8,10 @@ import com.fr.adaming.entity.Bien;
 import com.fr.adaming.entity.Client;
 import com.fr.adaming.entity.enume.TypeClient;
 
+/**
+ * @author Thibaud
+ *
+ */
 public class ClientConverter {
 	
 	public Client convertToClass (ClientDto dto) {

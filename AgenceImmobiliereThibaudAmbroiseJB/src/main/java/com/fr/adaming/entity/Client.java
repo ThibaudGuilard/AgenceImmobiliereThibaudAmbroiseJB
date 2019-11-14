@@ -14,6 +14,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * @author Thibaud
+ *
+ */
 @Entity
 @Getter @Setter @NoArgsConstructor
 public class Client extends User{

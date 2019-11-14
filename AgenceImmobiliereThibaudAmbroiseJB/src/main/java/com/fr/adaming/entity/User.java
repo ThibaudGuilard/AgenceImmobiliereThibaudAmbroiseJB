@@ -15,6 +15,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * @author Thibaud
+ *
+ */
 @MappedSuperclass
 @Setter @Getter @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
