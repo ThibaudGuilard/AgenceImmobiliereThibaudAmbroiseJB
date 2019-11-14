@@ -2,6 +2,7 @@ package com.fr.adaming.entity;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,6 +18,7 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 public class Client extends User{
 	
+	@Column(nullable = false)
 	private Enum<TypeClient> type;
 	@ManyToOne @JoinColumn(name = "id_agent")
 	private Agent agent;
