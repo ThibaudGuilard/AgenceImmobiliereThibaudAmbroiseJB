@@ -28,5 +28,6 @@ public class User {
 	private String fullName;
 	@Pattern(regexp = "\\d{10}")
 	private int telephone;
+	private boolean deleted;
 
 }
