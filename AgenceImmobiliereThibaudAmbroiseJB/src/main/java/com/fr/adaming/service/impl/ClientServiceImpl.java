@@ -19,7 +19,7 @@ public class ClientServiceImpl implements IClientService{
 
 	/*
 	 * (non-Javadoc)
-	 * @see com.fr.adaming.entity.service.IClientService#save()
+	 * @see com.fr.adaming.service.IClientService#save()
 	 */
 	@Override
 	public Client save(Client client) {
@@ -42,12 +42,20 @@ public class ClientServiceImpl implements IClientService{
 	}
 
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.fr.adaming.service.IClientService#findAll()
+	 */
 	@Override
 	public List<Client> findAll(){
 		return repository.findAll();
 	}
 	
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.fr.adaming.service.IClientService#updateClient()
+	 */
 	@Override
 	public boolean updateClient(Client client) {
 		
@@ -62,6 +70,10 @@ public class ClientServiceImpl implements IClientService{
 	}
 	
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.fr.adaming.service.IClientService#deleteClient()
+	 */
 	@Override
 	public Client deleteClient(Client client) {
 		// Changer la valeur de l'attribut "deleted"
