@@ -54,7 +54,7 @@ public class BienServiceTest {
 	
 	@SuppressWarnings("null")
 	@Test
-	public void updateBienServiceEnregistrePrixNul_shouldReturnFalse() {
+	public void updateBienServiceEnregistrePrixNul_shouldThrowException() {
 		//preparer les inputs
 		Bien bien = new Bien();
 		bien.setId(1120L);
