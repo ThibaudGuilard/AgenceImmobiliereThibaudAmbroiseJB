@@ -23,9 +23,10 @@ public class Client extends User{
 	@OneToMany(mappedBy = "client")
 	private List<Bien> biens;
 
-	public Client(String email, String fullName, int telephone, Enum<TypeClient> type) {
-		super();
-		this.type = type;
+	public Client(String email, String fullName, int telephone, Enum<TypeClient> type, Agent agent, List<Bien> biens) {		
+	}
+	
+	public Client(long id,String email, String fullName, int telephone, Enum<TypeClient> type, Agent agent, List<Bien> biens) {
 	}
 
 	
