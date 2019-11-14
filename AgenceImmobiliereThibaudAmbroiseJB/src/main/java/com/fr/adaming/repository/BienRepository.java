@@ -1,6 +1,7 @@
+// Ambroise RENE
+
 package com.fr.adaming.repository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,5 +36,4 @@ public interface BienRepository extends JpaRepository<Bien,Long>{
 	@Query(value = "SELECT * FROM Bien WHERE id = :id AND deleted = false", nativeQuery = true)
 	public Optional<Bien> findId(@Param(value = "id") Integer id);
 	
-//	public List<Bien> findById(Long id);
 }

@@ -1,3 +1,5 @@
+// Ambroise RENE
+
 package com.fr.adaming.entity;
 
 import javax.persistence.Column;

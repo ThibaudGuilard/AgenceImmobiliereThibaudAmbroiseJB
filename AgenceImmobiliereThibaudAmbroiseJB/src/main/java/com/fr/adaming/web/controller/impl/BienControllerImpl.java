@@ -1,3 +1,5 @@
+// Ambroise RENE
+
 package com.fr.adaming.web.controller.impl;
 
 import java.util.List;
@@ -31,13 +33,13 @@ public class BienControllerImpl implements IBienController {
 	}
 
 	@PostMapping(path="/supprimer")
-	public boolean supprimer(@RequestBody Bien bien) {
+	public Bien supprimer(@RequestBody Bien bien) {
 		return service.deleteBien(bien);
 	}
 
 	@GetMapping(path = "/{id}/chercherid")
 	public Bien chercherParId(@PathVariable(name = "id") Integer id) {
-		return service.chercherParId(id);
+		return service.FindParId(id);
 	}
 
 	@GetMapping(path = "/afficher")
