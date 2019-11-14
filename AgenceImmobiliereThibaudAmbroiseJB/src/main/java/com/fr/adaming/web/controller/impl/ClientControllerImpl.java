@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,7 +33,7 @@ public class ClientControllerImpl implements IClientController {
 	 * (non-Javadoc)
 	 * @see com.fr.adaming.service.IClientController#createClient()
 	 */
-	@GetMapping(path = "/create_client") @Override
+	@PostMapping(path = "/create_client") @Override
 	public String create(@RequestBody ClientDto dto) {
 		Client client = converter.convertToClass(dto);
 		service.save(client);
@@ -55,7 +55,7 @@ public class ClientControllerImpl implements IClientController {
 	 * (non-Javadoc)
 	 * @see com.fr.adaming.service.IClientController#updateClient()
 	 */
-	@GetMapping(path = "{Client}/update_client") @Override
+	@PostMapping(path = "{Client}/update_client") @Override
 	public String updateClient(@PathVariable ClientDto dto) {
 		Client client = converter.convertToClass(dto);
 		service.updateClient(client);
