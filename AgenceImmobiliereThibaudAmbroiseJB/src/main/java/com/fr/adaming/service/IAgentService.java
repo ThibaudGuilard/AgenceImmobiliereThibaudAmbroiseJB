@@ -36,4 +36,13 @@ public interface IAgentService {
 	 */
 	public Agent deleteAgent(Agent agent);
 
+	
+	/**
+	 * Finds an agent by its id
+	 * @param id
+	 * @return the agent
+	 */
+	public Agent findById(long id);
+
+
 }

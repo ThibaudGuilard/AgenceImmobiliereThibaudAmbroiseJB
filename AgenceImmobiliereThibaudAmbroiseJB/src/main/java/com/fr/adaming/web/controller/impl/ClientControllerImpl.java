@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fr.adaming.entity.Client;
 import com.fr.adaming.service.IClientService;
 import com.fr.adaming.web.controller.IClientController;
-import com.fr.adaming.web.dto.ClientConverter;
 import com.fr.adaming.web.dto.ClientDto;
+import com.fr.adaming.web.dto.converters.ClientConverter;
 
 /**
  * @author Thibaud
