@@ -26,7 +26,7 @@ public class Client extends User{
 	private Enum<TypeClient> type;
 	@ManyToOne @JoinColumn(name = "id_agent")
 	private Agent agent;
-	@OneToMany(mappedBy = "client")
+	@OneToMany(mappedBy = "clients")
 	private List<Bien> biens;
 
 	public Client(String email, String fullName, int telephone, Enum<TypeClient> type, Agent agent, List<Bien> biens) {		
