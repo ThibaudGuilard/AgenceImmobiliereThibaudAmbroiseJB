@@ -7,11 +7,8 @@ import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.entity.Agent;
-import com.fr.adaming.entity.Client;
 import com.fr.adaming.repository.AgentRepository;
-import com.fr.adaming.repository.ClientRepository;
 import com.fr.adaming.service.IAgentService;
-import com.fr.adaming.service.IClientService;
 
 @Service
 public class AgentServiceImpl implements IAgentService{
