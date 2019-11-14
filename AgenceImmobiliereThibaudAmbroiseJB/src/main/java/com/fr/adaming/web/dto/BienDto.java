@@ -1,16 +1,11 @@
 package com.fr.adaming.web.dto;
 
-import java.util.List;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-import com.fr.adaming.entity.Agent;
-import com.fr.adaming.entity.Bien;
 import com.fr.adaming.entity.Client;
-import com.fr.adaming.entity.enume.TypeClient;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
