@@ -35,8 +35,5 @@ public class Agent extends User {
 		this.pwd = pwd;
 		this.dateRecrutement = dateRecrutement;
 	}
-	
-	
-	
 
 }
