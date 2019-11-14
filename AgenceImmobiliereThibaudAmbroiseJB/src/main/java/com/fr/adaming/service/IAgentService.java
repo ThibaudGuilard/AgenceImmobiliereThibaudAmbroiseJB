@@ -3,7 +3,6 @@ package com.fr.adaming.service;
 import java.util.List;
 
 import com.fr.adaming.entity.Agent;
-import com.fr.adaming.entity.Client;
 
 public interface IAgentService {
 	
