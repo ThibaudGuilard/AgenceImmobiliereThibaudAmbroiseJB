@@ -34,4 +34,14 @@ public class Bien {
 	@ManyToOne
 	@JoinColumn(name = "id_client")
 	private Client clients;
+
+	public Bien(Long id, double prix, boolean vendu, boolean deleted, Client clients) {
+		this.id = id;
+		this.prix = prix;
+		this.vendu = vendu;
+		this.deleted = deleted;
+		this.clients = clients;
+	}
+	
+	
 }

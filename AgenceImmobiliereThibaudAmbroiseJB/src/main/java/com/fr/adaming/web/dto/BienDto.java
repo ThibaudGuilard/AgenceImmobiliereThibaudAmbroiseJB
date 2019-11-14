@@ -7,10 +7,15 @@ import javax.validation.constraints.Positive;
 
 import com.fr.adaming.entity.Client;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter @Setter @NoArgsConstructor
 public class BienDto {
 
 	
-	private Long id;
+	private long id;
 	
 	@NotNull
 	@NotEmpty
@@ -27,7 +32,7 @@ public class BienDto {
 	private Client clients;
 
 
-	public BienDto(Long id, @NotNull @NotEmpty @NotBlank @Positive double prix, @NotNull boolean vendu, boolean deleted,
+	public BienDto(long id, @NotNull @NotEmpty @NotBlank @Positive double prix, @NotNull boolean vendu, boolean deleted,
 			Client clients) {
 		super();
 		this.id = id;
