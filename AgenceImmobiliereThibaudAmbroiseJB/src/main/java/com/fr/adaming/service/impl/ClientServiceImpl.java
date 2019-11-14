@@ -10,6 +10,10 @@ import com.fr.adaming.entity.Client;
 import com.fr.adaming.repository.ClientRepository;
 import com.fr.adaming.service.IClientService;
 
+/**
+ * @author Thibaud
+ *
+ */
 @Service
 public class ClientServiceImpl implements IClientService{
 	
