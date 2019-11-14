@@ -23,7 +23,7 @@ public class BienControllerImpl implements IBienController {
 	@Autowired
 	private IBienService service;
 
-	@RequestMapping(path = "/ajouter", method = RequestMethod.POST)
+	@RequestMapping(path = "/add", method = RequestMethod.POST)
 	public String saveBien(@RequestBody Bien bien) {
 		if (service.saveBien(bien) != null) {
 			return "Ajouter SUCCES";
@@ -32,17 +32,17 @@ public class BienControllerImpl implements IBienController {
 		}
 	}
 
-	@GetMapping(path = "/{id}/chercherid")
+	@GetMapping(path = "/{id}/searchbyid")
 	public Bien searchParId(@PathVariable(name = "id") Long id) {
 		return service.FindParId(id);
 	}
 
-	@GetMapping(path = "/afficher")
+	@GetMapping(path = "/print")
 	public List<Bien> findAll() {
 		return service.findAll();
 	}
 
-	@RequestMapping(path = "/modifier", method = RequestMethod.POST)
+	@RequestMapping(path = "/update", method = RequestMethod.POST)
 	public String updateBien(@RequestBody Bien bien) {
 		if (service.updateBien(bien)) {
 			return "Modifier SUCCES";
@@ -51,7 +51,7 @@ public class BienControllerImpl implements IBienController {
 		}
 	}
 
-	@PostMapping(path="/supprimer")
+	@PostMapping(path="/delete")
 	public boolean deleteBien(@RequestBody Bien bien) {
 		return service.deleteBien(bien);
 	}
