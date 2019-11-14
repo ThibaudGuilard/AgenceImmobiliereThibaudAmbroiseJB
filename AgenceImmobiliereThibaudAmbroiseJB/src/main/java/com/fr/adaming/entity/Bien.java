@@ -22,7 +22,7 @@ public class Bien {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(nullable = false)
+	@Column(nullable = false )
 	private double prix;
 	
 	private boolean vendu;

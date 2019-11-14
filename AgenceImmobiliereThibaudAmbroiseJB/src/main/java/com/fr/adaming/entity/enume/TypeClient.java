@@ -1,4 +1,4 @@
-package com.fr.adaming.entity;
+package com.fr.adaming.entity.enume;
 
 public enum TypeClient {
 	
