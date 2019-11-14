@@ -32,13 +32,8 @@ public class BienControllerImpl implements IBienController {
 		}
 	}
 
-	@PostMapping(path="/supprimer")
-	public Bien supprimer(@RequestBody Bien bien) {
-		return service.deleteBien(bien);
-	}
-
 	@GetMapping(path = "/{id}/chercherid")
-	public Bien chercherParId(@PathVariable(name = "id") Integer id) {
+	public Bien searchParId(@PathVariable(name = "id") Long id) {
 		return service.FindParId(id);
 	}
 
@@ -56,10 +51,9 @@ public class BienControllerImpl implements IBienController {
 		}
 	}
 
-	@Override
-	public Bien deleteBien(Bien bien) {
-		// TODO Auto-generated method stub
-		return null;
+	@PostMapping(path="/supprimer")
+	public boolean deleteBien(@RequestBody Bien bien) {
+		return service.deleteBien(bien);
 	}
-
+	
 }

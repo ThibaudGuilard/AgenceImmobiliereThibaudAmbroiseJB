@@ -63,21 +63,21 @@ public class BienServiceImpl implements IBienService{
 	}
 	
 
-	public Bien deleteBien(Bien bien) {
+	public boolean deleteBien(Bien bien) {
 		// Changer la valeur de l'attribut "deleted"
-		bien.setDeleted(true);
-		return repository.save(bien);
+		if (FindParId(bien.getId()) != null) {
+			repository.supprimer(bien.getId());
+			return true;
+		} else {
+			return false;
+		}
 	}
 
-
-	@Override
-	public Bien FindParId(Integer id) {
+	public Bien FindParId(Long id) {
 		try {
 			return repository.findId(id).get();
 		} catch (NoSuchElementException e) {
 			return null;
 		}
 	}
-
-
 }

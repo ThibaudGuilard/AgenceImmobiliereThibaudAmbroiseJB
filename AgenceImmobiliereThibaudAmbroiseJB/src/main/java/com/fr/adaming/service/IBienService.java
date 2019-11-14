@@ -36,9 +36,9 @@ public interface IBienService {
 	 * @param bien
 	 * @return bien - the given bien
 	 */
-	public Bien deleteBien(Bien bien);
+	public boolean deleteBien(Bien bien);
 
-	public Bien FindParId(Integer id);
+	public Bien FindParId(Long id);
 	
 
 }

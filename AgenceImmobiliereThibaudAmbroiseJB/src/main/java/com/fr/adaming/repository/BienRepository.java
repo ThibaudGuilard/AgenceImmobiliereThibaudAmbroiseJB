@@ -21,12 +21,12 @@ public interface BienRepository extends JpaRepository<Bien,Long>{
 	@Transactional
 	@Modifying(clearAutomatically = true)
 	@Query(value= "UPDATE Bien SET deleted = true where id like :id", nativeQuery = true)
-	public void supprimer(@Param(value = "id") Integer id);
+	public void supprimer(@Param(value = "id") Long id);
 	
 	@Transactional
 	@Modifying(clearAutomatically = true)
 	@Query(value= "UPDATE Bien SET deleted = false where id like :id", nativeQuery = true)
-	public void restaurer(@Param(value = "id") Integer id);
+	public void restaurer(@Param(value = "id") Long id);
 	
 	
 	@Query(value = "SELECT * FROM Bien WHERE deleted = false", nativeQuery = true)
@@ -34,6 +34,6 @@ public interface BienRepository extends JpaRepository<Bien,Long>{
 	
 	
 	@Query(value = "SELECT * FROM Bien WHERE id = :id AND deleted = false", nativeQuery = true)
-	public Optional<Bien> findId(@Param(value = "id") Integer id);
+	public Optional<Bien> findId(@Param(value = "id") Long id);
 	
 }
