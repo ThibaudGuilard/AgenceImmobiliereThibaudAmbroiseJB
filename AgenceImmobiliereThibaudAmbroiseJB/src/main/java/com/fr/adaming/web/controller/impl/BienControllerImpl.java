@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fr.adaming.entity.Bien;
+import com.fr.adaming.entity.Client;
 import com.fr.adaming.service.IBienService;
 import com.fr.adaming.web.controller.IBienController;
+import com.fr.adaming.web.dto.BienConverter;
+import com.fr.adaming.web.dto.BienDto;
+import com.fr.adaming.web.dto.ClientConverter;
 
 @RestController
 @RequestMapping(path = "api/bien")
@@ -24,11 +28,14 @@ public class BienControllerImpl implements IBienController {
 	private IBienService service;
 
 	@RequestMapping(path = "/add", method = RequestMethod.POST)
-	public String saveBien(@RequestBody Bien bien) {
-		if (service.saveBien(bien) != null) {
-			return "Ajouter SUCCES";
+	public String createBien(@RequestBody BienDto dto) {
+		Bien bien = BienConverter.convertToClass(dto);
+		Bien bienRetour = service.saveBien(bien);
+		if (bienRetour != null) {
+		service.saveBien(bien);
+		return "client created";
 		} else {
-			return "Ajouter FAIL";
+			return "client already exist";
 		}
 	}
 
@@ -43,11 +50,14 @@ public class BienControllerImpl implements IBienController {
 	}
 
 	@RequestMapping(path = "/update", method = RequestMethod.POST)
-	public String updateBien(@RequestBody Bien bien) {
-		if (service.updateBien(bien)) {
-			return "Modifier SUCCES";
-		} else {
-			return "Modifier FAIL";
+	public String updateBien(@RequestBody BienDto dto) {
+		Bien bien = BienConverter.convertToClass(dto);
+		boolean clientRetour = service.updateBien(bien);
+		if (clientRetour == true) {
+		service.updateBien(bien);
+		return "Client updated";
+		}else {
+			return "This Client does'nt exist";
 		}
 	}
 

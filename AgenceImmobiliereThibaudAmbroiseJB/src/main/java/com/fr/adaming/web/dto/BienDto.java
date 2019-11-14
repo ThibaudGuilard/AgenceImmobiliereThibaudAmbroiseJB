@@ -1,16 +1,26 @@
 package com.fr.adaming.web.dto;
 
+import java.util.List;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+import com.fr.adaming.entity.Agent;
+import com.fr.adaming.entity.Bien;
 import com.fr.adaming.entity.Client;
+import com.fr.adaming.entity.enume.TypeClient;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter @Setter @NoArgsConstructor
 public class BienDto {
 
 	
-	private Long id;
+	private long id;
 	
 	@NotNull
 	@NotEmpty
@@ -27,7 +37,7 @@ public class BienDto {
 	private Client clients;
 
 
-	public BienDto(Long id, @NotNull @NotEmpty @NotBlank @Positive double prix, @NotNull boolean vendu, boolean deleted,
+	public BienDto(long id, @NotNull @NotEmpty @NotBlank @Positive double prix, @NotNull boolean vendu, boolean deleted,
 			Client clients) {
 		super();
 		this.id = id;
