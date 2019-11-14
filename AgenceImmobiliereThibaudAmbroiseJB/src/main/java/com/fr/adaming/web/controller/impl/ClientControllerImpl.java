@@ -8,13 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.fr.adaming.controller.dto.ClientDto;
-import com.fr.adaming.controller.dto.converter.ClientConverter;
 import com.fr.adaming.entity.Client;
-import com.fr.adaming.service.ClientService;
 import com.fr.adaming.service.IClientService;
 import com.fr.adaming.web.controller.IClientController;
+import com.fr.adaming.web.dto.ClientConverter;
+import com.fr.adaming.web.dto.ClientDto;
 
 /**
  * @author Thibaud
