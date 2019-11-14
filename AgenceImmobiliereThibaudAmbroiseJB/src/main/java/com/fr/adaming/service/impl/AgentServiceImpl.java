@@ -13,6 +13,10 @@ import com.fr.adaming.repository.ClientRepository;
 import com.fr.adaming.service.IAgentService;
 import com.fr.adaming.service.IClientService;
 
+/**
+ * @author Jean-Baptiste
+ *
+ */
 @Service
 public class AgentServiceImpl implements IAgentService{
 	
@@ -64,9 +68,20 @@ public class AgentServiceImpl implements IAgentService{
 
 	@Override
 	public Agent deleteAgent(Agent agent) {
-		// Changer la valeur de l'attribut "deleted"
-		agent.setDeleted(true);
-		return repository.save(agent);
+		if(repository.existsById(agent.getId())) {
+			// Changer la valeur de l'attribut "deleted"
+			agent.setDeleted(true);
+			return repository.save(agent);
+		} else {
+			System.out.println("DEBUG l'agent à supprimer n'existe pas ");
+			return null;
+		}
+		
+	}
+	
+	@Override
+	public Agent findById(long id) {
+		return repository.findById(id).get();
 	}
 
 }
