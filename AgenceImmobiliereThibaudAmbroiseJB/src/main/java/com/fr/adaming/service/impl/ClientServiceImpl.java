@@ -84,5 +84,14 @@ public class ClientServiceImpl implements IClientService{
 		client.setDeleted(true);
 		return repository.save(client);
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.fr.adaming.service.IClientService#findById()
+	 */
+	@Override
+	public Client findById(long id) {
+		return repository.findById(id).get();
+	}
 
 }

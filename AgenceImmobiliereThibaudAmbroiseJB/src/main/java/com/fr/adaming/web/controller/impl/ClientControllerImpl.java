@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.fr.adaming.entity.Client;
 import com.fr.adaming.service.IClientService;
 import com.fr.adaming.web.controller.IClientController;
@@ -41,9 +42,9 @@ public class ClientControllerImpl implements IClientController {
 	 * (non-Javadoc)
 	 * @see com.fr.adaming.service.IClientController#deleteClient()
 	 */
-	@DeleteMapping(path = "{Client}/delete_client") @Override
-	public String deleteClient(@PathVariable ClientDto dto) {
-		Client client = converter.convertToClass(dto);
+	@DeleteMapping(path = "{id}/delete_client") @Override
+	public String deleteClient(@PathVariable long id) {
+		Client client = service.findById(id);
 		service.deleteClient(client);
 		return "Client deleted";
 	}
@@ -67,5 +68,6 @@ public class ClientControllerImpl implements IClientController {
 	public List<Client> printClient() {
 		return service.findAll();
 	}
+
 	
 }

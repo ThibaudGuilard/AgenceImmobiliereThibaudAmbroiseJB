@@ -41,5 +41,11 @@ public interface IClientService {
 	 * @return client - the given client
 	 */
 	public Client deleteClient(Client client);
+	
+	/** trouve un client par son id
+	 * @param id
+	 * @return le client correspondant à l'id
+	 */
+	public Client findById(long id);
 
 }

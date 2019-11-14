@@ -26,7 +26,7 @@ public interface IClientController {
 	 * @param dto
 	 * @return un message si l'opération est effectuée
 	 */
-	public String deleteClient(@PathVariable ClientDto dto);
+	public String deleteClient(@PathVariable long id);
 	
 	/** met à jour un client à partir d'un ClientDto
 	 * @param dto
