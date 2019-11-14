@@ -1,3 +1,5 @@
+// Ambroise RENE
+
 package com.fr.adaming.entity;
 
 import javax.persistence.Column;
@@ -20,9 +22,9 @@ public class Bien {
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	
-	@Column(nullable = false)
+	@Column(nullable = false )
 	private double prix;
 	
 	private boolean vendu;
@@ -31,5 +33,15 @@ public class Bien {
 	
 	@ManyToOne
 	@JoinColumn(name = "id_client")
-	private Client client;
+	private Client clients;
+
+	public Bien(Long id, double prix, boolean vendu, boolean deleted, Client clients) {
+		this.id = id;
+		this.prix = prix;
+		this.vendu = vendu;
+		this.deleted = deleted;
+		this.clients = clients;
+	}
+	
+	
 }
