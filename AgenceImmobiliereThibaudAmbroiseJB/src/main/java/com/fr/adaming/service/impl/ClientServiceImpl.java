@@ -80,9 +80,13 @@ public class ClientServiceImpl implements IClientService{
 	 */
 	@Override
 	public Client deleteClient(Client client) {
+		if(repository.existsById(client.getId())) {
 		// Changer la valeur de l'attribut "deleted"
 		client.setDeleted(true);
 		return repository.save(client);
+		}else {
+			return null;
+		}
 	}
 	
 	/*
