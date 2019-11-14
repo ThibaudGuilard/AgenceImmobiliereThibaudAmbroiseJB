@@ -27,8 +27,6 @@ public class ClientControllerImpl implements IClientController {
 
 	@Autowired
 	private IClientService service;
-	@Autowired
-	ClientConverter converter;
 	
 	/*
 	 * (non-Javadoc)
@@ -36,9 +34,10 @@ public class ClientControllerImpl implements IClientController {
 	 */
 	@PostMapping(path = "/create_client") @Override
 	public String create(@RequestBody ClientDto dto) {
-		Client client = converter.convertToClass(dto);
+		Client client = ClientConverter.convertToClass(dto);
 		Client clientRetour = service.save(client);
 		if (clientRetour != null) {
+		service.save(client);
 		return "client created";
 		} else {
 			return "client already exist";
@@ -66,9 +65,10 @@ public class ClientControllerImpl implements IClientController {
 	 */
 	@PostMapping(path = "{Client}/update_client") @Override
 	public String updateClient(@PathVariable ClientDto dto) {
-		Client client = converter.convertToClass(dto);
+		Client client = ClientConverter.convertToClass(dto);
 		boolean clientRetour = service.updateClient(client);
 		if (clientRetour == true) {
+		service.updateClient(client);
 		return "Client updated";
 		}else {
 			return "This Client does'nt exist";
