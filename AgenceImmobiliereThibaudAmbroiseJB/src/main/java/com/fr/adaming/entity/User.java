@@ -24,5 +24,16 @@ public class User {
 	@Pattern(regexp = "\\d{10}")
 	private int telephone;
 	private boolean deleted;
+	
+	public User(@Email @NotNull String email, @NotNull String fullName, @Pattern(regexp = "\\d{10}") int telephone,
+			boolean deleted) {
+		super();
+		this.email = email;
+		this.fullName = fullName;
+		this.telephone = telephone;
+		this.deleted = deleted;
+	}
+	
+	
 
 }
