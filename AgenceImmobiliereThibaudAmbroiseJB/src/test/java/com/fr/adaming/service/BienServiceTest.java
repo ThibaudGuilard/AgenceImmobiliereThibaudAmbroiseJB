@@ -1,5 +1,6 @@
 package com.fr.adaming.service;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,10 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import com.fr.adaming.entity.Bien;
 
+/**
+ * @author Thibaud, JB et Ambroise
+ *
+ */
 @SpringBootTest
 public class BienServiceTest {
 
@@ -35,6 +40,15 @@ public class BienServiceTest {
 	
 	@Test
 	public void updateBienServicePasEnregistre_shouldReturnFalse() {
-		
+		//preparer les inputs
+		Bien bien = new Bien();
+		bien.setId(1120L);
+		bien.setPrix(200000);
+		bien.setVendu(true);
+		bien.setDeleted(false);
+		//invoquer la méthode
+		boolean retour = service.updateBien(bien);
+		//vérifier le résultat
+		assertFalse(retour);
 	}
 }
