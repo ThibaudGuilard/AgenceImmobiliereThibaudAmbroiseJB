@@ -46,23 +46,31 @@ public class BienServiceTest {
 		assertTrue(b.isDeleted()== retournedBien.isDeleted());
 	}
 	
-
-
-//	@Test
-////	@Sql(statements = "insert into bien values (1234567,false,15,false,1)")
-//	private void deleteBienThatExists_shouldReturnTrue() {
-//		Bien bien = service.FindParId(1234567L);
-//		assertTrue(service.deleteBien(bien));		
-//	}
+	
+	@Test
+	@Sql(statements = "insert into bien values (1234567,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	private void deleteBienThatExists_shouldReturnTrue() {
+		Bien bien = service.FindParId(1234567L);
+		assertTrue(service.deleteBien(bien));	
+	}
+	
 	
 	@Rule
 	ExpectedException exception = ExpectedException.none();
 	
 	@Test
-	private void deleteBienThatDoesNotExist_shouldReturnFalse() {
+	private void deleteBienThatDoesNotExist_shouldReturnNotSuchElementException() {
 		exception.expect(NoSuchElementException.class);
 		service.FindParId(5425698754212L);
 				
+	}
+	
+	@Test
+	@Sql(statements = "insert into bien values (1234568,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into bien values (1234569,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into bien values (12345610,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	private void findAllBiensIfExist_shouldReturnNotNull() {
+		assertNotNull(service.findAll());
 	}
 	
 
