@@ -1,8 +1,10 @@
 package com.fr.adaming.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.junit.Rule;
@@ -48,8 +50,8 @@ public class BienServiceTest {
 	
 	
 	@Test
-	@Sql(statements = "insert into bien values (1234567,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	private void deleteBienThatExists_shouldReturnTrue() {
+	@Sql(statements = "insert into bien (id, deleted, prix, vendu) values (1234567,false,15,false)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	public void deleteBienThatExists_shouldReturnTrue() {
 		Bien bien = service.FindParId(1234567L);
 		assertTrue(service.deleteBien(bien));	
 	}
@@ -59,25 +61,31 @@ public class BienServiceTest {
 	ExpectedException exception = ExpectedException.none();
 	
 	@Test
-	private void deleteBienThatDoesNotExist_shouldReturnNotSuchElementException() {
+	public void deleteBienThatDoesNotExist_shouldReturnNotSuchElementException() {
 		exception.expect(NoSuchElementException.class);
 		service.FindParId(5425698754212L);
 				
 	}
 	
 	@Test
+	@Sql(statements = "insert into client (id, email, full_name, deleted, telephone, type) values (1, 'emailqsdfqsdf@gmail.com', 'fullName', true, 1234, 1);",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into bien values (1234568,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into bien values (1234569,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into bien values (12345610,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	private void findAllBiensIfExist_shouldReturnNotNull() {
-		assertNotNull(service.findAll());
+	public void findAllBiensIfExist_shouldReturnNotNull() {
+		List<Bien> list = service.findAll();
+		assertNotNull(list);
+		assertThat(list).asList().last().hasFieldOrPropertyWithValue("id", 12345610L);
+		
+		assertTrue(list.get(list.size()-1).getId().equals(12345678L));
+		
+		assertThat(list.get(0)).isNotNull();
+		assertThat(list.get(0).getId()).isEqualTo(1234568L);
 	}
 	
 
 	@Sql(statements = { "truncate Bien","insert into bien values (112, 200000, false, false)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from bien where id=112", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-
-	
 	public void updateBienServiceExistant_shouldReturnTrue() {
 		//preparer les inputs
 		Bien bien = new Bien();
