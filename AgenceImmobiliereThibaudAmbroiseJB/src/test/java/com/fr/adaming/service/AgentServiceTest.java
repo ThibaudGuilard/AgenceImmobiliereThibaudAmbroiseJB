@@ -173,12 +173,13 @@ public class AgentServiceTest {
 		assertFalse(retour);
 	}
 	
-//	@Sql(statements = "insert into bien (id, deleted, prix, vendu) values (1234567,false,15,false)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "truncate bien",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "insert into agent (id, deleted, email, full_name, telephone) values (1, false, 'agent@mail.com', 'John Doe', 88888888)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "truncate agent",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 //	@Test
-//	public void deleteBienThatExists_shouldReturnTrue() {
-//		Bien bien = service.FindParId(1234567L);
-//		assertTrue(service.deleteBien(bien));
+//	public void deleteAgentThatExists_shouldReturnNotNullAndDeletedEqualsTrue() {
+//		Agent agent = service.deleteAgent(service.findById(1));
+//		assertNotNull(agent);
+//		assertThat(agent).hasFieldOrProperty("deleted").isEqualTo(true);
 //	}
 	
 //	@Test
