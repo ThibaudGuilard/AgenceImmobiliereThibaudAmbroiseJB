@@ -56,9 +56,10 @@ public class BienServiceTest {
 	
 	@Test
 	@Sql(statements = "insert into bien (id, deleted, prix, vendu) values (1234567,false,15,false)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "truncate bien",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void deleteBienThatExists_shouldReturnTrue() {
 		Bien bien = service.FindParId(1234567L);
-		assertTrue(service.deleteBien(bien) != null);		
+		assertTrue(service.deleteBien(bien));		
 	}
 	
 	
@@ -77,15 +78,12 @@ public class BienServiceTest {
 	@Sql(statements = "insert into bien values (1234568,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into bien values (1234569,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into bien values (12345610,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	public void findAllBiensIfExist_shouldReturnNotNull() {
+	@Sql(statements = "truncate bien",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "truncate client",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void findAllBiensIfExist_shouldBeNotNullAndOfSize3() {
 		List<Bien> list = service.findAll();
 		assertNotNull(list);
-		assertThat(list).asList().last().hasFieldOrPropertyWithValue("id", 12345610L);
-		
-		assertTrue(list.get(list.size()-1).getId().equals(12345678L));
-		
-		assertThat(list.get(0)).isNotNull();
-		assertThat(list.get(0).getId()).isEqualTo(1234568L);
+		assertThat(list).asList().hasSize(3);
 	}
 	
 
