@@ -22,7 +22,7 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 public class Client extends User{
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private TypeClient type;
 	
 	@ManyToOne @JoinColumn(name = "id_agent")

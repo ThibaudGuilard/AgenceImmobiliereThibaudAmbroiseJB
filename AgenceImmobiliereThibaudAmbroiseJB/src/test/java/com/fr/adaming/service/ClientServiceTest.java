@@ -136,35 +136,36 @@ public class ClientServiceTest {
 		assertFalse(retour);
 	}
 	
-//	@Sql(statements = "insert into agent (id, deleted, email, full_name, telephone) values (1, false, 'agent@mail.com', 'John Doe',1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "truncate agent",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Test
-//	public void deleteAgentThatExists_shouldReturnNotNullAndDeletedEqualsTrue() {
-//		Agent agent = service.deleteAgent(service.findById(1L));
-//		assertNotNull(agent);
-//		assertTrue(agent.isDeleted());
-//	}
-//	
-//	@Test
-//	public void deleteAgentThatDoesNotExist_shouldReturnNullAgent() {
-//		assertNull(service.deleteAgent(new Agent()));
-//	}
-//	
-//
-//	@Test
-//	@Sql(statements = "insert into agent (id, deleted, email, full_name, telephone) values (1, false, 'agent1@mail.com', 'John Doe',1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "insert into agent (id, deleted, email, full_name, telephone) values (2, false, 'agent2@mail.com', 'John Doe',1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "insert into agent (id, deleted, email, full_name, telephone) values (3, false, 'agent3@mail.com', 'John Doe',1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "truncate agent",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	public void findAllAgentsIfExist_shouldBeNotNullAndOfSize3() {
-//		List<Agent> list = service.findAll();
-//		assertNotNull(list);
-//		assertTrue(list.size() == 3);
-//	}
-//	
-//	@Test
-//	public void findAllAgentIfNotExist_shouldReturnEmptyList() {
-//		assertTrue(service.findAll().isEmpty());
-//	}
+	//ce test ne marche que si j'insère un client qui n'a pas de type (il faut changer la colonne "type" dans la BD et la rendre "nullable"
+	@Sql(statements = "insert into client (id, deleted, email, full_name, telephone) values (1, false, 'client@mail.fr', 'John Doe', 1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "truncate client",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void deleteClientThatExists_shouldReturnNotNullAndDeletedEqualsTrue() {
+		Client client = service.deleteClient(service.findById(1L));
+		assertNotNull(client);
+		assertTrue(client.isDeleted());
+	}
+	
+	@Test
+	public void deleteClientThatDoesNotExist_shouldReturnNullAgent() {
+		assertNull(service.deleteClient(new Client()));
+	}
+	
+
+	@Test
+	@Sql(statements = "insert into client (id, deleted, email, full_name, telephone) values (1, false, 'client1@mail.fr', 'John Doe', 1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into client (id, deleted, email, full_name, telephone) values (2, false, 'client2@mail.fr', 'John Doe', 1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into client (id, deleted, email, full_name, telephone) values (3, false, 'client3@mail.fr', 'John Doe', 1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "truncate client",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void findAllClientsIfExist_shouldBeNotNullAndOfSize3() {
+		List<Client> list = service.findAll();
+		assertNotNull(list);
+		assertTrue(list.size() == 3);
+	}
+	
+	@Test
+	public void findAllClientIfNotExist_shouldReturnEmptyList() {
+		assertTrue(service.findAll().isEmpty());
+	}
 
 }
