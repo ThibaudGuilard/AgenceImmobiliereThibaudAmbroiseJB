@@ -236,10 +236,10 @@ public class AgentServiceTest {
 		assertNotNull(list);
 		assertTrue(list.size() == 3);
 	}
-//	
-//	@Test
-//	public void findAllBienIfNotExist_shouldReturnEmptyList() {
-//		assertTrue(service.findAll().isEmpty());
-//	}
+	
+	@Test
+	public void findAllAgentIfNotExist_shouldReturnEmptyList() {
+		assertTrue(service.findAll().isEmpty());
+	}
 
 }

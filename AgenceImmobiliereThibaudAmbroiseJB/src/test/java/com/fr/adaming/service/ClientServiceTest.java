@@ -1,7 +1,11 @@
 package com.fr.adaming.service;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
+import com.fr.adaming.entity.Agent;
 import com.fr.adaming.entity.Client;
 
 /**
@@ -130,5 +135,36 @@ public class ClientServiceTest {
 		//vérifier le résultat
 		assertFalse(retour);
 	}
+	
+//	@Sql(statements = "insert into agent (id, deleted, email, full_name, telephone) values (1, false, 'agent@mail.com', 'John Doe',1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "truncate agent",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Test
+//	public void deleteAgentThatExists_shouldReturnNotNullAndDeletedEqualsTrue() {
+//		Agent agent = service.deleteAgent(service.findById(1L));
+//		assertNotNull(agent);
+//		assertTrue(agent.isDeleted());
+//	}
+//	
+//	@Test
+//	public void deleteAgentThatDoesNotExist_shouldReturnNullAgent() {
+//		assertNull(service.deleteAgent(new Agent()));
+//	}
+//	
+//
+//	@Test
+//	@Sql(statements = "insert into agent (id, deleted, email, full_name, telephone) values (1, false, 'agent1@mail.com', 'John Doe',1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "insert into agent (id, deleted, email, full_name, telephone) values (2, false, 'agent2@mail.com', 'John Doe',1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "insert into agent (id, deleted, email, full_name, telephone) values (3, false, 'agent3@mail.com', 'John Doe',1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "truncate agent",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	public void findAllAgentsIfExist_shouldBeNotNullAndOfSize3() {
+//		List<Agent> list = service.findAll();
+//		assertNotNull(list);
+//		assertTrue(list.size() == 3);
+//	}
+//	
+//	@Test
+//	public void findAllAgentIfNotExist_shouldReturnEmptyList() {
+//		assertTrue(service.findAll().isEmpty());
+//	}
 
 }
