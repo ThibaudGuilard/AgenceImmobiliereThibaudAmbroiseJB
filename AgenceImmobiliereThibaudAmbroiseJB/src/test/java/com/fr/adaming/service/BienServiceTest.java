@@ -83,12 +83,11 @@ public class BienServiceTest {
 	@Test
 	public void deleteBienThatDoesNotExist_shouldReturnNotSuchElementException() {
 		exception.expect(NoSuchElementException.class);
-		service.FindParId(5425698754212L);
-
+		assertFalse(service.deleteBien(new Bien()));
 	}
+	
 
 	@Test
-
 	@Sql(statements = "insert into client (id, email, full_name, deleted, telephone, type) values (1, 'emailqsdfqsdf@gmail.com', 'fullName', true, 1234, 1);",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into bien values (1234568,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into bien values (1234569,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -99,6 +98,11 @@ public class BienServiceTest {
 		List<Bien> list = service.findAll();
 		assertNotNull(list);
 		assertThat(list).asList().hasSize(3);	
+	}
+	
+	@Test
+	public void findAllBienIfNotExist_shouldReturnEmptyList() {
+		assertTrue(service.findAll().isEmpty());
 	}
 
 
