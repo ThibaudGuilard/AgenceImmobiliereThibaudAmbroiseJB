@@ -192,5 +192,39 @@ public class AgentServiceTest {
 		//vérifier le résultat
 		assertFalse(retour);
 	}
+	
+//	@Sql(statements = "insert into agent (id, deleted, email, full_name, telephone) values (1, false, 'agent@mail.com', 'John Doe', 88888888)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "truncate agent",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Test
+//	public void deleteAgentThatExists_shouldReturnNotNullAndDeletedEqualsTrue() {
+//		Agent agent = service.deleteAgent(service.findById(1));
+//		assertNotNull(agent);
+//		assertThat(agent).hasFieldOrProperty("deleted").isEqualTo(true);
+//	}
+	
+//	@Test
+//	public void deleteBienThatDoesNotExist_shouldReturnNotSuchElementException() {
+//		exception.expect(NoSuchElementException.class);
+//		assertFalse(service.deleteBien(new Bien()));
+//	}
+//	
+//
+//	@Test
+//	@Sql(statements = "insert into client (id, email, full_name, deleted, telephone, type) values (1, 'emailqsdfqsdf@gmail.com', 'fullName', true, 1234, 1);",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "insert into bien values (1234568,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "insert into bien values (1234569,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "insert into bien values (12345610,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "truncate bien",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "truncate client",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	public void findAllBiensIfExist_shouldBeNotNullAndOfSize3() {
+//		List<Bien> list = service.findAll();
+//		assertNotNull(list);
+//		assertThat(list).asList().hasSize(3);	
+//	}
+//	
+//	@Test
+//	public void findAllBienIfNotExist_shouldReturnEmptyList() {
+//		assertTrue(service.findAll().isEmpty());
+//	}
 
 }
