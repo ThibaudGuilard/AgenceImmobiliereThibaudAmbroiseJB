@@ -101,21 +101,7 @@ public class BienServiceTest {
 		assertThat(list).asList().hasSize(3);	
 	}
 
-	@Sql(statements = "insert into client (id, email, full_name, deleted, telephone, type) values (1, 'emailqsdfqsdf@gmail.com', 'fullName', true, 1234, 1);", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into bien values (1234568,false,15,false,1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into bien values (1234569,false,15,false,1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into bien values (12345610,false,15,false,1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	public void findAllBiensIfExist_shouldReturnNotNull() {
-		List<Bien> list = service.findAll();
-		assertNotNull(list);
-		assertThat(list).asList().last().hasFieldOrPropertyWithValue("id", 12345610L);
 
-		assertTrue(list.get(list.size() - 1).getId().equals(12345678L));
-
-		assertThat(list.get(0)).isNotNull();
-		assertThat(list.get(0).getId()).isEqualTo(1234568L);
-
-	}
 
 	@Sql(statements = { "truncate Bien",
 			"insert into bien values (112, 200000, false, false)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
