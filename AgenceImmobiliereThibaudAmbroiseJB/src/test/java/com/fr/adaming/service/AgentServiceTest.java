@@ -50,7 +50,8 @@ public class AgentServiceTest {
 	
 	@Test
 	@Sql(statements = "insert into agent values (44, 0, 'a@mail.com', 'JPP', 1234567890, '2007-05-15', 'azertyuiop')",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	public void addNonValideClientWithSameEmail_shouldReturnError() {
+	@Sql(statements = "delete from agent where id = 44" ,executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void addNonValideAgentWithSameEmail_shouldReturnError() {
 		Agent a = new Agent();
 		
 		a.setFullName("JPP");
@@ -60,9 +61,28 @@ public class AgentServiceTest {
 		
 		Agent retourned = service.save(a);
 
-		assertNull(retourned);
+		assertNull(retourned);	
+	}
+	
+	@Test
+	@Sql(statements = "insert into agent values (555, 0, 'a@aaa.com', 'JPP', 1234567890, '2007-05-15', 'azertyuiop')",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from agent where id = 555" ,executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void addNotValidAgentWithSameId_shouldReturnError() {
+		Agent a = new Agent();
+		
+		a.setId(555);
+		a.setFullName("JPP");
+		a.setEmail("a@a.fr");
+		a.setDeleted(true);
+		a.setTelephone(1234567809);
+		a.setPwd("azertyuiop");
 		
 		
+		exception.expect(AssertionError.class);
+		Agent retourned = service.save(a);
+		
+		assertNotNull(retourned);	
+	
 	}
 	
 	@Sql(statements = { "truncate Agent","insert into agent values (112, 'agent@mail.com', 'John Doe', 88888888, false, 'azertyui', 10/12/2009)","insert into agent values (110, 'agent2@mail.com', 'John Doe', 88888888, false, 'azertyui', 10/12/2009)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
