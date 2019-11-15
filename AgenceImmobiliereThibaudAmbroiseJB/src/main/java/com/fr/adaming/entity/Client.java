@@ -23,7 +23,7 @@ import lombok.Setter;
 public class Client extends User{
 	
 	@Column(nullable = false)
-	private Enum<TypeClient> type;
+	private TypeClient type;
 	@ManyToOne @JoinColumn(name = "id_agent")
 	private Agent agent;
 	@OneToMany(mappedBy = "clients")
