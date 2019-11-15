@@ -35,7 +35,7 @@ public class BienServiceTest {
 
 	@Test
 	@Sql(statements = "delete from bien where prix = 51234565.55 and vendu = true and deleted = false ", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	public void createValidBien_shouldReturnUserWithIdNotNull() {
+	public void addValidBien_shouldReturnUserWithIdNotNull() {
 		// preparer les inputs
 		Bien b = new Bien();
 
@@ -60,8 +60,8 @@ public class BienServiceTest {
 	
 	@Test
 	@Sql(statements = "delete from bien where id =1234568910 ", executionPhase = ExecutionPhase.AFTER_TEST_METHOD )
-	@Sql(statements = "insert into bien values (1234568910,false,15.5,false,1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	public void CreateBienAlreadyExist_shouldNotReturn() {
+	@Sql(statements = "insert into bien (id, deleted, prix,vendu)values (1234568910,false,15.5,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	public void addBienAlreadyExist_shouldNotReturn() {
 		Bien b = new Bien();
 		
 		b.setId(1234568910L);
@@ -69,9 +69,10 @@ public class BienServiceTest {
 		b.setVendu(false);
 		b.setDeleted(false);
 		// invocation de la methode
+		exception.expect(AssertionError.class);
 		Bien retourned = service.saveBien(b);
 		// verification des résultats
-		exception.expect(AssertionError.class);
+		
 		assertNull(retourned);
 	}
 

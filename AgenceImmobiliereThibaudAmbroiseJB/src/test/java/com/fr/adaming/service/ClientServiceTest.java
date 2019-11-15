@@ -8,11 +8,12 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -160,10 +161,11 @@ public class ClientServiceTest {
 	}
 	
 
-	@Test
-	@Sql(statements = "insert into client (id, deleted, email, full_name, telephone) values (1, false, 'client1@mail.fr', 'John Doe', 1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into client (id, deleted, email, full_name, telephone) values (2, false, 'client2@mail.fr', 'John Doe', 1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into client (id, deleted, email, full_name, telephone) values (3, false, 'client3@mail.fr', 'John Doe', 1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@org.junit.Test
+	@Sql(statements = "truncate client",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = " insert into client (id,deleted, email, full_name,type, telephone) values (787,false, 'c1@mail.fr', 'John Doe',0, 1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = " insert into client (id,deleted, email, full_name,type, telephone) values (888,false, 'c2@mail.fr', 'John Doe',0, 1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = " insert into client (id,deleted, email, full_name,type, telephone) values (889,false, 'c3@mail.fr', 'John Doe',0, 1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "truncate client",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void findAllClientsIfExist_shouldBeNotNullAndOfSize3() {
 		List<Client> list = service.findAll();
@@ -171,7 +173,7 @@ public class ClientServiceTest {
 		assertTrue(list.size() == 3);
 	}
 	
-	@Test
+	@org.junit.Test
 	public void findAllClientIfNotExist_shouldReturnEmptyList() {
 		assertTrue(service.findAll().isEmpty());
 	}
@@ -208,6 +210,29 @@ public class ClientServiceTest {
 		
 		assertNotNull(retourned);
 	}
+	
+	@org.junit.Test
+	@Sql(statements = "delete from client where id = 55", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = " insert into client (id,deleted, email, full_name,type, telephone) values (55,false, 'c3@mail.fr', 'John Doe',0, 1122334455)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	public void addNonValidClientSameEmail_shouldReturnError() {
+		exception.expect(DataIntegrityViolationException.class);
+		
+		Client c = new Client();
+
+		c.setDeleted(false);
+		c.setEmail("c3@mail.fr");
+		c.setFullName("pierro");
+		c.setType(TypeClient.ACHETEUR);
+		c.setTelephone(1122334455);
+		
+		
+		Client retourned =  service.save(c);
+		
+		assertNotNull(retourned);
+		
+		
+	}
+	
 
 	
 	
