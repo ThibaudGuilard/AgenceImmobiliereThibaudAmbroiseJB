@@ -7,9 +7,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,18 +21,22 @@ import lombok.Setter;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class User {
 	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	@Email @NotNull @Column(unique = true)
+	
+	@Column(unique = true, nullable = false)
 	private String email;
-	@NotNull
+
+	@Column(nullable = false)
 	private String fullName;
-	@Pattern(regexp = "\\d{10}")
+	
+//	@Pattern(regexp = "\\d{10}")
 	private int telephone;
+	
 	private boolean deleted;
 	
-	public User(@Email @NotNull String email, @NotNull String fullName, @Pattern(regexp = "\\d{10}") int telephone,
-			boolean deleted) {
+	public User(String email, String fullName, int telephone,boolean deleted) {
 		super();
 		this.email = email;
 		this.fullName = fullName;

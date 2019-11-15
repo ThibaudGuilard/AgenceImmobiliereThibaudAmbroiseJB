@@ -76,7 +76,6 @@ public class BienServiceTest {
 	}
 
 
-
 	@Sql(statements = "insert into bien (id, deleted, prix, vendu) values (1234567,false,15,false)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "truncate bien",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
@@ -84,7 +83,6 @@ public class BienServiceTest {
 		Bien bien = service.FindParId(1234567L);
 		assertTrue(service.deleteBien(bien));
 	}
-
 
 	@Test
 	public void deleteBienThatDoesNotExist_shouldReturnNotSuchElementException() {

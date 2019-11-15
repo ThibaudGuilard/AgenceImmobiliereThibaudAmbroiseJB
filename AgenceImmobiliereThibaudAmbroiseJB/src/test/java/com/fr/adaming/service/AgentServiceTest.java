@@ -1,25 +1,24 @@
 package com.fr.adaming.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.NoSuchElementException;
 
+import org.junit.Rule;
 import org.junit.jupiter.api.Test;
+import org.junit.rules.ExpectedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import com.fr.adaming.entity.Agent;
-import com.fr.adaming.entity.Bien;
 
 /**
- * @author Thibaud JB et Ambroise
+ * @author Thibaud ( update) JB (delete) et Ambroise (add)
  *
  */
 @SpringBootTest
@@ -27,6 +26,44 @@ public class AgentServiceTest {
 	
 	@Autowired
 	private IAgentService service;
+	
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
+	
+	
+	@Test
+	@Sql(statements = "delete from agent where full_name like jj and pwd like azertyuiop and email like a@a.fr", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void addValideAgent_shouldReturnClientWithIdNotNull() {
+		Agent a = new Agent();
+		
+		a.setFullName("jj");
+		a.setPwd("azertyuiop");
+		a.setTelephone(1234567890);
+		a.setEmail("a@a.fr");
+		a.setDeleted(false);
+		a.setDateRecrutement(LocalDate.parse("2017-05-15"));
+		
+		Agent retourned = service.save(a);
+
+		assertNotNull(retourned);
+	}
+	
+	@Test
+	@Sql(statements = "insert into agent values (44, 0, 'a@mail.com', 'JPP', 1234567890, '2007-05-15', 'azertyuiop')",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	public void addNonValideClientWithSameEmail_shouldReturnError() {
+		Agent a = new Agent();
+		
+		a.setFullName("JPP");
+		a.setTelephone(1234567890);
+		a.setEmail("a@mail.com");
+		a.setDeleted(false);
+		
+		Agent retourned = service.save(a);
+
+		assertNull(retourned);
+		
+		
+	}
 	
 	@Sql(statements = { "truncate Agent","insert into agent values (112, 'agent@mail.com', 'John Doe', 88888888, false, 'azertyui', 10/12/2009)","insert into agent values (110, 'agent2@mail.com', 'John Doe', 88888888, false, 'azertyui', 10/12/2009)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = {"delete from agent where id=112","delete from agent where id=110"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
