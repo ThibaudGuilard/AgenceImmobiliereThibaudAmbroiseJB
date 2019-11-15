@@ -173,14 +173,15 @@ public class AgentServiceTest {
 		assertFalse(retour);
 	}
 	
-//	@Sql(statements = "insert into agent (id, deleted, email, full_name, telephone) values (1, false, 'agent@mail.com', 'John Doe', 88888888)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "truncate agent",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Test
-//	public void deleteAgentThatExists_shouldReturnNotNullAndDeletedEqualsTrue() {
-//		Agent agent = service.deleteAgent(service.findById(1));
-//		assertNotNull(agent);
-//		assertThat(agent).hasFieldOrProperty("deleted").isEqualTo(true);
-//	}
+	@Sql(statements = "insert into agent (id, deleted, email, full_name, telephone) values (1, false, 'agent@mail.com', 'John Doe', 8888888888)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "truncate agent",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void deleteAgentThatExists_shouldReturnNotNullAndDeletedEqualsTrue() {
+		// System.out.println(service.findById(1L) == null); is not null
+		Agent agent = service.deleteAgent(service.findById(1L));
+		assertNotNull(agent);
+		//assertThat(agent).hasFieldOrProperty("deleted").isEqualTo(true);
+	}
 	
 //	@Test
 //	public void deleteBienThatDoesNotExist_shouldReturnNotSuchElementException() {
