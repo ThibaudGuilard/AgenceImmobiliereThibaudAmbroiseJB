@@ -66,7 +66,7 @@ public class BienServiceImpl implements IBienService{
 	public Bien deleteBien(Bien bien) {
 		// Changer la valeur de l'attribut "deleted"
 		if (FindParId(bien.getId()) != null) {
-			return (repository.supprimer(bien.getId()));	
+			return (repository.supprimerBien(bien.getId()));	
 		} else {
 			return null;
 		}

@@ -21,19 +21,19 @@ public interface BienRepository extends JpaRepository<Bien,Long>{
 	@Transactional
 	@Modifying(clearAutomatically = true)
 	@Query(value= "UPDATE Bien SET deleted = true where id like :id", nativeQuery = true)
-	public Bien supprimer(@Param(value = "id") Long id);
-	
+	public Bien supprimerBien(@Param(value = "id") Long id);
+
 	@Transactional
-	@Modifying(clearAutomatically = true)
-	@Query(value= "UPDATE Bien SET deleted = false where id like :id", nativeQuery = true)
+	@Modifying
+	@Query(value= "UPDATE bien SET deleted = false where id like :id", nativeQuery = true)
 	public void restaurer(@Param(value = "id") Long id);
 	
 	
-	@Query(value = "SELECT * FROM Bien WHERE deleted = false", nativeQuery = true)
+	@Query(value = "SELECT * FROM bien WHERE deleted = false", nativeQuery = true)
 	public List<Bien> listAll();
 	
 	
-	@Query(value = "SELECT * FROM Bien WHERE id = :id AND deleted = false", nativeQuery = true)
+	@Query(value = "SELECT * FROM bien WHERE id = :id AND deleted = false", nativeQuery = true)
 	public Optional<Bien> findId(@Param(value = "id") Long id);
 	
 }
