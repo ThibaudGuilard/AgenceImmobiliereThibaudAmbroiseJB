@@ -48,7 +48,7 @@ public class BienServiceTest {
 //	@Sql(statements = "insert into bien values (1234567,false,15,false,1)")
 	private void deleteBienThatExists_shouldReturnTrue() {
 		Bien bien = service.FindParId(1234567L);
-		assertTrue(service.deleteBien(bien));		
+		assertTrue(service.deleteBien(bien) != null);		
 	}
 	
 //	@Rule
