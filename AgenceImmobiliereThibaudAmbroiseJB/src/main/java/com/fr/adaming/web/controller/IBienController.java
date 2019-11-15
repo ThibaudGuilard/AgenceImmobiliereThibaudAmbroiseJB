@@ -13,6 +13,6 @@ public interface IBienController {
 	
 	public String updateBien(BienDto dto);
 	
-	public boolean deleteBien(Bien bien);
+	public Bien deleteBien(Bien bien);
 	
 }

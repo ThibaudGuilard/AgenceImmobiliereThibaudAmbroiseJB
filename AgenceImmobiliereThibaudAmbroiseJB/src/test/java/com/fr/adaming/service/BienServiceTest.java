@@ -1,6 +1,7 @@
 package com.fr.adaming.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -17,6 +18,10 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import com.fr.adaming.entity.Bien;
 
+/**
+ * @author Thibaud, JB et Ambroise
+ *
+ */
 @SpringBootTest
 public class BienServiceTest {
 
@@ -53,7 +58,7 @@ public class BienServiceTest {
 	@Sql(statements = "insert into bien (id, deleted, prix, vendu) values (1234567,false,15,false)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	public void deleteBienThatExists_shouldReturnTrue() {
 		Bien bien = service.FindParId(1234567L);
-		assertTrue(service.deleteBien(bien));	
+		assertTrue(service.deleteBien(bien) != null);		
 	}
 	
 	
@@ -86,6 +91,7 @@ public class BienServiceTest {
 
 	@Sql(statements = { "truncate Bien","insert into bien values (112, 200000, false, false)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from bien where id=112", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
 	public void updateBienServiceExistant_shouldReturnTrue() {
 		//preparer les inputs
 		Bien bien = new Bien();
@@ -94,8 +100,38 @@ public class BienServiceTest {
 		bien.setVendu(true);
 		bien.setDeleted(false);
 		//invoquer la méthode
-		
-		//récupérer le résultat
+		boolean retour = service.updateBien(bien);
+		//vérifier le résultat
+		assertTrue(retour);
+	}
+	
+	@Test
+	public void updateBienServicePasEnregistre_shouldReturnFalse() {
+		//preparer les inputs
+		Bien bien = new Bien();
+		bien.setId(1120L);
+		bien.setPrix(200000);
+		bien.setVendu(true);
+		bien.setDeleted(false);
+		//invoquer la méthode
+		boolean retour = service.updateBien(bien);
+		//vérifier le résultat
+		assertFalse(retour);
+	}
+	
+	@SuppressWarnings("null")
+	@Test
+	public void updateBienServiceEnregistrePrixNul_shouldThrowException() {
+		//preparer les inputs
+		Bien bien = new Bien();
+		bien.setId(1120L);
+		bien.setPrix((Double) null);
+		bien.setVendu(true);
+		bien.setDeleted(false);
+		//invoquer la méthode
+		boolean retour = service.updateBien(bien);
+		//vérifier le résultat
+		assertFalse(retour);
 	}
 
 }
