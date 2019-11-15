@@ -24,15 +24,11 @@ public class AgentDto {
 
 	private String fullName;
 	
-	@NotNull
 	private int telephone;
 	
-
 	private boolean deleted;
 	
-
 	private String pwd;
-	
 
 	private LocalDate dateRecrutement;
 	private List<Client> clients;
