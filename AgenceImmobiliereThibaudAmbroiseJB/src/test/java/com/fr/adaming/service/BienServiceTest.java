@@ -20,7 +20,7 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import com.fr.adaming.entity.Bien;
 
 /**
- * @author Thibaud, JB et Ambroise
+ * @author Thibaud ( update) JB (delete) et Ambroise (add)
  *
  */
 @SpringBootTest

@@ -7,24 +7,33 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.datasource.init.ScriptStatementFailedException;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import com.fr.adaming.entity.Agent;
 import com.fr.adaming.entity.Client;
+import com.fr.adaming.entity.enume.TypeClient;
 
 /**
- * @author Thibaud Ambroise et JB
+ * @author Thibaud ( update) JB (delete) et Ambroise (add)
  *
  */
 @SpringBootTest
+@RunWith(SpringRunner.class)
 public class ClientServiceTest {
 	
 	@Autowired
 	private IClientService service;
+	
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
 	
 	@Sql(statements = { "truncate Client","insert into client values (110, 'client@mail.fr', 'John Doe', 88888888, false, 'VENDEUR', 1000)","insert into client values (112, 'client@mail.com', 'John Doe', 88888888, false, 'VENDEUR', 1000)","insert into agent values (1000, 'agent2@mail.com', 'John Doe', 88888888, false, 'azertyui', 10/12/2009)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = {"delete from client where id=112","delete from client where id=110","delete from agent where id=1000"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -166,6 +175,39 @@ public class ClientServiceTest {
 	@Test
 	public void findAllClientIfNotExist_shouldReturnEmptyList() {
 		assertTrue(service.findAll().isEmpty());
+	}
+
+	@Test
+	@Sql(statements = "delete from client where email like 'aa@a.fr' and full_name like'Jacquies'",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void addValideClient_shouldReturnGoodClient() {
+		Client c = new Client();
+		c.setDeleted(false);
+		c.setEmail("aa@a.fr");
+		c.setFullName("Jacquies");
+		c.setTelephone(1234567890);
+		c.setType(TypeClient.ACHETEUR);
+		
+		Client retourned = service.save(c);
+		
+		assertNotNull(retourned);
+	}
+
+	@Test
+	@Sql(statements = "delete from client where id = 888", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = " insert into client (id,deleted, email, full_name,type, telephone) values (888,false, 'c3@mail.fr', 'John Doe',0, 1122334455)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	public void addNonValidClientAlreadyExistById_shouldReturnFail() {
+		Client c = new Client();
+		c.setId(888);
+		c.setDeleted(false);
+		c.setEmail("efjze@zefj.fr");
+		c.setFullName("pierro");
+		c.setType(TypeClient.ACHETEUR);
+		c.setTelephone(1122334455);
+		
+		exception.expect(AssertionError.class);
+		Client retourned =  service.save(c);
+		
+		assertNotNull(retourned);
 	}
 
 }

@@ -9,12 +9,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.Rule;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import com.fr.adaming.entity.Agent;
 
@@ -23,6 +26,7 @@ import com.fr.adaming.entity.Agent;
  *
  */
 @SpringBootTest
+@RunWith(SpringRunner.class)
 public class AgentServiceTest {
 	
 	@Autowired
@@ -33,7 +37,7 @@ public class AgentServiceTest {
 	
 	
 	@Test
-	@Sql(statements = "delete from agent where full_name like jj and pwd like azertyuiop and email like a@a.fr", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from agent where full_name like 'jj' and pwd like 'azertyuiop' and email like 'a@a.fr'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void addValideAgent_shouldReturnClientWithIdNotNull() {
 		Agent a = new Agent();
 		
@@ -53,6 +57,7 @@ public class AgentServiceTest {
 	@Sql(statements = "insert into agent values (44, 0, 'a@mail.com', 'JPP', 1234567890, '2007-05-15', 'azertyuiop')",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from agent where id = 44" ,executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void addNonValideAgentWithSameEmail_shouldReturnError() {
+		exception.expect(DataIntegrityViolationException.class);
 		Agent a = new Agent();
 		
 		a.setFullName("JPP");
@@ -60,6 +65,7 @@ public class AgentServiceTest {
 		a.setEmail("a@mail.com");
 		a.setDeleted(false);
 		
+//		exception.expectMessage("Duplicata du champ 'a@mail.com'");
 		Agent retourned = service.save(a);
 
 		assertNull(retourned);	
@@ -77,7 +83,6 @@ public class AgentServiceTest {
 		a.setDeleted(true);
 		a.setTelephone(1234567809);
 		a.setPwd("azertyuiop");
-		
 		
 		exception.expect(AssertionError.class);
 		Agent retourned = service.save(a);
