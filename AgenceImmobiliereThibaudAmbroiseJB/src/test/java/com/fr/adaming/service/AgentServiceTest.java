@@ -1,9 +1,13 @@
 package com.fr.adaming.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +16,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import com.fr.adaming.entity.Agent;
+import com.fr.adaming.entity.Bien;
 
 /**
  * @author Thibaud JB et Ambroise
@@ -167,5 +172,38 @@ public class AgentServiceTest {
 		//vérifier le résultat
 		assertFalse(retour);
 	}
+	
+//	@Sql(statements = "insert into bien (id, deleted, prix, vendu) values (1234567,false,15,false)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "truncate bien",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Test
+//	public void deleteBienThatExists_shouldReturnTrue() {
+//		Bien bien = service.FindParId(1234567L);
+//		assertTrue(service.deleteBien(bien));
+//	}
+	
+//	@Test
+//	public void deleteBienThatDoesNotExist_shouldReturnNotSuchElementException() {
+//		exception.expect(NoSuchElementException.class);
+//		assertFalse(service.deleteBien(new Bien()));
+//	}
+//	
+//
+//	@Test
+//	@Sql(statements = "insert into client (id, email, full_name, deleted, telephone, type) values (1, 'emailqsdfqsdf@gmail.com', 'fullName', true, 1234, 1);",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "insert into bien values (1234568,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "insert into bien values (1234569,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "insert into bien values (12345610,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "truncate bien",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "truncate client",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	public void findAllBiensIfExist_shouldBeNotNullAndOfSize3() {
+//		List<Bien> list = service.findAll();
+//		assertNotNull(list);
+//		assertThat(list).asList().hasSize(3);	
+//	}
+//	
+//	@Test
+//	public void findAllBienIfNotExist_shouldReturnEmptyList() {
+//		assertTrue(service.findAll().isEmpty());
+//	}
 
 }

@@ -57,16 +57,6 @@ public class BienServiceTest {
 		assertTrue(b.isVendu() == retournedBien.isVendu());
 		assertTrue(b.isDeleted() == retournedBien.isDeleted());
 	}
-
-
-
-	@Sql(statements = "insert into bien (id, deleted, prix, vendu) values (1234567,false,15,false)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "truncate bien",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Test
-	public void deleteBienThatExists_shouldReturnTrue() {
-		Bien bien = service.FindParId(1234567L);
-		assertTrue(service.deleteBien(bien));
-	}
 	
 	@Test
 	@Sql(statements = "delete from bien where id =1234568910 ", executionPhase = ExecutionPhase.AFTER_TEST_METHOD )
@@ -83,6 +73,16 @@ public class BienServiceTest {
 		// verification des résultats
 		exception.expect(AssertionError.class);
 		assertNull(retourned);
+	}
+
+
+
+	@Sql(statements = "insert into bien (id, deleted, prix, vendu) values (1234567,false,15,false)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "truncate bien",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void deleteBienThatExists_shouldReturnTrue() {
+		Bien bien = service.FindParId(1234567L);
+		assertTrue(service.deleteBien(bien));
 	}
 
 
