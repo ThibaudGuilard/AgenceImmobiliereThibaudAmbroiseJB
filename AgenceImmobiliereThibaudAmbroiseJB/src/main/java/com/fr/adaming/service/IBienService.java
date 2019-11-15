@@ -38,7 +38,11 @@ public interface IBienService {
 	 */
 	public boolean deleteBien(Bien bien);
 
+	
+	/**
+	 * @param id
+	 * @return Bien related with the id
+	 */
 	public Bien FindParId(Long id);
 	
-
 }

@@ -91,7 +91,7 @@ public class AgentServiceTest {
 	
 	}
 
-	// ATTENTION A L'ORDRE LORS DE L4ENVOIE D4UNE REQUETE SQL !!
+	// ATTENTION A L'ORDRE LORS DE L'ENVOIE D4UNE REQUETE SQL !!
 	@Sql(statements = { "truncate Agent","insert into agent values (112,false, 'agent@mail.com', 'John Doe', 88888888, '2009-12-10','azertyuiop')" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = {"delete from agent where id=112","delete from agent where id=110"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
