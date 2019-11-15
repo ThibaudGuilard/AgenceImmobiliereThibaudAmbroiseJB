@@ -1,11 +1,14 @@
 package com.fr.adaming.service;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
 
+import org.junit.Rule;
 import org.junit.jupiter.api.Test;
+import org.junit.rules.ExpectedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
@@ -22,6 +25,28 @@ public class AgentServiceTest {
 	
 	@Autowired
 	private IAgentService service;
+	
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
+	
+	
+	@Test
+	public void addValideAgent_shouldReturnClientWithIdNotNull() {
+		Agent a = new Agent();
+		
+		a.setFullName("jj");
+		a.setPwd("azertyuiop");
+		a.setTelephone(1234567890);
+		a.setEmail("a@a.fr");
+		a.setDeleted(false);
+		a.setDateRecrutement(LocalDate.parse("2017-05-15"));
+		
+		Agent retourned = service.save(a);
+		
+		
+		assertNotNull(retourned);
+	
+	}
 	
 	@Sql(statements = { "truncate Agent","insert into agent values (112, 'agent@mail.com', 'John Doe', 88888888, false, 'azertyui', 10/12/2009)","insert into agent values (110, 'agent2@mail.com', 'John Doe', 88888888, false, 'azertyui', 10/12/2009)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = {"delete from agent where id=112","delete from agent where id=110"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)

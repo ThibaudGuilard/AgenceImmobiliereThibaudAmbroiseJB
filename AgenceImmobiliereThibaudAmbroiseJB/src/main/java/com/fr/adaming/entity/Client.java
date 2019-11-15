@@ -24,8 +24,10 @@ public class Client extends User{
 	
 	@Column(nullable = false)
 	private TypeClient type;
+	
 	@ManyToOne @JoinColumn(name = "id_agent")
 	private Agent agent;
+	
 	@OneToMany(mappedBy = "clients")
 	private List<Bien> biens;
 
