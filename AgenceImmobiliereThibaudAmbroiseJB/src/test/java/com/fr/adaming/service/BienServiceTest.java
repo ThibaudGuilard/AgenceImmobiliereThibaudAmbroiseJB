@@ -29,6 +29,10 @@ public class BienServiceTest {
 	@Autowired
 	private IBienService service;
 
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
+
+
 	@Test
 	@Sql(statements = "delete from bien where prix = 51234565.55 and vendu = true and deleted = false ", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void createValidBien_shouldReturnUserWithIdNotNull() {
@@ -54,31 +58,31 @@ public class BienServiceTest {
 		assertTrue(b.isDeleted() == retournedBien.isDeleted());
 	}
 
-	@Test
+
+
 	@Sql(statements = "insert into bien (id, deleted, prix, vendu) values (1234567,false,15,false)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "truncate bien",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void deleteBienThatExists_shouldReturnTrue() {
 		Bien bien = service.FindParId(1234567L);
 		assertTrue(service.deleteBien(bien));
 	}
-
-	public void CreateBienWithNoValidPrix_shouldReturnUserNonValid() {
+	@Test
+	@Sql(statements = "delete from bien where id =1234568910 ", executionPhase = ExecutionPhase.AFTER_TEST_METHOD )
+	@Sql(statements = "insert into bien values (1234568910,false,15.5,false,1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	public void CreateBienAlreadyExist_shouldNotReturn() {
 		Bien b = new Bien();
-
-		b.setPrix(51234565);
-		b.setVendu(true);
+		
+		b.setId(1234568910L);
+		b.setPrix(15.5);
+		b.setVendu(false);
 		b.setDeleted(false);
 		// invocation de la methode
-		Bien retournedBien = service.saveBien(b);
+		Bien retourned = service.saveBien(b);
 		// verification des résultats
-
-		assertNull(retournedBien.getPrix());
-
+		exception.expect(AssertionError.class);
+		assertNull(retourned);
 	}
 
-
-	@Rule
-	ExpectedException exception = ExpectedException.none();
 
 	@Test
 	public void deleteBienThatDoesNotExist_shouldReturnNotSuchElementException() {
@@ -107,15 +111,14 @@ public class BienServiceTest {
 
 
 
-	@Sql(statements = { "truncate Bien",
-			"insert into bien values (112, 200000, false, false)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = { "truncate Bien","insert into bien values (112, 200000.55, false, false)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from bien where id=112", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void updateBienServiceExistant_shouldReturnTrue() {
 		// preparer les inputs
 		Bien bien = new Bien();
 		bien.setId(112L);
-		bien.setPrix(200000);
+		bien.setPrix(200000.55);
 		bien.setVendu(true);
 		bien.setDeleted(false);
 		// invoquer la méthode
@@ -129,7 +132,7 @@ public class BienServiceTest {
 		// preparer les inputs
 		Bien bien = new Bien();
 		bien.setId(1120L);
-		bien.setPrix(200000);
+		bien.setPrix(200000.55);
 		bien.setVendu(true);
 		bien.setDeleted(false);
 		// invoquer la méthode
