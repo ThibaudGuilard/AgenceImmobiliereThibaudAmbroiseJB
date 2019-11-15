@@ -59,9 +59,14 @@ public class BienServiceTest {
 	}
 
 	@Test
-//	@Sql(statements = "delete from bien where id =1234568910 ", executionPhase = ExecutionPhase.AFTER_TEST_METHOD )
-	@Sql(statements = "insert into bien values (1234568910,false,15.5,false,1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	public void CreateBienAlreadyExist_shouldNotReturn() {
+	@Sql(statements = "insert into bien (id, deleted, prix, vendu) values (1234567,false,15,false)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "truncate bien",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void deleteBienThatExists_shouldReturnTrue() {
+		Bien bien = service.FindParId(1234567L);
+		assertTrue(service.deleteBien(bien));
+	}
+
+	public void CreateBienWithNoValidPrix_shouldReturnUserNonValid() {
 		Bien b = new Bien();
 		
 		b.setId(1234568910L);
@@ -72,15 +77,9 @@ public class BienServiceTest {
 		Bien retourned = service.saveBien(b);
 		// verification des résultats
 		exception.expect(AssertionError.class);
-
+		assertNull(retourned);
 	}
 
-	@Test
-	@Sql(statements = "insert into bien (id, deleted, prix, vendu) values (1234567,false,15,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	public void deleteBienThatExists_shouldReturnTrue() {
-		Bien bien = service.FindParId(1234567L);
-		assertTrue(service.deleteBien(bien) != null);
-	}
 
 	@Test
 	public void deleteBienThatDoesNotExist_shouldReturnNotSuchElementException() {
@@ -90,20 +89,20 @@ public class BienServiceTest {
 	}
 
 	@Test
-	@Sql(statements = "insert into client (id, email, full_name, deleted, telephone, type) values (1, 'emailqsdfqsdf@gmail.com', 'fullName', true, 1234, 1);", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into bien values (1234568,false,15,false,1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into bien values (1234569,false,15,false,1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into bien values (12345610,false,15,false,1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	public void findAllBiensIfExist_shouldReturnNotNull() {
+
+	@Sql(statements = "insert into client (id, email, full_name, deleted, telephone, type) values (1, 'emailqsdfqsdf@gmail.com', 'fullName', true, 1234, 1);",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into bien values (1234568,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into bien values (1234569,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into bien values (12345610,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "truncate bien",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "truncate client",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void findAllBiensIfExist_shouldBeNotNullAndOfSize3() {
 		List<Bien> list = service.findAll();
 		assertNotNull(list);
-		assertThat(list).asList().last().hasFieldOrPropertyWithValue("id", 12345610L);
-
-		assertTrue(list.get(list.size() - 1).getId().equals(12345678L));
-
-		assertThat(list.get(0)).isNotNull();
-		assertThat(list.get(0).getId()).isEqualTo(1234568L);
+		assertThat(list).asList().hasSize(3);	
 	}
+
+
 
 	@Sql(statements = { "truncate Bien","insert into bien values (112, 200000.55, false, false)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from bien where id=112", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)

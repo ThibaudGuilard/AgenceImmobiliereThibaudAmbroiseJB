@@ -19,9 +19,9 @@ public interface BienRepository extends JpaRepository<Bien,Long>{
 
 	
 	@Transactional
-	@Modifying(clearAutomatically = true)
+	@Modifying
 	@Query(value= "UPDATE bien SET deleted = true where id like :id", nativeQuery = true)
-	public Bien supprimerBien(@Param(value = "id") Long id);
+	public void supprimerBien(@Param(value = "id") Long id);
 
 	@Transactional
 	@Modifying

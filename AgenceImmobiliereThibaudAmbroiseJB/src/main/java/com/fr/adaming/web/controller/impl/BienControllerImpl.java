@@ -60,8 +60,9 @@ public class BienControllerImpl implements IBienController {
 	}
 
 	@PostMapping(path="/delete")
-	public Bien deleteBien(@RequestBody Bien bien) {
+	public boolean deleteBien(@RequestBody Bien bien) {
 		return service.deleteBien(bien);
+		
 	}
 	
 }
