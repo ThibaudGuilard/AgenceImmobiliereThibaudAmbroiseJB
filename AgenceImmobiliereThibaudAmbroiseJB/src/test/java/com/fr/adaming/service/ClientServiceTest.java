@@ -35,9 +35,8 @@ public class ClientServiceTest {
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
 	
-	@Sql(statements = { "truncate Client","insert into client values (110, 'client@mail.fr', 'John Doe', 88888888, false, 'VENDEUR', 1000)","insert into client values (112, 'client@mail.com', 'John Doe', 88888888, false, 'VENDEUR', 1000)","insert into agent values (1000, 'agent2@mail.com', 'John Doe', 88888888, false, 'azertyui', 10/12/2009)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = { "insert into client values (112, false, 'client@mail.com', 'John Doe', 8888888, 'VENDEUR',1)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = {"delete from client where id=112","delete from client where id=110","delete from agent where id=1000"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-
 	@Test
 	public void updateClientServiceExistant_shouldReturnTrue() {
 		//preparer les inputs

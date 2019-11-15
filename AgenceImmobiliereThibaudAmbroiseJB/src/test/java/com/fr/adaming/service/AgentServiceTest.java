@@ -71,7 +71,7 @@ public class AgentServiceTest {
 		assertNull(retourned);	
 	}
 	
-	@Test
+	@org.junit.jupiter.api.Test
 	@Sql(statements = "insert into agent values (555, 0, 'a@aaa.com', 'JPP', 1234567890, '2007-05-15', 'azertyuiop')",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from agent where id = 555" ,executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void addNotValidAgentWithSameId_shouldReturnError() {
