@@ -34,4 +34,12 @@ public class Agent extends User {
 		this.dateRecrutement = dateRecrutement;
 	}
 
+	@Override
+	public String toString() {
+		return "Agent [pwd=" + pwd + ", dateRecrutement=" + dateRecrutement + ", getId()=" + getId() + ", getEmail()="
+				+ getEmail() + ", getFullName()=" + getFullName() + ", getTelephone()=" + getTelephone() + "]";
+	}
+
+	
+	
 }

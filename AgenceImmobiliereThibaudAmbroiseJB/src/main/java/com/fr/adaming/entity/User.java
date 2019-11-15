@@ -7,7 +7,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.Pattern;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +31,7 @@ public class User {
 	@Column(nullable = false)
 	private String fullName;
 	
-	@Pattern(regexp = "\\d{10}")
+//	@Pattern(regexp = "\\d{10}")
 	private int telephone;
 	
 	private boolean deleted;
