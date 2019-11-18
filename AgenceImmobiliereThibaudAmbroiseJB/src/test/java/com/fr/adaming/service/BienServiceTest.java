@@ -60,7 +60,7 @@ public class BienServiceTest {
 	
 	@Test
 	@Sql(statements = "delete from bien where id =1234568910 ", executionPhase = ExecutionPhase.AFTER_TEST_METHOD )
-	@Sql(statements = "insert into bien (id, deleted, prix,vendu)values (1234568910,false,15.5,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into bien (id, deleted, prix,vendu) values (1234568910,false,15.5,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	public void addBienAlreadyExist_shouldNotReturn() {
 		Bien b = new Bien();
 		
@@ -69,7 +69,6 @@ public class BienServiceTest {
 		b.setVendu(false);
 		b.setDeleted(false);
 		// invocation de la methode
-		exception.expect(AssertionError.class);
 		Bien retourned = service.saveBien(b);
 		// verification des résultats
 		

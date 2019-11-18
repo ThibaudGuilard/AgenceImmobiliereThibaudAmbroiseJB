@@ -205,10 +205,9 @@ public class ClientServiceTest {
 		c.setType(TypeClient.ACHETEUR);
 		c.setTelephone(1122334455);
 		
-		exception.expect(AssertionError.class);
 		Client retourned =  service.save(c);
 		
-		assertNotNull(retourned);
+		assertNull(retourned);
 	}
 	
 	@org.junit.Test
