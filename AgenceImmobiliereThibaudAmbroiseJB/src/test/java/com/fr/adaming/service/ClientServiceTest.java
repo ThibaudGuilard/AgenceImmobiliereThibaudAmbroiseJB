@@ -145,7 +145,7 @@ public class ClientServiceTest {
 	}
 	
 	//ce test ne marche que si j'insère un client qui n'a pas de type (il faut changer la colonne "type" dans la BD et la rendre "nullable"
-	@Sql(statements = "insert into client (id, deleted, email, full_name, telephone) values (222, false, 'client@mail.fr', 'John Doe', 1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into client (id, deleted, email, full_name, telephone) values (1, false, 'client@mail.fr', 'John Doe', 1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from client where id = 222",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void deleteClientThatExists_shouldReturnNotNullAndDeletedEqualsTrue() {
