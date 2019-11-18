@@ -12,10 +12,12 @@ import java.util.NoSuchElementException;
 import org.junit.Rule;
 import org.junit.jupiter.api.Test;
 import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import com.fr.adaming.entity.Bien;
 
@@ -24,6 +26,7 @@ import com.fr.adaming.entity.Bien;
  *
  */
 @SpringBootTest
+@RunWith(SpringRunner.class)
 public class BienServiceTest {
 
 	@Autowired
@@ -144,7 +147,7 @@ public class BienServiceTest {
 	}
 
 	@SuppressWarnings("null")
-	@Test
+	@org.junit.Test
 	public void updateBienServiceEnregistrePrixNul_shouldThrowException() {
 		// preparer les inputs
 		Bien bien = new Bien();
@@ -152,6 +155,8 @@ public class BienServiceTest {
 		bien.setPrix((Double) null);
 		bien.setVendu(true);
 		bien.setDeleted(false);
+		
+		exception.expect(NullPointerException.class);
 		// invoquer la méthode
 		boolean retour = service.updateBien(bien);
 		// vérifier le résultat
