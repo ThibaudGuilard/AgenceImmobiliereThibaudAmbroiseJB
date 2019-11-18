@@ -78,7 +78,7 @@ public class BienServiceTest {
 
 
 	@Sql(statements = "insert into bien (id, deleted, prix, vendu) values (1234567,false,15,false)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "truncate bien",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from bien",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void deleteBienThatExists_shouldReturnTrue() {
 		Bien bien = service.FindParId(1234567L);
@@ -97,8 +97,8 @@ public class BienServiceTest {
 	@Sql(statements = "insert into bien values (1234568,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into bien values (1234569,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into bien values (12345610,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "truncate bien",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "truncate client",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from bien",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from client",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void findAllBiensIfExist_shouldBeNotNullAndOfSize3() {
 		List<Bien> list = service.findAll();
 		assertNotNull(list);
@@ -112,7 +112,7 @@ public class BienServiceTest {
 
 
 
-	@Sql(statements = { "truncate Bien","insert into bien values (112, 200000.55, false, false)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = { "delete from Bien","insert into bien values (112, 200000.55, false, false)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from bien where id=112", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void updateBienServiceExistant_shouldReturnTrue() {
