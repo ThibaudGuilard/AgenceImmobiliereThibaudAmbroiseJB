@@ -35,8 +35,8 @@ public class ClientServiceTest {
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
 	
-	@Sql(statements = { "insert into client values (112, false, 'client@mail.com', 'John Doe', 8888888, 'VENDEUR',1)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = {"delete from client where id=112","delete from client where id=110","delete from agent where id=1000"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = { "insert into client(id, deleted,email,full_name,telephone,type) values (112, false, 'client@mail.com', 'John Doe', 8888888, 1)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = {"delete from client where id=112"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void updateClientServiceExistant_shouldReturnTrue() {
 		//preparer les inputs
@@ -145,8 +145,8 @@ public class ClientServiceTest {
 	}
 	
 	//ce test ne marche que si j'insère un client qui n'a pas de type (il faut changer la colonne "type" dans la BD et la rendre "nullable"
-	@Sql(statements = "insert into client (id, deleted, email, full_name, telephone) values (1, false, 'client@mail.fr', 'John Doe', 1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "truncate client",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "insert into client (id, deleted, email, full_name, telephone) values (222, false, 'client@mail.fr', 'John Doe', 1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from client where id = 222",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void deleteClientThatExists_shouldReturnNotNullAndDeletedEqualsTrue() {
 		Client client = service.deleteClient(service.findById(1L));
@@ -161,11 +161,12 @@ public class ClientServiceTest {
 	
 
 	@org.junit.Test
-	@Sql(statements = "truncate client",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = " insert into client (id,deleted, email, full_name,type, telephone) values (787,false, 'c1@mail.fr', 'John Doe',0, 1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = " insert into client (id,deleted, email, full_name,type, telephone) values (888,false, 'c2@mail.fr', 'John Doe',0, 1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = " insert into client (id,deleted, email, full_name,type, telephone) values (889,false, 'c3@mail.fr', 'John Doe',0, 1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "truncate client",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from  client where id =787",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from  client where id =788",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from  client where id =789",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void findAllClientsIfExist_shouldBeNotNullAndOfSize3() {
 		List<Client> list = service.findAll();
 		assertNotNull(list);
@@ -211,8 +212,8 @@ public class ClientServiceTest {
 	}
 	
 	@org.junit.Test
-	@Sql(statements = "delete from client where id = 55", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = " insert into client (id,deleted, email, full_name,type, telephone) values (55,false, 'c3@mail.fr', 'John Doe',0, 1122334455)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from client where id = 66", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = " insert into client (id,deleted, email, full_name,type, telephone) values (66,false, 'c3@mail.fr', 'John Doe',0, 1122334455)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	public void addNonValidClientSameEmail_shouldReturnError() {
 		exception.expect(DataIntegrityViolationException.class);
 		

@@ -84,15 +84,14 @@ public class AgentServiceTest {
 		a.setTelephone(1234567809);
 		a.setPwd("azertyuiop");
 		
-		exception.expect(AssertionError.class);
 		Agent retourned = service.save(a);
 		
-		assertNotNull(retourned);	
+		assertNull(retourned);	
 	
 	}
 
 	// ATTENTION A L'ORDRE LORS DE L'ENVOIE D4UNE REQUETE SQL !!
-	@Sql(statements = { "truncate Agent","insert into agent values (112,false, 'agent@mail.com', 'John Doe', 88888888, '2009-12-10','azertyuiop')" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = { "insert into agent values (112,false, 'agent@mail.com', 'John Doe', 88888888, '2009-12-10','azertyuiop')" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = {"delete from agent where id=112","delete from agent where id=110"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void updateAgentServiceExistant_shouldReturnTrue() {
@@ -238,7 +237,7 @@ public class AgentServiceTest {
 	}
 	
 	@Sql(statements = "insert into agent (id, deleted, email, full_name, telephone) values (1, false, 'agent@mail.com', 'John Doe',1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "truncate agent",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from agent where id =1",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void deleteAgentThatExists_shouldReturnNotNullAndDeletedEqualsTrue() {
 		Agent agent = service.deleteAgent(service.findById(1L));
@@ -253,10 +252,12 @@ public class AgentServiceTest {
 	
 
 	@Test
-	@Sql(statements = "insert into agent (id, deleted, email, full_name, telephone) values (1, false, 'agent1@mail.com', 'John Doe',1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into agent (id, deleted, email, full_name, telephone) values (2, false, 'agent2@mail.com', 'John Doe',1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into agent (id, deleted, email, full_name, telephone) values (3, false, 'agent3@mail.com', 'John Doe',1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "truncate agent",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "insert into agent (id, deleted, email, full_name, telephone) values (123, false, 'agent1@mail.com', 'John Doe',1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into agent (id, deleted, email, full_name, telephone) values (223, false, 'agent2@mail.com', 'John Doe',1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into agent (id, deleted, email, full_name, telephone) values (323, false, 'agent3@mail.com', 'John Doe',1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from agent where id =123",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from agent where id =223",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from agent where id =323",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void findAllAgentsIfExist_shouldBeNotNullAndOfSize3() {
 		List<Agent> list = service.findAll();
 		assertNotNull(list);
