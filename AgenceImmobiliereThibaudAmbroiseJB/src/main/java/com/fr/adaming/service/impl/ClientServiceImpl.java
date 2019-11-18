@@ -3,7 +3,7 @@ package com.fr.adaming.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.entity.Client;
@@ -27,20 +27,11 @@ public class ClientServiceImpl implements IClientService{
 	 */
 	@Override
 	public Client save(Client client) {
-		
-		// Vérifier si le client existe dans la BD (email)
-//		Client c = dao.findByEmail(client.getEmail());
-		
-		Client c = new Client();
-		c.setEmail(client.getEmail());
-		
-		
-		if(repository.exists(Example.of(c))) {
-			//Le client existe dans la BD (FAIL)
+				
+		try {
+		return repository.save(client);
+		} catch (DataIntegrityViolationException e) {
 			return null;
-		}else {
-			//Le client n'existe pas (SUCCESS) : enregistrer le client dans la BD et retourner le client
-			return repository.save(client);
 		}
 		
 	}

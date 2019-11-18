@@ -13,7 +13,6 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -193,28 +192,13 @@ public class ClientServiceTest {
 		assertNotNull(retourned);
 	}
 
-	@Test
-	@Sql(statements = "delete from client where id = 888", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = " insert into client (id,deleted, email, full_name,type, telephone) values (888,false, 'c3@mail.fr', 'John Doe',0, 1122334455)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	public void addNonValidClientAlreadyExistById_shouldReturnFail() {
-		Client c = new Client();
-		c.setId(888);
-		c.setDeleted(false);
-		c.setEmail("efjze@zefj.fr");
-		c.setFullName("pierro");
-		c.setType(TypeClient.ACHETEUR);
-		c.setTelephone(1122334455);
-		
-		Client retourned =  service.save(c);
-		
-		assertNull(retourned);
-	}
+
 	
 	@org.junit.Test
 	@Sql(statements = "delete from client where id = 66", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = " insert into client (id,deleted, email, full_name,type, telephone) values (66,false, 'c3@mail.fr', 'John Doe',0, 1122334455)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	public void addNonValidClientSameEmail_shouldReturnError() {
-		exception.expect(DataIntegrityViolationException.class);
+		
 		
 		Client c = new Client();
 
@@ -227,7 +211,7 @@ public class ClientServiceTest {
 		
 		Client retourned =  service.save(c);
 		
-		assertNotNull(retourned);
+		assertNull(retourned);
 		
 		
 	}

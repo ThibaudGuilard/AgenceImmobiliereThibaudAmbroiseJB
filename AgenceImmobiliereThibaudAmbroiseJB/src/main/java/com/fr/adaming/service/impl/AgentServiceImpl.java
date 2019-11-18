@@ -3,7 +3,7 @@ package com.fr.adaming.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.entity.Agent;
@@ -27,18 +27,11 @@ public class AgentServiceImpl implements IAgentService{
 	 */
 	@Override
 	public Agent save(Agent agent) {
-		
-		// Vérifier si l'agent existe dans la BD (email)		
-		Agent a = new Agent();
-		a.setEmail(a.getEmail());
-		
-		
-		if(repository.exists(Example.of(a))) {
-			//L'agent existe dans la BD (FAIL)
+				
+		try {
+		return repository.save(agent);
+		}catch (DataIntegrityViolationException e) {
 			return null;
-		}else {
-			//L'agent n'existe pas (SUCCESS) : enregistrer l'agent dans la BD et retourner l'agent
-			return repository.save(agent);
 		}
 		
 	}

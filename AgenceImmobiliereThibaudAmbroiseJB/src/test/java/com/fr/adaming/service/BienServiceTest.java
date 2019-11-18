@@ -26,7 +26,6 @@ import com.fr.adaming.entity.Bien;
  *
  */
 @SpringBootTest
-@RunWith(SpringRunner.class)
 public class BienServiceTest {
 
 	@Autowired
@@ -146,21 +145,5 @@ public class BienServiceTest {
 		assertFalse(retour);
 	}
 
-	@SuppressWarnings("null")
-	@org.junit.Test
-	public void updateBienServiceEnregistrePrixNul_shouldThrowException() {
-		// preparer les inputs
-		Bien bien = new Bien();
-		bien.setId(1120L);
-		bien.setPrix((Double) null);
-		bien.setVendu(true);
-		bien.setDeleted(false);
-		
-		exception.expect(NullPointerException.class);
-		// invoquer la méthode
-		boolean retour = service.updateBien(bien);
-		// vérifier le résultat
-		assertFalse(retour);
-	}
 
 }

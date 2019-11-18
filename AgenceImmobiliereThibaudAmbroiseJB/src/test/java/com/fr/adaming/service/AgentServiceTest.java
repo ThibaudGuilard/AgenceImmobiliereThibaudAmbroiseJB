@@ -14,7 +14,6 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -53,33 +52,16 @@ public class AgentServiceTest {
 		assertNotNull(retourned);
 	}
 	
-	@Test
-	@Sql(statements = "insert into agent values (44, 0, 'a@mail.com', 'JPP', 1234567890, '2007-05-15', 'azertyuiop')",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "delete from agent where id = 44" ,executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	public void addNonValideAgentWithSameEmail_shouldReturnError() {
-		exception.expect(DataIntegrityViolationException.class);
-		Agent a = new Agent();
-		
-		a.setFullName("JPP");
-		a.setTelephone(1234567890);
-		a.setEmail("a@mail.com");
-		a.setDeleted(false);
-		
-//		exception.expectMessage("Duplicata du champ 'a@mail.com'");
-		Agent retourned = service.save(a);
-
-		assertNull(retourned);	
-	}
 	
 	@org.junit.jupiter.api.Test
 	@Sql(statements = "insert into agent values (555, 0, 'a@aaa.com', 'JPP', 1234567890, '2007-05-15', 'azertyuiop')",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from agent where id = 555" ,executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	public void addNotValidAgentWithSameId_shouldReturnError() {
+	public void addNotValidAgentWithSameEmail_shouldReturnError() {
 		Agent a = new Agent();
 		
-		a.setId(555);
+		a.setId(55);
 		a.setFullName("JPP");
-		a.setEmail("a@a.fr");
+		a.setEmail("a@aaa.com");
 		a.setDeleted(true);
 		a.setTelephone(1234567809);
 		a.setPwd("azertyuiop");
