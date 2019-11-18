@@ -35,7 +35,7 @@ public class ClientServiceTest {
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
 	
-	@Sql(statements = "insert into agent values (1, 'agent@mail.fr', 'agent', 7777777777, false, azertyui, 10/12/09)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into agent values (1, 'agent@mail.fr', 'agent', 7777777777, false, 'azertyui', 10/12/09)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = { "insert into client values (112, false, 'client@mail.com', 'John Doe', 8888888, 'VENDEUR',1)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = {"delete from client where id=112","delete from client where id=110","delete from agent where id=1000"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
