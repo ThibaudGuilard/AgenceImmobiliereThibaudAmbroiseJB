@@ -1,13 +1,11 @@
 package com.fr.adaming.entity;
 
-import java.util.List;
-
 import javax.persistence.Column;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-
 import com.fr.adaming.entity.enume.TypeClient;
 
 import lombok.Getter;

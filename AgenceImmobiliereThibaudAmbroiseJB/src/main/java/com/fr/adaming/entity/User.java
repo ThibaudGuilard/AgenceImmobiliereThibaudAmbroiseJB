@@ -24,10 +24,15 @@ public class User {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+<<<<<<< HEAD
 	
 	@Column(unique = true, nullable = false)
 	private String email;
 
+=======
+	@Email @Column(unique = true, nullable = false)
+	private String email;
+>>>>>>> 236beab40416cfa72499ae3580bef28693dde05f
 	@Column(nullable = false)
 	private String fullName;
 	
