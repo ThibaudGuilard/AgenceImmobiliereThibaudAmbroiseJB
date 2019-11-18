@@ -32,7 +32,7 @@ public class BienDto {
 	private Client clients;
 
 
-	public BienDto(long id, @NotNull @NotEmpty @NotBlank @Positive double prix, @NotNull boolean vendu, boolean deleted,
+	public BienDto(long id, double prix,  boolean vendu, boolean deleted,
 			Client clients) {
 		super();
 		this.id = id;
@@ -40,6 +40,23 @@ public class BienDto {
 		this.vendu = vendu;
 		this.deleted = deleted;
 		this.clients = clients;
+	}
+
+
+	public BienDto( double prix,  boolean vendu, boolean deleted, Client clients) {
+		super();
+		this.prix = prix;
+		this.vendu = vendu;
+		this.deleted = deleted;
+		this.clients = clients;
+	}
+
+
+	public BienDto(double prix,  boolean vendu, boolean deleted) {
+		super();
+		this.prix = prix;
+		this.vendu = vendu;
+		this.deleted = deleted;
 	}
 	
 	

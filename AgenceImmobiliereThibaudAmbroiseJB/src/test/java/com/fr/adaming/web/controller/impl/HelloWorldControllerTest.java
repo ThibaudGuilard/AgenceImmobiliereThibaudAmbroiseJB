@@ -9,18 +9,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.io.UnsupportedEncodingException;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fr.adaming.AgenceImmobiliereThibaudAmbroiseJbApplication;
 import com.fr.adaming.AgenceImmobiliereThibaudAmbroiseJbApplicationTests;
+import com.fr.adaming.entity.enume.TypeClient;
 import com.fr.adaming.web.dto.ClientDto;
 
 @SpringBootTest
@@ -64,7 +60,7 @@ public class HelloWorldControllerTest extends AgenceImmobiliereThibaudAmbroiseJb
 		
 		//Prepare inputs
 		//(créer un constructeur qui ne prend pas l'id)
-		ClientDto dto = new ClientDto(id, email, fullName, telephone, type, agent, biens);
+		ClientDto dto = new ClientDto(" email@1.fr", "fullName", 1234567890, TypeClient.ACHETEUR );
 		
 		String result = mvc.perform(post("/api/hello")
 				.contentType(MediaType.APPLICATION_JSON)

@@ -3,8 +3,6 @@ package com.fr.adaming.web.dto;
 import java.util.List;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.fr.adaming.entity.Agent;
@@ -23,18 +21,13 @@ import lombok.Setter;
 public class ClientDto {
 	
 	private long id;
+	
 	@NotNull
-	@NotEmpty
-	@NotBlank
 	@Email
 	private String email;
 	@NotNull
-	@NotEmpty
-	@NotBlank
 	private String fullName;
 	@NotNull
-	@NotEmpty
-	@NotBlank
 	private int telephone;
 	private TypeClient type;
 	private Agent agent;
@@ -51,4 +44,23 @@ public class ClientDto {
 		this.biens = biens;
 	}
 
+	public ClientDto( String email, String fullName,int telephone, TypeClient type, Agent agent, List<Bien> biens) {
+		super();
+		this.email = email;
+		this.fullName = fullName;
+		this.telephone = telephone;
+		this.type = type;
+		this.agent = agent;
+		this.biens = biens;
+	}
+
+	public ClientDto(String email, String fullName,int telephone, TypeClient type) {
+		super();
+		this.email = email;
+		this.fullName = fullName;
+		this.telephone = telephone;
+		this.type = type;
+	}
+
+	
 }

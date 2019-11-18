@@ -34,6 +34,28 @@ public class AgentConverter {
 		return dto;
 	}
 	
+	public static Agent convertToClass1(AgentDto dto) {
+		Agent agent = new Agent();
+		agent.setEmail(dto.getEmail());
+		agent.setFullName(dto.getFullName());
+		agent.setTelephone(dto.getTelephone());
+		agent.setDeleted(dto.isDeleted());
+		agent.setPwd(dto.getPwd());
+		agent.setDateRecrutement(dto.getDateRecrutement());
+		return agent;
+	}
+	
+	public static AgentDto convertToDto1(Agent agent) {
+		AgentDto dto = new AgentDto();
+		dto.setEmail(agent.getEmail());
+		dto.setFullName(agent.getFullName());
+		dto.setTelephone(agent.getTelephone());
+		dto.setDeleted(agent.isDeleted());
+		dto.setPwd(agent.getPwd());
+		dto.setDateRecrutement(agent.getDateRecrutement());
+		return dto;
+	}
+	
 	public static List<Agent> convertListDtoToListAgent(List<AgentDto> dtos){
 		List<Agent> agents = new ArrayList<Agent>();
 		for(AgentDto d : dtos) {
