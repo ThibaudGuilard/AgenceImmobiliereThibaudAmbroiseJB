@@ -149,7 +149,7 @@ public class ClientServiceTest {
 	@Sql(statements = "delete from client where id = 222",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void deleteClientThatExists_shouldReturnNotNullAndDeletedEqualsTrue() {
-		Client client = service.deleteClient(service.findById(1L));
+		Client client = service.deleteClient(service.findById(222L));
 		assertNotNull(client);
 		assertTrue(client.isDeleted());
 	}
