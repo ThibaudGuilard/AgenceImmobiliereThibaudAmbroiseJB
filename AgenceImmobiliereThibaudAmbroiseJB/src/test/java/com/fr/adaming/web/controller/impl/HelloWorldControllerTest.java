@@ -19,14 +19,12 @@ import org.springframework.test.web.servlet.MvcResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fr.adaming.AgenceImmobiliereThibaudAmbroiseJbApplication;
+import com.fr.adaming.AgenceImmobiliereThibaudAmbroiseJbApplicationTests;
 import com.fr.adaming.web.dto.ClientDto;
 
 @SpringBootTest
-@AutoConfigureMockMvc
-public class HelloWorldControllerTest {
-	
-	@Autowired
-	private MockMvc mvc;
+public class HelloWorldControllerTest extends AgenceImmobiliereThibaudAmbroiseJbApplicationTests  {
 	
 	private ObjectMapper mapper;
 	
