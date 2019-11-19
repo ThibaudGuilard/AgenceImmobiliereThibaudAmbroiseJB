@@ -2,6 +2,7 @@ package com.fr.adaming.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -20,7 +21,6 @@ import com.fr.adaming.web.dto.ClientDto;
 public class ClientControllerTest extends AgenceImmobiliereThibaudAmbroiseJbApplicationTests{
 
 	
-	// La methode fonctionne pas mais l'esprit est la je crois
 	@Test
 	public void createValidClient_shouldReturnStatus200AndDtoNotNull() throws UnsupportedEncodingException, Exception {
 		
@@ -158,6 +158,12 @@ public class ClientControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppl
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(mapper.writeValueAsString(dto))).andExpect(status().is(400));
 		
+	}
+	
+	@Test
+	public void printClientTest_shouldReturnListOfClient() throws Exception {
+		String result = mvc.perform(get("/api/client/print").contentType(MediaType.APPLICATION_JSON)).andReturn().getResponse().getContentAsString();
+		assertNotNull(result);
 	}
 
 }
