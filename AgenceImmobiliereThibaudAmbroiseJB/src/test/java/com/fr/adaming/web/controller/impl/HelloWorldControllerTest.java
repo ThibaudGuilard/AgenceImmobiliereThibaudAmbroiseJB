@@ -59,7 +59,6 @@ public class HelloWorldControllerTest extends AgenceImmobiliereThibaudAmbroiseJb
 	public void createValidClient_shouldReturnStatus200AndDtoNotNull() throws UnsupportedEncodingException, Exception {
 		
 		//Prepare inputs
-		//(créer un constructeur qui ne prend pas l'id)
 		ClientDto dto = new ClientDto(" email@1.fr", "fullName", 1234567890, TypeClient.ACHETEUR );
 		
 		String result = mvc.perform(post("/api/hello")
