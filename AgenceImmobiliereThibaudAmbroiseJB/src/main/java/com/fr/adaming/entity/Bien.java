@@ -57,6 +57,19 @@ public class Bien {
 		this.vendu = vendu;
 		this.deleted = deleted;
 	}
+
+	public Bien(double prix, boolean vendu) {
+		super();
+		this.prix = prix;
+		this.vendu = vendu;
+	}
+	public Bien(Long id, double prix, boolean vendu, boolean deleted) {
+		super();
+		this.id = id;
+		this.prix = prix;
+		this.vendu = vendu;
+		this.deleted = deleted;
+	}
 	
 	
 }

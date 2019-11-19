@@ -32,7 +32,7 @@ public class BienServiceImpl implements IBienService{
 //		Bien c = dao.findByEmail(bien.getEmail());
 		
 		Bien b = new Bien();
-		b.setPrix(bien.getPrix());
+		b.setId(bien.getId());
 		
 		
 		if(repository.exists(Example.of(b))) {
@@ -50,26 +50,24 @@ public class BienServiceImpl implements IBienService{
 		return repository.findAll();
 	}
 	
-	public boolean updateBien(Bien bien) {
+	public Bien updateBien(Bien bien) {
 		
 		// Chercher bien par id
-		if(repository.existsById(bien.getId())) {
-			repository.save(bien);
-			return true;
+		if(repository.existsById(bien.getId())) {	
+			return repository.save(bien);
 		}else {
-			System.out.println("DEBUG Le bien à modifier n'existe pas ");
-			return false;
+			return null;
 		}
 	}
 	
 
-	public boolean deleteBien(Bien bien) {
+	public Bien deleteBien(Bien bien) {
 		// Changer la valeur de l'attribut "deleted"
 		if (FindParId(bien.getId()) != null) {
 			 repository.supprimerBien(bien.getId());
-			 return true;
+			 return bien;
 		} else {
-			return false;
+			return null;
 		}
 	}
 

@@ -26,17 +26,15 @@ public class BienControllerImpl implements IBienController {
 	private IBienService service;
 
 	@RequestMapping(path = "/add", method = RequestMethod.POST)
-	public String createBien(@RequestBody BienDto dto) {
+	public Bien createBien(@RequestBody BienDto dto) {
 		Bien bien = BienConverter.convertToClass(dto);
-		Bien bienRetour = service.saveBien(bien);
-		if (bienRetour != null) {
-		service.saveBien(bien);
-		return "client created";
-		} else {
-			return "client already exist";
+		if (service.FindParId(bien.getId()) != null) {
+			return null;
+		} else{
+			return service.saveBien(bien);
 		}
 	}
-
+	
 	@GetMapping(path = "/{id}/searchbyid")
 	public Bien searchParId(@PathVariable(name = "id") Long id) {
 		return service.FindParId(id);
@@ -48,19 +46,17 @@ public class BienControllerImpl implements IBienController {
 	}
 
 	@RequestMapping(path = "/update", method = RequestMethod.POST)
-	public String updateBien(@RequestBody BienDto dto) {
+	public Bien updateBien(@RequestBody BienDto dto) {
 		Bien bien = BienConverter.convertToClass(dto);
-		boolean clientRetour = service.updateBien(bien);
-		if (clientRetour == true) {
-		service.updateBien(bien);
-		return "Client updated";
+		if (service.FindParId(bien.getId()) != null) {
+		return service.updateBien(bien);
 		}else {
-			return "This Client does'nt exist";
+			return null;
 		}
 	}
 
 	@PostMapping(path="/delete")
-	public boolean deleteBien(@RequestBody Bien bien) {
+	public Bien deleteBien(@RequestBody Bien bien) {
 		return service.deleteBien(bien);
 		
 	}

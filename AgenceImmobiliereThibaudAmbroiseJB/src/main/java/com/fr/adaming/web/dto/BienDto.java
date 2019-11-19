@@ -1,7 +1,5 @@
 package com.fr.adaming.web.dto;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
@@ -18,8 +16,6 @@ public class BienDto {
 	private long id;
 	
 	@NotNull
-	@NotEmpty
-	@NotBlank
 	@Positive
 	private double prix;
 	
@@ -58,6 +54,21 @@ public class BienDto {
 		this.vendu = vendu;
 		this.deleted = deleted;
 	}
-	
+
+
+	public BienDto(long id, double prix, boolean vendu,boolean deleted) {
+		super();
+		this.id = id;
+		this.prix = prix;
+		this.vendu = vendu;
+		this.deleted = deleted;
+	}
+
+	public BienDto(long id, double prix, boolean vendu) {
+		super();
+		this.id = id;
+		this.prix = prix;
+		this.vendu = vendu;
+	}
 	
 }
