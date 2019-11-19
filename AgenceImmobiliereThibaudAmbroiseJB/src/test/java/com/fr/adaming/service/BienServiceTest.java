@@ -60,7 +60,7 @@ public class BienServiceTest {
 	
 	@Test
 	@Sql(statements = "delete from bien where id =1234568910 ", executionPhase = ExecutionPhase.AFTER_TEST_METHOD )
-	@Sql(statements = "insert into bien (id, deleted, prix,vendu)values (1234568910,false,15.5,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into bien (id, deleted, prix,vendu) values (1234568910,false,15.5,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	public void addBienAlreadyExist_shouldNotReturn() {
 		Bien b = new Bien();
 		
@@ -69,7 +69,6 @@ public class BienServiceTest {
 		b.setVendu(false);
 		b.setDeleted(false);
 		// invocation de la methode
-		exception.expect(AssertionError.class);
 		Bien retourned = service.saveBien(b);
 		// verification des résultats
 		
@@ -78,7 +77,7 @@ public class BienServiceTest {
 
 
 	@Sql(statements = "insert into bien (id, deleted, prix, vendu) values (1234567,false,15,false)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "delete from bien",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from bien where id=1234567",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void deleteBienThatExists_shouldReturnTrue() {
 		Bien bien = service.FindParId(1234567L);
@@ -93,12 +92,14 @@ public class BienServiceTest {
 	
 
 	@Test
-	@Sql(statements = "insert into client (id, email, full_name, deleted, telephone, type) values (1, 'emailqsdfqsdf@gmail.com', 'fullName', true, 1234, 1);",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into bien values (1234568,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into bien values (1234569,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into bien values (12345610,false,15,false,1)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "delete from bien",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "delete from client",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "insert into bien (id,deleted,prix,vendu)values (1234568,false,15,false)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into bien (id,deleted,prix,vendu) values (1234569,false,15,false)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into bien (id,deleted,prix,vendu)values (12345610,false,15,false)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from bien where id =1234568",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from bien where id =1234569",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from bien where id =12345610",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from client where id =123",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+
 	public void findAllBiensIfExist_shouldBeNotNullAndOfSize3() {
 		List<Bien> list = service.findAll();
 		assertNotNull(list);
@@ -112,7 +113,7 @@ public class BienServiceTest {
 
 
 
-	@Sql(statements = { "delete from Bien","insert into bien values (112, 200000.55, false, false)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = { "insert into bien(id,deleted,prix,vendu) values (112,false, 200000.55, false)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from bien where id=112", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void updateBienServiceExistant_shouldReturnTrue() {
@@ -142,18 +143,6 @@ public class BienServiceTest {
 		assertFalse(retour);
 	}
 
-	@SuppressWarnings("null")
-	@Test
-	public void updateBienServiceEnregistrePrixNul_shouldThrowException() {
-		// preparer les inputs
-		Bien bien = new Bien();
-		bien.setId(1120L);
-		bien.setPrix((Double) null);
-		bien.setVendu(true);
-		// invoquer la méthode
-		boolean retour = service.updateBien(bien);
-		// vérifier le résultat
-		assertFalse(retour);
-	}
+
 
 }
