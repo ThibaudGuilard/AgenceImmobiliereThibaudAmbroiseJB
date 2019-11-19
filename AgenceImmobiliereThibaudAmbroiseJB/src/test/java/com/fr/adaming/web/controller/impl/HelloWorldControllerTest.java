@@ -22,8 +22,7 @@ import com.fr.adaming.web.dto.ClientDto;
 @SpringBootTest
 public class HelloWorldControllerTest extends AgenceImmobiliereThibaudAmbroiseJbApplicationTests  {
 	
-	private ObjectMapper mapper;
-	
+	@Test
 	public void testConvertJsonToJavaObject() throws JsonMappingException, JsonProcessingException {
 		String json = "{\"email\" : \"xxxx@gmail.com\", \"fullname\" : \"Jean\", \"type\" : \"VENDEUR\", \"telephone\" : \"1122334455\"}";
 		

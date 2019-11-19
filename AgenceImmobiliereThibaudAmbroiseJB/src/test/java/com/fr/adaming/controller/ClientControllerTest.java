@@ -34,6 +34,7 @@ public class ClientControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppl
 				.content(mapper.writeValueAsString(dto)))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		
+		//on peut trouver une methode andDoPrint qui peut etre pratique
 		
 		ClientDto dtoResult = mapper.readValue(result, ClientDto.class);
 		
