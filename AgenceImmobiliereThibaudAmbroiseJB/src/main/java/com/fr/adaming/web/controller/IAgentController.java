@@ -7,7 +7,7 @@ import com.fr.adaming.web.dto.AgentDto;
 
 public interface IAgentController {
 	
-	public String createAgent(AgentDto dto);
+	public AgentDto createAgent(AgentDto dto);
 	
 	public String deleteAgent(AgentDto dto);
 	

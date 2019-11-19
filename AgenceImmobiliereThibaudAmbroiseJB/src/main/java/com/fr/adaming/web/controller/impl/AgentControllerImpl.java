@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fr.adaming.entity.Agent;
@@ -19,6 +20,7 @@ import com.fr.adaming.web.dto.converters.AgentConverter;
  *
  */
 @RestController
+@RequestMapping(path = "api/agent")
 public class AgentControllerImpl implements IAgentController {
 
 	@Autowired
@@ -26,14 +28,11 @@ public class AgentControllerImpl implements IAgentController {
 	
 	@Override
 	@PostMapping(path = "/create_agent")
-	public String createAgent(@RequestBody AgentDto dto) {
+	public AgentDto createAgent(@RequestBody AgentDto dto) {
 		Agent agent = AgentConverter.convertToClass(dto);
-		if(service.save(agent) == null) {
-			return "Agent already exists";
-		} else {
-			return "Agent created";
-		}
-		
+		Agent savedAgent = service.save(agent);
+		AgentDto savedDto = AgentConverter.convertToDto1(savedAgent);
+		return savedDto;		
 	}
 	
 	@Override

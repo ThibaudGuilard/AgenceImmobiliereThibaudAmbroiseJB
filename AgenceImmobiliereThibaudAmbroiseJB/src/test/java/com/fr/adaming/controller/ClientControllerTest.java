@@ -17,7 +17,6 @@ import com.fr.adaming.entity.enume.TypeClient;
 import com.fr.adaming.web.dto.ClientDto;
 
 @SpringBootTest
-
 public class ClientControllerTest extends AgenceImmobiliereThibaudAmbroiseJbApplicationTests{
 
 	
@@ -165,5 +164,6 @@ public class ClientControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppl
 		String result = mvc.perform(get("/api/client/print").contentType(MediaType.APPLICATION_JSON)).andReturn().getResponse().getContentAsString();
 		assertNotNull(result);
 	}
+
 
 }
