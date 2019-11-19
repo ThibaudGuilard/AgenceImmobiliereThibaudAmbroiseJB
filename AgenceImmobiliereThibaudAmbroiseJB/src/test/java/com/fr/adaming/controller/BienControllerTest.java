@@ -127,8 +127,8 @@ public class BienControllerTest extends AgenceImmobiliereThibaudAmbroiseJbApplic
 	}
 	
 	@Test
-	@Sql(statements = "insert into bien (id, deleted, prix,vendu) values (444,false,55.12,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into bien (id, deleted, prix,vendu) values (445,false,55.12,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into bien (id, deleted, prix,vendu) values (555,false,55.12,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into bien (id, deleted, prix,vendu) values (556,false,55.12,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	public void findAllValidBien_shouldReturnList() throws UnsupportedEncodingException, Exception {
 
 		// invoquer la methode
@@ -137,10 +137,10 @@ public class BienControllerTest extends AgenceImmobiliereThibaudAmbroiseJbApplic
 						.andReturn().getResponse().getContentAsString();
 
 		assertNotNull(result);
-		assertEquals("[]", result);
+		assertEquals("[{\"id\":111,\"prix\":55.12,\"vendu\":false,\"deleted\":false,\"clients\":null},{\"id\":222,\"prix\":500.0,\"vendu\":false,\"deleted\":false,\"clients\":null},{\"id\":333,\"prix\":55.12,\"vendu\":false,\"deleted\":false,\"clients\":null},{\"id\":334,\"prix\":55.12,\"vendu\":false,\"deleted\":false,\"clients\":null},{\"id\":444,\"prix\":55.12,\"vendu\":false,\"deleted\":true,\"clients\":null},{\"id\":555,\"prix\":55.12,\"vendu\":false,\"deleted\":false,\"clients\":null},{\"id\":556,\"prix\":55.12,\"vendu\":false,\"deleted\":false,\"clients\":null},{\"id\":666,\"prix\":55.12,\"vendu\":false,\"deleted\":false,\"clients\":null}]", result);
 	}
 	@Test
-	@Sql(statements = "insert into bien (id, deleted, prix,vendu) values (444,false,55.12,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into bien (id, deleted, prix,vendu) values (666,false,55.12,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	public void SearchById_shouldReturnBien() throws UnsupportedEncodingException, Exception {
 
 		// Prepare inputs
@@ -148,11 +148,13 @@ public class BienControllerTest extends AgenceImmobiliereThibaudAmbroiseJbApplic
 
 		// invoquer la methode
 		String result = mvc
-				.perform(post("/api/bien/444/searchbyid").contentType(MediaType.APPLICATION_JSON)
+				.perform(get("/api/bien/444/searchbyid").contentType(MediaType.APPLICATION_JSON)
 						.content(mapper.writeValueAsString(dto)))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 		BienDto dtoResult = mapper.readValue(result, BienDto.class);
 
+		assertNotNull(dtoResult);
+		
 	}
 }
