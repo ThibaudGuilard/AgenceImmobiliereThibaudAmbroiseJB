@@ -2,7 +2,6 @@ package com.fr.adaming.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -195,7 +194,7 @@ public class ClientControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppl
 	}
 	
 	@Test
-	public void DeleteClientPasExistant_shouldReturnNull() throws UnsupportedEncodingException, JsonProcessingException, Exception {
+	public void deleteClientPasExistant_shouldReturnNull() throws UnsupportedEncodingException, JsonProcessingException, Exception {
 		//Prepare inputs
 				ClientDto dto = new ClientDto(112, "client@mail.com", "John Doe", "8888888", TypeClient.ACHETEUR, false);
 				
@@ -212,6 +211,42 @@ public class ClientControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppl
 				
 				assert(result.isEmpty());
 				
+	}
+	
+	@Test
+	@Sql(statements = { "insert into client(id, deleted,email,full_name,telephone,type) values (112, false, 'client@mail.com', 'John Doe', '8888888', 1)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = {"delete from client where id=112"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void updateClientExistantAvecValeursCorrectes_ShouldReturnStatus200EtRetourClientTrue() throws UnsupportedEncodingException, JsonProcessingException, Exception {
+		//Prepare inputs
+				ClientDto dto = new ClientDto(112, "email@123456.fr", "fullName", "1122334455", TypeClient.VENDEUR, false);
+				
+				//invoquer la methode
+				String result = mvc.perform(post("/api/client/update_client")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(mapper.writeValueAsString(dto)))
+						.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+				
+				//on peut trouver une methode andDoPrint qui peut etre pratique
+				
+				assertEquals("true", result);
+	}
+	
+	@Test
+	@Sql(statements = { "insert into client(id, deleted,email,full_name,telephone,type) values (112, false, 'client@mail.com', 'John Doe', '8888888', 1)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = {"delete from client where id=112"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void updateClientPasExistantAvecValeursCorrectes_ShouldReturnStatus200EtRetourClientTrue() throws UnsupportedEncodingException, JsonProcessingException, Exception {
+		//Prepare inputs
+				ClientDto dto = new ClientDto(1120, "email@123456.fr", "fullName", "1122334455", TypeClient.VENDEUR, false);
+				
+				//invoquer la methode
+				String result = mvc.perform(post("/api/client/update_client")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(mapper.writeValueAsString(dto)))
+						.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+				
+				//on peut trouver une methode andDoPrint qui peut etre pratique
+				
+				assertEquals("false", result);
 	}
 
 
