@@ -24,7 +24,7 @@ public class ClientControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppl
 	public void createValidClient_shouldReturnStatus200AndDtoNotNull() throws UnsupportedEncodingException, Exception {
 		
 		//Prepare inputs
-		ClientDto dto = new ClientDto(" email@1.fr", "fullName", 1234567890, TypeClient.ACHETEUR );
+		ClientDto dto = new ClientDto("email@123456.fr", "fullName", 1122334455, TypeClient.ACHETEUR );
 		
 		//invoquer la methode
 		String result = mvc.perform(post("/api/client/create_client")
@@ -36,7 +36,7 @@ public class ClientControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppl
 		ClientDto dtoResult = mapper.readValue(result, ClientDto.class);
 		
 		assertNotNull(dtoResult);
-		assertEquals("", dto.getEmail());
+		assertEquals("email@123456.fr", dto.getEmail());
 		
 		System.out.println("DEBUG CREATE VALID CLIENT : " + result );
 		
