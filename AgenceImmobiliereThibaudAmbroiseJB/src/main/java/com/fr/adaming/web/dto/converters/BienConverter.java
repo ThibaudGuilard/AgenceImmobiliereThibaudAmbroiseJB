@@ -28,6 +28,37 @@ public class BienConverter {
 		BienDto dto = new BienDto(id, prix, vendu, deleted, clients);
 			return dto;		
 	}
+public static Bien convertToClass1 (BienDto dto) {
+		double prix = dto.getPrix();		
+		boolean vendu = dto.isVendu();
+		boolean deleted = dto.isDeleted();
+		Client clients = dto.getClients();
+		Bien bien = new Bien(prix, vendu, deleted, clients);
+		return bien;
+	}
+	public static BienDto convertToDto1 (Bien bien) {
+		double prix = bien.getPrix();		
+		boolean vendu = bien.isVendu();
+		boolean deleted = bien.isDeleted();
+		Client clients = bien.getClients();
+		BienDto dto = new BienDto( prix, vendu, deleted, clients);
+			return dto;		
+	}
+	
+	public static Bien convertToClass2 (BienDto dto) {
+		double prix = dto.getPrix();		
+		boolean vendu = dto.isVendu();
+		boolean deleted = dto.isDeleted();
+		Bien bien = new Bien(prix, vendu, deleted);
+		return bien;
+	}
+	public static BienDto convertToDto2 (Bien bien) {
+		double prix = bien.getPrix();		
+		boolean vendu = bien.isVendu();
+		boolean deleted = bien.isDeleted();
+		BienDto dto = new BienDto( prix, vendu, deleted);
+			return dto;		
+	}
 	
 	public static List<Bien> convertListToClass(List<BienDto> dtos){
 		List<Bien> clients = new ArrayList<Bien>();

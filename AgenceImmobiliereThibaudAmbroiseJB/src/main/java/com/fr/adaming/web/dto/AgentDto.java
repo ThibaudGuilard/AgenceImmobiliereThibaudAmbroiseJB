@@ -44,6 +44,29 @@ public class AgentDto {
 		this.dateRecrutement = dateRecrutement;
 		this.clients = clients;
 	}
+
+	public AgentDto( String email, String fullName, int telephone, boolean deleted, String pwd,
+			LocalDate dateRecrutement, List<Client> clients) {
+		super();
+		this.email = email;
+		this.fullName = fullName;
+		this.telephone = telephone;
+		this.deleted = deleted;
+		this.pwd = pwd;
+		this.dateRecrutement = dateRecrutement;
+		this.clients = clients;
+	}
+
+	public AgentDto( String email, String fullName, int telephone, boolean deleted, String pwd,
+			LocalDate dateRecrutement) {
+		super();
+		this.email = email;
+		this.fullName = fullName;
+		this.telephone = telephone;
+		this.deleted = deleted;
+		this.pwd = pwd;
+		this.dateRecrutement = dateRecrutement;
+	}
 	
 	
 

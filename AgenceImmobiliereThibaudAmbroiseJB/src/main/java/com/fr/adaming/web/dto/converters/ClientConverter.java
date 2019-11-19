@@ -39,6 +39,29 @@ public class ClientConverter {
 		return dto;
 	}
 	
+	public static Client convertToClass1 (ClientDto dto) {
+		String email = dto.getEmail();
+		String fullName = dto.getFullName();
+		int telephone = dto.getTelephone();
+		TypeClient type = dto.getType();
+		Agent agent = dto.getAgent();
+		List<Bien> biens = dto.getBiens();
+		Client client = new Client( email, fullName, telephone, type, agent, biens);
+		return client;
+	}
+	
+	public static ClientDto convertToDto1 (Client client) {
+		String email = client.getEmail();
+		String fullName = client.getFullName();
+		int telephone = client.getTelephone();
+		Enum<TypeClient> type = client.getType();
+		Agent agent = client.getAgent();
+		List<Bien> biens = client.getBiens();
+		ClientDto dto = new ClientDto( email, fullName, telephone, (TypeClient) type, agent, biens);
+		return dto;
+	}
+	
+	
 	public static List<Client> convertListToClass(List<ClientDto> dtos){
 		List<Client> clients = new ArrayList<Client>();
 		for (ClientDto dto : dtos) {

@@ -42,6 +42,21 @@ public class Bien {
 		this.deleted = deleted;
 		this.clients = clients;
 	}
+
+	public Bien(double prix, boolean vendu, boolean deleted, Client clients) {
+		super();
+		this.prix = prix;
+		this.vendu = vendu;
+		this.deleted = deleted;
+		this.clients = clients;
+	}
+
+	public Bien(double prix, boolean vendu, boolean deleted) {
+		super();
+		this.prix = prix;
+		this.vendu = vendu;
+		this.deleted = deleted;
+	}
 	
 	
 }
