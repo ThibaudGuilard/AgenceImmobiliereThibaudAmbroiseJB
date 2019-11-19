@@ -20,7 +20,7 @@ public interface IClientController {
 	 * @param dto
 	 * @return un message si l'opération est effectuée
 	 */
-	public String create(@RequestBody ClientDto dto);
+	public Client create(@RequestBody ClientDto dto);
 	
 	/** Met à jour l'attribut "deleted" d'un client à partir d'un ClientDto
 	 * @param dto

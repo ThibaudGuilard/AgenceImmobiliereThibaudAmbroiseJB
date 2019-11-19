@@ -17,4 +17,5 @@ public class AgenceImmobiliereThibaudAmbroiseJbApplicationTests {
 	@Autowired
 	protected ObjectMapper mapper;
 
+	
 }

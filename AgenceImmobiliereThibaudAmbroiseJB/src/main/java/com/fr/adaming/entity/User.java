@@ -53,7 +53,11 @@ public class User {
 		this.telephone = telephone;
 		this.deleted = deleted;
 	}
-	
-	
+
+	public User(long id, String email, String fullName, int telephone) {
+		this.id = id;
+		this.email = email;
+		this.fullName = fullName;
+		this.telephone = telephone;	}
 
 }

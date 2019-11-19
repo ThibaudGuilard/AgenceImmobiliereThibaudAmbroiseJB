@@ -33,15 +33,10 @@ public class ClientControllerImpl implements IClientController {
 	 * @see com.fr.adaming.service.IClientController#createClient()
 	 */
 	@PostMapping(path = "/create_client") @Override
-	public String create(@RequestBody ClientDto dto) {
+	public Client create(@RequestBody ClientDto dto) {
 		Client client = ClientConverter.convertToClass(dto);
-		Client clientRetour = service.save(client);
-		if (clientRetour != null) {
-		service.save(client);
-		return "client created";
-		} else {
-			return "client already exist";
-		}
+		return service.save(client);
+		
 	}
 	
 	/*

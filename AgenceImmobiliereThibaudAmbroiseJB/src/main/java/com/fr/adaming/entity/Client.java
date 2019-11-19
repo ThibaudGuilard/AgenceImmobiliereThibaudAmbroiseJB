@@ -36,6 +36,10 @@ public class Client extends User{
 	
 	public Client(long id,String email, String fullName, int telephone, Enum<TypeClient> type, Agent agent, List<Bien> biens) {
 	
+		super (id, email, fullName, telephone);
+		this.type=(TypeClient) type;
+		this.agent=agent;
+		this.biens=biens;
 	}
 
 	public Client(String email, String fullName, int telephone, boolean deleted, TypeClient type) {
