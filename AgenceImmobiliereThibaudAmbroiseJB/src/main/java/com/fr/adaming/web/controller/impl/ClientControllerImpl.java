@@ -5,7 +5,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,11 +44,15 @@ public class ClientControllerImpl implements IClientController {
 	 * (non-Javadoc)
 	 * @see com.fr.adaming.service.IClientController#deleteClient()
 	 */
-	@DeleteMapping(path = "{id}/delete_client") @Override
+	@GetMapping(path = "{id}/delete_client") @Override
 	public Client deleteClient(@PathVariable long id) {
 		Client client = service.findById(id);
+		if (client!=null) {
 		Client clientRetour = service.deleteClient(client);
 		return clientRetour;
+		} else {
+			return null;
+		}
 		
 	}
 	

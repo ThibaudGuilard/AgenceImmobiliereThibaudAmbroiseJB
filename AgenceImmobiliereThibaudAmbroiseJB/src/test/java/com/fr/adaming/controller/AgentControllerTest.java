@@ -32,7 +32,7 @@ public class AgentControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppli
 	@Sql(statements = "delete from agent where email like 'email@email.fr'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void createValidAgent_shouldReturnStatus200AndDtoNotNull() throws JsonProcessingException, Exception{
 		
-		AgentDto dto = new AgentDto("email@email.fr", "Jean Claude", 1122334455, false, "123456789", LocalDate.parse("2017-05-15"));		
+		AgentDto dto = new AgentDto("email@email.fr", "Jean Claude", "1122334455", false, "123456789", LocalDate.parse("2017-05-15"));		
 		
 		ResultActions sendHttpRequestInJson = mvc.perform(post("/api/agent/create_agent")
 				.contentType(MediaType.APPLICATION_JSON)
@@ -59,7 +59,7 @@ public class AgentControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppli
 		// Tester ce test, voir si l'exception est catché
 		exception.expect(NestedServletException.class);
 		
-		AgentDto dto = new AgentDto("email123@email.fr", "Jean Claude", 1122334455, false, "1234567", LocalDate.parse("2017-05-15"));
+		AgentDto dto = new AgentDto("email123@email.fr", "Jean Claude", "1122334455", false, "1234567", LocalDate.parse("2017-05-15"));
 		
 		ResultActions sendHttpRequestInJson = mvc.perform(post("/api/agent/create_agent")
 				.contentType(MediaType.APPLICATION_JSON)

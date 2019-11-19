@@ -32,6 +32,7 @@ public class ClientDto {
 	@NotNull @NotBlank @NotEmpty
 	private String telephone;
 	private TypeClient type;
+	private boolean deleted;
 	private Agent agent;
 	private List<Bien> biens;
 	
@@ -63,6 +64,20 @@ public class ClientDto {
 		this.telephone = telephone;
 		this.type = type;
 	}
+
+	public ClientDto(long id, @NotNull @NotBlank @NotEmpty @Email String email,
+			@NotNull @NotBlank @NotEmpty String fullName, @NotNull @NotBlank @NotEmpty String telephone,
+			TypeClient type, boolean deleted) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.fullName = fullName;
+		this.telephone = telephone;
+		this.type = type;
+		this.deleted = deleted;
+	}
+
+
 
 	
 }

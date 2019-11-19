@@ -1,6 +1,7 @@
 package com.fr.adaming.service.impl;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -86,7 +87,11 @@ public class ClientServiceImpl implements IClientService{
 	 */
 	@Override
 	public Client findById(long id) {
+		try {
 		return repository.findById(id).get();
+		}catch (NoSuchElementException elementException) {
+			return null;
+		}
 	}
 
 }

@@ -2,6 +2,8 @@ package com.fr.adaming.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -11,7 +13,10 @@ import java.io.UnsupportedEncodingException;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fr.adaming.AgenceImmobiliereThibaudAmbroiseJbApplicationTests;
 import com.fr.adaming.entity.enume.TypeClient;
 import com.fr.adaming.web.dto.ClientDto;
@@ -163,6 +168,50 @@ public class ClientControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppl
 	public void printClientTest_shouldReturnListOfClient() throws Exception {
 		String result = mvc.perform(get("/api/client/print").contentType(MediaType.APPLICATION_JSON)).andReturn().getResponse().getContentAsString();
 		assertNotNull(result);
+	}
+	
+	@Test
+	@Sql(statements = { "insert into client(id, deleted,email,full_name,telephone,type) values (112, false, 'client@mail.com', 'John Doe', '8888888', 1)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = {"delete from client where id=112"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void DeleteClientExistant_shouldReturnClientRetourEtDeletedTrue() throws UnsupportedEncodingException, JsonProcessingException, Exception {
+		//Prepare inputs
+				ClientDto dto = new ClientDto(112, "client@mail.com", "John Doe", "8888888", TypeClient.ACHETEUR, false);
+				
+				//invoquer la methode
+				String result = mvc.perform(get("/api/client/112/delete_client")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(mapper.writeValueAsString(dto)))
+						.andExpect(status()
+								.isOk())
+						.andReturn()
+						.getResponse()
+						.getContentAsString();
+				
+				
+				ClientDto dtoResult = mapper.readValue(result, ClientDto.class);
+				
+				assertTrue(dtoResult.isDeleted());
+				
+	}
+	
+	@Test
+	public void DeleteClientPasExistant_shouldReturnNull() throws UnsupportedEncodingException, JsonProcessingException, Exception {
+		//Prepare inputs
+				ClientDto dto = new ClientDto(112, "client@mail.com", "John Doe", "8888888", TypeClient.ACHETEUR, false);
+				
+				//invoquer la methode
+				String result = mvc.perform(get("/api/client/112/delete_client")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(mapper.writeValueAsString(dto)))
+						.andExpect(status()
+								.isOk())
+						.andReturn()
+						.getResponse()
+						.getContentAsString();
+				
+				
+				assert(result.isEmpty());
+				
 	}
 
 
