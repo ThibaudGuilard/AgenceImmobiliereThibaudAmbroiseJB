@@ -46,26 +46,41 @@ public class ClientControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppl
 	}
 	
 	@Test
-	public void createClientEmailNull_shouldReturnStatus200AndDtoNull() throws UnsupportedEncodingException, Exception {
+	public void createClientEmailNull_shouldReturnResultNull() throws UnsupportedEncodingException, Exception {
+		
+		//Prepare inputs
+		ClientDto dto = new ClientDto(null, "fullName", 1122334455, TypeClient.ACHETEUR );
+		
+		//invoquer la methode
+		mvc.perform(post("/api/client/create_client")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(mapper.writeValueAsString(dto))).andExpect(status().is(400));
+		
+	}
+	
+	@Test
+	public void createClientEmailEmpty_shouldReturnResultNull() throws UnsupportedEncodingException, Exception {
 		
 		//Prepare inputs
 		ClientDto dto = new ClientDto("", "fullName", 1122334455, TypeClient.ACHETEUR );
 		
 		//invoquer la methode
-		String result = mvc.perform(post("/api/client/create_client")
+		mvc.perform(post("/api/client/create_client")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(mapper.writeValueAsString(dto)))
-				.andExpect(status().isOk())
-				.andReturn().getResponse().getContentAsString();
+				.content(mapper.writeValueAsString(dto))).andExpect(status().is(400));
 		
-		//on peut trouver une methode andDoPrint qui peut etre pratique
+	}
+	
+	@Test
+	public void createClientEmailBlank_shouldReturnResultNull() throws UnsupportedEncodingException, Exception {
 		
-		ClientDto dtoResult = mapper.readValue(result, ClientDto.class);
+		//Prepare inputs
+		ClientDto dto = new ClientDto(" ", "fullName", 1122334455, TypeClient.ACHETEUR );
 		
-		assertNull(dtoResult);
-		assertEquals("email@123456.fr", dto.getEmail());
-		
-		System.out.println("DEBUG CREATE VALID CLIENT : " + result );
+		//invoquer la methode
+		mvc.perform(post("/api/client/create_client")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(mapper.writeValueAsString(dto))).andExpect(status().is(400));
 		
 	}
 

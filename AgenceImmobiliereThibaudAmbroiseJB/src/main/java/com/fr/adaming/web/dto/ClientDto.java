@@ -3,6 +3,8 @@ package com.fr.adaming.web.dto;
 import java.util.List;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.fr.adaming.entity.Agent;
@@ -22,7 +24,7 @@ public class ClientDto {
 	
 	private long id;
 	
-	@NotNull
+	@NotNull @NotBlank @NotEmpty
 	@Email
 	private String email;
 	@NotNull
