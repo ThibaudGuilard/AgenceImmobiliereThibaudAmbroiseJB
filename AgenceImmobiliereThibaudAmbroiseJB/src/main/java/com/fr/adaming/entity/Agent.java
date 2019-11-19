@@ -28,7 +28,7 @@ public class Agent extends User {
 	@JoinColumn(name = "id_agent")
 	private List<Client> clients;
 	
-	public Agent( String email,String fullName, int telephone,boolean deleted, String pwd,LocalDate dateRecrutement) {
+	public Agent( String email,String fullName, String telephone,boolean deleted, String pwd,LocalDate dateRecrutement) {
 		super(email, fullName, telephone, deleted);
 		this.pwd = pwd;
 		this.dateRecrutement = dateRecrutement;

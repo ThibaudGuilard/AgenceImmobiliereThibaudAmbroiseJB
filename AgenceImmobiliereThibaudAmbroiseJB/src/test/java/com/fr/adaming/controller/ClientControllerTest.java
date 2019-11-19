@@ -2,7 +2,6 @@ package com.fr.adaming.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -26,7 +25,7 @@ public class ClientControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppl
 	public void createValidClient_shouldReturnStatus200AndDtoNotNull() throws UnsupportedEncodingException, Exception {
 		
 		//Prepare inputs
-		ClientDto dto = new ClientDto("email@123456.fr", "fullName", 1122334455, TypeClient.ACHETEUR );
+		ClientDto dto = new ClientDto("email@123456.fr", "fullName", "1122334455", TypeClient.ACHETEUR );
 		
 		//invoquer la methode
 		String result = mvc.perform(post("/api/client/create_client")
@@ -46,10 +45,10 @@ public class ClientControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppl
 	}
 	
 	@Test
-	public void createClientEmailNull_shouldReturnResultNull() throws UnsupportedEncodingException, Exception {
+	public void createClientEmailNull_shouldReturnStatus400() throws UnsupportedEncodingException, Exception {
 		
 		//Prepare inputs
-		ClientDto dto = new ClientDto(null, "fullName", 1122334455, TypeClient.ACHETEUR );
+		ClientDto dto = new ClientDto(null, "fullName", "1122334455", TypeClient.ACHETEUR );
 		
 		//invoquer la methode
 		mvc.perform(post("/api/client/create_client")
@@ -59,10 +58,10 @@ public class ClientControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppl
 	}
 	
 	@Test
-	public void createClientEmailEmpty_shouldReturnResultNull() throws UnsupportedEncodingException, Exception {
+	public void createClientEmailEmpty_shouldReturnStatus400() throws UnsupportedEncodingException, Exception {
 		
 		//Prepare inputs
-		ClientDto dto = new ClientDto("", "fullName", 1122334455, TypeClient.ACHETEUR );
+		ClientDto dto = new ClientDto("", "fullName", "1122334455", TypeClient.ACHETEUR );
 		
 		//invoquer la methode
 		mvc.perform(post("/api/client/create_client")
@@ -72,10 +71,87 @@ public class ClientControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppl
 	}
 	
 	@Test
-	public void createClientEmailBlank_shouldReturnResultNull() throws UnsupportedEncodingException, Exception {
+	public void createClientEmailBlank_shouldReturnStatus400() throws UnsupportedEncodingException, Exception {
 		
 		//Prepare inputs
-		ClientDto dto = new ClientDto(" ", "fullName", 1122334455, TypeClient.ACHETEUR );
+		ClientDto dto = new ClientDto(" ", "fullName", "1122334455", TypeClient.ACHETEUR );
+		
+		//invoquer la methode
+		mvc.perform(post("/api/client/create_client")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(mapper.writeValueAsString(dto))).andExpect(status().is(400));
+		
+	}
+	@Test
+	public void createClientFullNameNull_shouldReturnStatus400() throws UnsupportedEncodingException, Exception {
+		
+		//Prepare inputs
+		ClientDto dto = new ClientDto("email@123456.fr", null, "1122334455", TypeClient.ACHETEUR );
+		
+		//invoquer la methode
+		mvc.perform(post("/api/client/create_client")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(mapper.writeValueAsString(dto))).andExpect(status().is(400));
+		
+	}
+	
+	@Test
+	public void createClientFullNameEmpty_shouldReturnStatus400() throws UnsupportedEncodingException, Exception {
+		
+		//Prepare inputs
+		ClientDto dto = new ClientDto("email@123456.fr", "", "1122334455", TypeClient.ACHETEUR );
+		
+		//invoquer la methode
+		mvc.perform(post("/api/client/create_client")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(mapper.writeValueAsString(dto))).andExpect(status().is(400));
+		
+	}
+	
+	@Test
+	public void createClientFullNameBlank_shouldReturnStatus400() throws UnsupportedEncodingException, Exception {
+		
+		//Prepare inputs
+		ClientDto dto = new ClientDto("email@123456.fr", " ", "1122334455", TypeClient.ACHETEUR );
+		
+		//invoquer la methode
+		mvc.perform(post("/api/client/create_client")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(mapper.writeValueAsString(dto))).andExpect(status().is(400));
+		
+	}
+	
+	@Test
+	public void createClientTelephoneNull_shouldReturnStatus400() throws UnsupportedEncodingException, Exception {
+		
+		//Prepare inputs
+		ClientDto dto = new ClientDto("email@123456.fr", "fullName", null, TypeClient.ACHETEUR );
+		
+		//invoquer la methode
+		mvc.perform(post("/api/client/create_client")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(mapper.writeValueAsString(dto))).andExpect(status().is(400));
+		
+	}
+	
+	@Test
+	public void createClientTelephoneEmpty_shouldReturnStatus400() throws UnsupportedEncodingException, Exception {
+		
+		//Prepare inputs
+		ClientDto dto = new ClientDto("email@123456.fr", "fullName", "", TypeClient.ACHETEUR );
+		
+		//invoquer la methode
+		mvc.perform(post("/api/client/create_client")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(mapper.writeValueAsString(dto))).andExpect(status().is(400));
+		
+	}
+	
+	@Test
+	public void createClientTelephoneBlank_shouldReturnStatus400() throws UnsupportedEncodingException, Exception {
+		
+		//Prepare inputs
+		ClientDto dto = new ClientDto("email@123456.fr", "fullName", " ", TypeClient.ACHETEUR );
 		
 		//invoquer la methode
 		mvc.perform(post("/api/client/create_client")
