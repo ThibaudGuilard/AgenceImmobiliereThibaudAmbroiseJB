@@ -7,12 +7,12 @@ import com.fr.adaming.web.dto.BienDto;
 
 public interface IBienController {
 
-	public String createBien (BienDto dto);
+	public Bien createBien (BienDto dto);
 	
 	public List<Bien> findAll();
 	
-	public String updateBien(BienDto dto);
+	public Bien updateBien(BienDto dto);
 	
-	public boolean deleteBien(Bien bien);
+	public Bien deleteBien(Bien bien);
 	
 }

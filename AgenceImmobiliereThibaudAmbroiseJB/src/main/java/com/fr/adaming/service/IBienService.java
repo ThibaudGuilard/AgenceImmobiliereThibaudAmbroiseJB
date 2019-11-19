@@ -28,7 +28,7 @@ public interface IBienService {
 	 * @param bien - the given entity
 	 * @return true if the given bien has been modified - else, returns false
 	 */
-	public boolean updateBien(Bien bien);
+	public Bien updateBien(Bien bien);
 
 	/**
 	 * Modifies attribute "deleted" from given bien in database
@@ -36,7 +36,7 @@ public interface IBienService {
 	 * @param bien
 	 * @return bien - the given bien
 	 */
-	public boolean deleteBien(Bien bien);
+	public Bien deleteBien(Bien bien);
 
 	
 	/**

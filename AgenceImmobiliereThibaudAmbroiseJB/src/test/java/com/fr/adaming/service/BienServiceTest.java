@@ -2,6 +2,7 @@ package com.fr.adaming.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -81,13 +82,14 @@ public class BienServiceTest {
 	@Test
 	public void deleteBienThatExists_shouldReturnTrue() {
 		Bien bien = service.FindParId(1234567L);
-		assertTrue(service.deleteBien(bien));
+		service.deleteBien(bien);
+		assertTrue(bien.isDeleted());
 	}
 
 	@Test
 	public void deleteBienThatDoesNotExist_shouldReturnNotSuchElementException() {
 		exception.expect(NoSuchElementException.class);
-		assertFalse(service.deleteBien(new Bien()));
+		assertNull(service.deleteBien(new Bien()));
 	}
 	
 
@@ -124,9 +126,9 @@ public class BienServiceTest {
 		bien.setVendu(true);
 		bien.setDeleted(false);
 		// invoquer la méthode
-		boolean retour = service.updateBien(bien);
+		Bien retour = service.updateBien(bien);
 		// vérifier le résultat
-		assertTrue(retour);
+		assertNotNull(retour);
 	}
 
 	@Test
@@ -138,9 +140,9 @@ public class BienServiceTest {
 		bien.setVendu(true);
 		bien.setDeleted(false);
 		// invoquer la méthode
-		boolean retour = service.updateBien(bien);
+		Bien retour = service.updateBien(bien);
 		// vérifier le résultat
-		assertFalse(retour);
+		assertNotEquals(retour, bien);
 	}
 
 

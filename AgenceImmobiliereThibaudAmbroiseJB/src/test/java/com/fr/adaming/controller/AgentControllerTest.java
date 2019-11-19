@@ -107,7 +107,9 @@ public class AgentControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppli
 	@Sql(statements = "delete from agent where email like 'email123123@email.fr'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void createAgentWithPwdLengthSuperiorTo16_shouldReturnshouldReturnEmptyString() throws JsonProcessingException, Exception {
 		
+
 		AgentDto dto = new AgentDto("email123123@email.fr", "Jean Claude", "1122334455", false, "12345678901234567", LocalDate.parse("2017-05-15"));
+
 		
 		ResultActions sendHttpRequestInJson = mvc.perform(post("/api/agent/create_agent")
 				.contentType(MediaType.APPLICATION_JSON)
