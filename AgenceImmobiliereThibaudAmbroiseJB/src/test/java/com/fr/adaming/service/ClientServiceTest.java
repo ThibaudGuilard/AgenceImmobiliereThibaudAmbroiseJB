@@ -34,7 +34,7 @@ public class ClientServiceTest {
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
 	
-	@Sql(statements = { "insert into client(id, deleted,email,full_name,telephone,type) values (112, false, 'client@mail.com', 'John Doe', 8888888, 1)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = { "insert into client(id, deleted,email,full_name,telephone,type) values (112, false, 'client@mail.com', 'John Doe', '8888888', 1)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = {"delete from client where id=112"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void updateClientServiceExistant_shouldReturnTrue() {
@@ -136,7 +136,7 @@ public class ClientServiceTest {
 		client.setId(112L);
 		client.setEmail("client@mail.fr");
 		client.setFullName("Machin");
-		client.setTelephone(8888);
+		client.setTelephone("8888");
 		//invoquer la méthode
 		boolean retour = service.updateClient(client);
 		//vérifier le résultat
@@ -184,7 +184,7 @@ public class ClientServiceTest {
 		c.setDeleted(false);
 		c.setEmail("aa@a.fr");
 		c.setFullName("Jacquies");
-		c.setTelephone(1234567890);
+		c.setTelephone("1234567890");
 		c.setType(TypeClient.ACHETEUR);
 		
 		Client retourned = service.save(c);
@@ -206,7 +206,7 @@ public class ClientServiceTest {
 		c.setEmail("c3@mail.fr");
 		c.setFullName("pierro");
 		c.setType(TypeClient.ACHETEUR);
-		c.setTelephone(1122334455);
+		c.setTelephone("1122334455");
 		
 		
 		Client retourned =  service.save(c);

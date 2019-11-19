@@ -2,8 +2,9 @@ package com.fr.adaming.web.controller.impl;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,30 +34,26 @@ public class ClientControllerImpl implements IClientController {
 	 * @see com.fr.adaming.service.IClientController#createClient()
 	 */
 	@PostMapping(path = "/create_client") @Override
-	public String create(@RequestBody ClientDto dto) {
+	public Client create(@Valid @RequestBody ClientDto dto) {
 		Client client = ClientConverter.convertToClass(dto);
-		Client clientRetour = service.save(client);
-		if (clientRetour != null) {
-		service.save(client);
-		return "client created";
-		} else {
-			return "client already exist";
-		}
+		return service.save(client);
+		
 	}
 	
 	/*
 	 * (non-Javadoc)
 	 * @see com.fr.adaming.service.IClientController#deleteClient()
 	 */
-	@DeleteMapping(path = "{id}/delete_client") @Override
-	public String deleteClient(@PathVariable long id) {
+	@GetMapping(path = "{id}/delete_client") @Override
+	public Client deleteClient(@PathVariable long id) {
 		Client client = service.findById(id);
+		if (client!=null) {
 		Client clientRetour = service.deleteClient(client);
-		if (clientRetour != null) {
-		return "Client deleted";
-		}else {
-			return "You're trying to delete an inexistant Client";
+		return clientRetour;
+		} else {
+			return null;
 		}
+		
 	}
 	
 	/*
@@ -64,15 +61,10 @@ public class ClientControllerImpl implements IClientController {
 	 * @see com.fr.adaming.service.IClientController#updateClient()
 	 */
 	@PostMapping(path = "{Client}/update_client") @Override
-	public String updateClient(@PathVariable ClientDto dto) {
+	public boolean updateClient(@PathVariable ClientDto dto) {
 		Client client = ClientConverter.convertToClass(dto);
 		boolean clientRetour = service.updateClient(client);
-		if (clientRetour == true) {
-		service.updateClient(client);
-		return "Client updated";
-		}else {
-			return "This Client does'nt exist";
-		}
+		return clientRetour;
 	}
 	
 	/*

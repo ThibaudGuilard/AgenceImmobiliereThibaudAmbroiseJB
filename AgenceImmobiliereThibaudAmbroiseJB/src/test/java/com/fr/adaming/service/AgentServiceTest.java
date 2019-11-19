@@ -42,7 +42,7 @@ public class AgentServiceTest {
 		
 		a.setFullName("jj");
 		a.setPwd("azertyuiop");
-		a.setTelephone(1234567890);
+		a.setTelephone("1234567890");
 		a.setEmail("a@a.fr");
 		a.setDeleted(false);
 		a.setDateRecrutement(LocalDate.parse("2017-05-15"));
@@ -63,7 +63,7 @@ public class AgentServiceTest {
 		a.setFullName("JPP");
 		a.setEmail("a@aaa.com");
 		a.setDeleted(true);
-		a.setTelephone(1234567809);
+		a.setTelephone("1234567809");
 		a.setPwd("azertyuiop");
 		
 		Agent retourned = service.save(a);
@@ -195,7 +195,7 @@ public class AgentServiceTest {
 		agent.setEmail("agent@mail.com");
 		agent.setFullName("Machin");
 		agent.setPwd("abcd1234");
-		agent.setTelephone(8888);
+		agent.setTelephone("8888");
 		//invoquer la méthode
 		boolean retour = service.updateAgent(agent);
 		//vérifier le résultat

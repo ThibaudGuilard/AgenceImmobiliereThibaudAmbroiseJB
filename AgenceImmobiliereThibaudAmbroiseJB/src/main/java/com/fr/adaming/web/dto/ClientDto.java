@@ -3,6 +3,8 @@ package com.fr.adaming.web.dto;
 import java.util.List;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.fr.adaming.entity.Agent;
@@ -22,18 +24,19 @@ public class ClientDto {
 	
 	private long id;
 	
-	@NotNull
+	@NotNull @NotBlank @NotEmpty
 	@Email
 	private String email;
-	@NotNull
+	@NotNull @NotBlank @NotEmpty
 	private String fullName;
-	@NotNull
-	private int telephone;
+	@NotNull @NotBlank @NotEmpty
+	private String telephone;
 	private TypeClient type;
+	private boolean deleted;
 	private Agent agent;
 	private List<Bien> biens;
 	
-	public ClientDto(long id, String email, String fullName, int telephone, TypeClient type, Agent agent,
+	public ClientDto(long id, String email, String fullName, String telephone, TypeClient type, Agent agent,
 			List<Bien> biens) {
 		this.id = id;
 		this.email = email;
@@ -44,7 +47,7 @@ public class ClientDto {
 		this.biens = biens;
 	}
 
-	public ClientDto( String email, String fullName,int telephone, TypeClient type, Agent agent, List<Bien> biens) {
+	public ClientDto( String email, String fullName,String telephone, TypeClient type, Agent agent, List<Bien> biens) {
 		super();
 		this.email = email;
 		this.fullName = fullName;
@@ -54,13 +57,27 @@ public class ClientDto {
 		this.biens = biens;
 	}
 
-	public ClientDto(String email, String fullName,int telephone, TypeClient type) {
+	public ClientDto(String email, String fullName,String telephone, TypeClient type) {
 		super();
 		this.email = email;
 		this.fullName = fullName;
 		this.telephone = telephone;
 		this.type = type;
 	}
+
+	public ClientDto(long id, @NotNull @NotBlank @NotEmpty @Email String email,
+			@NotNull @NotBlank @NotEmpty String fullName, @NotNull @NotBlank @NotEmpty String telephone,
+			TypeClient type, boolean deleted) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.fullName = fullName;
+		this.telephone = telephone;
+		this.type = type;
+		this.deleted = deleted;
+	}
+
+
 
 	
 }

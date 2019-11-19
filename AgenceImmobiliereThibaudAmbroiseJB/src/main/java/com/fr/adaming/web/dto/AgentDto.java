@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 
 import com.fr.adaming.entity.Client;
 
@@ -24,7 +23,7 @@ public class AgentDto {
 
 	private String fullName;
 	
-	private int telephone;
+	private String telephone;
 	
 	private boolean deleted;
 	
@@ -33,7 +32,7 @@ public class AgentDto {
 	private LocalDate dateRecrutement;
 	private List<Client> clients;
 
-	public AgentDto(long id, String email,String fullName, int telephone, boolean deleted, String pwd, LocalDate dateRecrutement, List<Client> clients) {
+	public AgentDto(long id, String email,String fullName, String telephone, boolean deleted, String pwd, LocalDate dateRecrutement, List<Client> clients) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -45,7 +44,7 @@ public class AgentDto {
 		this.clients = clients;
 	}
 
-	public AgentDto( String email, String fullName, int telephone, boolean deleted, String pwd,
+	public AgentDto( String email, String fullName, String telephone, boolean deleted, String pwd,
 			LocalDate dateRecrutement, List<Client> clients) {
 		super();
 		this.email = email;
@@ -57,7 +56,7 @@ public class AgentDto {
 		this.clients = clients;
 	}
 
-	public AgentDto( String email, String fullName, int telephone, boolean deleted, String pwd,
+	public AgentDto( String email, String fullName, String telephone, boolean deleted, String pwd,
 			LocalDate dateRecrutement) {
 		super();
 		this.email = email;
