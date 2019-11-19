@@ -1,5 +1,7 @@
 package com.fr.adaming;
 
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,5 +18,8 @@ public class AgenceImmobiliereThibaudAmbroiseJbApplicationTests {
 
 	@Autowired
 	protected ObjectMapper mapper;
+	
+	@Rule
+	protected ExpectedException exception = ExpectedException.none();
 
 }

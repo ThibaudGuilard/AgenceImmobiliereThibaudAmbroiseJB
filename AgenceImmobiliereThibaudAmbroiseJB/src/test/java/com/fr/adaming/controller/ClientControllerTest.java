@@ -17,7 +17,6 @@ import com.fr.adaming.entity.enume.TypeClient;
 import com.fr.adaming.web.dto.ClientDto;
 
 @SpringBootTest
-@RequestMapping(path = "api/client")
 public class ClientControllerTest extends AgenceImmobiliereThibaudAmbroiseJbApplicationTests{
 
 	
@@ -29,7 +28,7 @@ public class ClientControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppl
 		ClientDto dto = new ClientDto("email@123456.fr", "fullName", 1122334455, TypeClient.ACHETEUR );
 		
 		//invoquer la methode
-		String result = mvc.perform(post("/create_client")
+		String result = mvc.perform(post("api/client/create_client")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(mapper.writeValueAsString(dto)))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
@@ -44,5 +43,7 @@ public class ClientControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppl
 		System.out.println("DEBUG CREATE VALID CLIENT : " + result );
 		
 	}
+	
+	
 
 }
