@@ -2,6 +2,8 @@ package com.fr.adaming.service.impl;
 
 import java.util.List;
 
+import javax.validation.ConstraintViolationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,8 @@ public class AgentServiceImpl implements IAgentService{
 				
 		try {
 		return repository.save(agent);
+		}catch (ConstraintViolationException e ) {
+			return null;
 		}catch (DataIntegrityViolationException e) {
 			return null;
 		}
