@@ -172,7 +172,7 @@ public class ClientControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppl
 	@Test
 	@Sql(statements = { "insert into client(id, deleted,email,full_name,telephone,type) values (112, false, 'client@mail.com', 'John Doe', '8888888', 1)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = {"delete from client where id=112"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	public void DeleteClientExistant_shouldReturnClientRetourEtDeletedTrue() throws UnsupportedEncodingException, JsonProcessingException, Exception {
+	public void deleteClientExistant_shouldReturnClientRetourEtDeletedTrue() throws UnsupportedEncodingException, JsonProcessingException, Exception {
 		//Prepare inputs
 				ClientDto dto = new ClientDto(112, "client@mail.com", "John Doe", "8888888", TypeClient.ACHETEUR, false);
 				
@@ -247,6 +247,168 @@ public class ClientControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppl
 				//on peut trouver une methode andDoPrint qui peut etre pratique
 				
 				assertEquals("false", result);
+	}
+	
+	@Test
+	@Sql(statements = { "insert into client(id, deleted,email,full_name,telephone,type) values (112, false, 'client@mail.com', 'John Doe', '8888888', 1)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = {"delete from client where id=112"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void updateClientExistantFullNameEmpty_ShouldReturnStatus400EtRetourClientNull() throws UnsupportedEncodingException, JsonProcessingException, Exception {
+		//Prepare inputs
+				ClientDto dto = new ClientDto(1120, "email@123456.fr", "", "1122334455", TypeClient.VENDEUR, false);
+				
+				//invoquer la methode
+				String result = mvc.perform(post("/api/client/update_client")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(mapper.writeValueAsString(dto)))
+						.andExpect(status().is(400)).andReturn().getResponse().getContentAsString();
+				
+				//on peut trouver une methode andDoPrint qui peut etre pratique
+				
+				assert(result.isEmpty());
+	}
+	
+	@Test
+	@Sql(statements = { "insert into client(id, deleted,email,full_name,telephone,type) values (112, false, 'client@mail.com', 'John Doe', '8888888', 1)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = {"delete from client where id=112"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void updateClientExistantFullNameBlank_ShouldReturnStatus400EtRetourClientNull() throws UnsupportedEncodingException, JsonProcessingException, Exception {
+		//Prepare inputs
+				ClientDto dto = new ClientDto(1120, "email@123456.fr", " ", "1122334455", TypeClient.VENDEUR, false);
+				
+				//invoquer la methode
+				String result = mvc.perform(post("/api/client/update_client")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(mapper.writeValueAsString(dto)))
+						.andExpect(status().is(400)).andReturn().getResponse().getContentAsString();
+				
+				//on peut trouver une methode andDoPrint qui peut etre pratique
+				
+				assert(result.isEmpty());
+	}
+	
+	@Test
+	@Sql(statements = { "insert into client(id, deleted,email,full_name,telephone,type) values (112, false, 'client@mail.com', 'John Doe', '8888888', 1)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = {"delete from client where id=112"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void updateClientExistantFullNameNull_ShouldReturnStatus400EtRetourClientNull() throws UnsupportedEncodingException, JsonProcessingException, Exception {
+		//Prepare inputs
+				ClientDto dto = new ClientDto(1120, "email@123456.fr", null, "1122334455", TypeClient.VENDEUR, false);
+				
+				//invoquer la methode
+				String result = mvc.perform(post("/api/client/update_client")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(mapper.writeValueAsString(dto)))
+						.andExpect(status().is(400)).andReturn().getResponse().getContentAsString();
+				
+				//on peut trouver une methode andDoPrint qui peut etre pratique
+				
+				assert(result.isEmpty());
+	}
+	
+	@Test
+	@Sql(statements = { "insert into client(id, deleted,email,full_name,telephone,type) values (112, false, 'client@mail.com', 'John Doe', '8888888', 1)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = {"delete from client where id=112"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void updateClientExistantTelephoneEmpty_ShouldReturnStatus400EtRetourClientNull() throws UnsupportedEncodingException, JsonProcessingException, Exception {
+		//Prepare inputs
+				ClientDto dto = new ClientDto(1120, "email@123456.fr", "fullname", "", TypeClient.VENDEUR, false);
+				
+				//invoquer la methode
+				String result = mvc.perform(post("/api/client/update_client")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(mapper.writeValueAsString(dto)))
+						.andExpect(status().is(400)).andReturn().getResponse().getContentAsString();
+				
+				//on peut trouver une methode andDoPrint qui peut etre pratique
+				
+				assert(result.isEmpty());
+	}
+	
+	@Test
+	@Sql(statements = { "insert into client(id, deleted,email,full_name,telephone,type) values (112, false, 'client@mail.com', 'John Doe', '8888888', 1)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = {"delete from client where id=112"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void updateClientExistantTelephoneBlank_ShouldReturnStatus400EtRetourClientNull() throws UnsupportedEncodingException, JsonProcessingException, Exception {
+		//Prepare inputs
+				ClientDto dto = new ClientDto(1120, "email@123456.fr", "fullname", " ", TypeClient.VENDEUR, false);
+				
+				//invoquer la methode
+				String result = mvc.perform(post("/api/client/update_client")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(mapper.writeValueAsString(dto)))
+						.andExpect(status().is(400)).andReturn().getResponse().getContentAsString();
+				
+				//on peut trouver une methode andDoPrint qui peut etre pratique
+				
+				assert(result.isEmpty());
+	}
+	
+	@Test
+	@Sql(statements = { "insert into client(id, deleted,email,full_name,telephone,type) values (112, false, 'client@mail.com', 'John Doe', '8888888', 1)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = {"delete from client where id=112"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void updateClientExistantTelephoneNull_ShouldReturnStatus400EtRetourClientNull() throws UnsupportedEncodingException, JsonProcessingException, Exception {
+		//Prepare inputs
+				ClientDto dto = new ClientDto(1120, "email@123456.fr", "fullName", null, TypeClient.VENDEUR, false);
+				
+				//invoquer la methode
+				String result = mvc.perform(post("/api/client/update_client")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(mapper.writeValueAsString(dto)))
+						.andExpect(status().is(400)).andReturn().getResponse().getContentAsString();
+				
+				//on peut trouver une methode andDoPrint qui peut etre pratique
+				
+				assert(result.isEmpty());
+	}
+	
+	@Test
+	@Sql(statements = { "insert into client(id, deleted,email,full_name,telephone,type) values (112, false, 'client@mail.com', 'John Doe', '8888888', 1)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = {"delete from client where id=112"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void updateClientExistantEmailEmpty_ShouldReturnStatus400EtRetourClientNull() throws UnsupportedEncodingException, JsonProcessingException, Exception {
+		//Prepare inputs
+				ClientDto dto = new ClientDto(112, "", "fullname", "1122334455", TypeClient.VENDEUR, false);
+				
+				//invoquer la methode
+				String result = mvc.perform(post("/api/client/update_client")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(mapper.writeValueAsString(dto)))
+						.andExpect(status().is(400)).andReturn().getResponse().getContentAsString();
+				
+				//on peut trouver une methode andDoPrint qui peut etre pratique
+				
+				assert(result.isEmpty());
+	}
+	
+	@Test
+	@Sql(statements = { "insert into client(id, deleted,email,full_name,telephone,type) values (112, false, 'client@mail.com', 'John Doe', '8888888', 1)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = {"delete from client where id=112"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void updateClientExistantEmailBlank_ShouldReturnStatus400EtRetourClientNull() throws UnsupportedEncodingException, JsonProcessingException, Exception {
+		//Prepare inputs
+				ClientDto dto = new ClientDto(112, " ", "fullname", "1122334455", TypeClient.VENDEUR, false);
+				
+				//invoquer la methode
+				String result = mvc.perform(post("/api/client/update_client")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(mapper.writeValueAsString(dto)))
+						.andExpect(status().is(400)).andReturn().getResponse().getContentAsString();
+				
+				//on peut trouver une methode andDoPrint qui peut etre pratique
+				
+				assert(result.isEmpty());
+	}
+	
+	@Test
+	@Sql(statements = { "insert into client(id, deleted,email,full_name,telephone,type) values (112, false, 'client@mail.com', 'John Doe', '8888888', 1)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = {"delete from client where id=112"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void updateClientExistantEmailNull_ShouldReturnStatus400EtRetourClientNull() throws UnsupportedEncodingException, JsonProcessingException, Exception {
+		//Prepare inputs
+				ClientDto dto = new ClientDto(112, null, "fullName", "1122334455", TypeClient.VENDEUR, false);
+				
+				//invoquer la methode
+				String result = mvc.perform(post("/api/client/update_client")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(mapper.writeValueAsString(dto)))
+						.andExpect(status().is(400)).andReturn().getResponse().getContentAsString();
+				
+				//on peut trouver une methode andDoPrint qui peut etre pratique
+				
+				assert(result.isEmpty());
 	}
 
 
