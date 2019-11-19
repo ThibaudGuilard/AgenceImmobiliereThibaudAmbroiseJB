@@ -31,19 +31,27 @@ public class Client extends User{
 	@OneToMany(mappedBy = "clients")
 	private List<Bien> biens;
 
-	public Client(String email, String fullName, int telephone, Enum<TypeClient> type, Agent agent, List<Bien> biens) {		
+	public Client(String email, String fullName, String telephone, Enum<TypeClient> type, Agent agent, List<Bien> biens) {
+		super (email, fullName, telephone);
+		this.type=(TypeClient) type;
+		this.agent=agent;
+		this.biens=biens;	
 	}
 	
-	public Client(long id,String email, String fullName, int telephone, Enum<TypeClient> type, Agent agent, List<Bien> biens) {
+	public Client(long id,String email, String fullName, String telephone, Enum<TypeClient> type, Agent agent, List<Bien> biens) {
 	
+		super (id, email, fullName, telephone);
+		this.type=(TypeClient) type;
+		this.agent=agent;
+		this.biens=biens;
 	}
 
-	public Client(String email, String fullName, int telephone, boolean deleted, TypeClient type) {
+	public Client(String email, String fullName, String telephone, boolean deleted, TypeClient type) {
 		super(email, fullName, telephone, deleted);
 		this.type = type;
 	}
 
-	public Client(String email, String fullName, int telephone, boolean deleted, TypeClient type, Agent agent,
+	public Client(String email, String fullName, String telephone, boolean deleted, TypeClient type, Agent agent,
 			List<Bien> biens) {
 		super(email, fullName, telephone, deleted);
 		this.type = type;

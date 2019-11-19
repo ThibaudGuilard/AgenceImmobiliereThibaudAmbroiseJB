@@ -19,7 +19,7 @@ public class ClientConverter {
 		String email = dto.getEmail();
 		long id = dto.getId();
 		String fullName = dto.getFullName();
-		int telephone = dto.getTelephone();
+		String telephone = dto.getTelephone();
 		TypeClient type = dto.getType();
 		Agent agent = dto.getAgent();
 		List<Bien> biens = dto.getBiens();
@@ -31,7 +31,7 @@ public class ClientConverter {
 		String email = client.getEmail();
 		long id = client.getId();
 		String fullName = client.getFullName();
-		int telephone = client.getTelephone();
+		String telephone = client.getTelephone();
 		Enum<TypeClient> type = client.getType();
 		Agent agent = client.getAgent();
 		List<Bien> biens = client.getBiens();
@@ -42,7 +42,7 @@ public class ClientConverter {
 	public static Client convertToClass1 (ClientDto dto) {
 		String email = dto.getEmail();
 		String fullName = dto.getFullName();
-		int telephone = dto.getTelephone();
+		String telephone = dto.getTelephone();
 		TypeClient type = dto.getType();
 		Agent agent = dto.getAgent();
 		List<Bien> biens = dto.getBiens();
@@ -53,7 +53,7 @@ public class ClientConverter {
 	public static ClientDto convertToDto1 (Client client) {
 		String email = client.getEmail();
 		String fullName = client.getFullName();
-		int telephone = client.getTelephone();
+		String telephone = client.getTelephone();
 		Enum<TypeClient> type = client.getType();
 		Agent agent = client.getAgent();
 		List<Bien> biens = client.getBiens();

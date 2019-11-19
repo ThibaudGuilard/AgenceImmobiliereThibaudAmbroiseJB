@@ -22,4 +22,5 @@ public class AgenceImmobiliereThibaudAmbroiseJbApplicationTests {
 	@Rule
 	protected ExpectedException exception = ExpectedException.none();
 
+	
 }

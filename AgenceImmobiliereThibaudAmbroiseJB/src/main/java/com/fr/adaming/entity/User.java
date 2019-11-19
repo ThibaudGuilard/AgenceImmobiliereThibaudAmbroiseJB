@@ -17,27 +17,28 @@ import lombok.Setter;
  *
  */
 @MappedSuperclass
-@Setter @Getter @NoArgsConstructor
+@Setter
+@Getter
+@NoArgsConstructor
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class User {
-	
-	@Id 
+
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique = true)
 	private long id;
-	
+
 	@Column(unique = true, nullable = false)
 	private String email;
 
 	@Column(nullable = false)
 	private String fullName;
-	
-//	@Pattern(regexp = "\\d{10}")
-	private int telephone;
-	
+
+	private String telephone;
+
 	private boolean deleted;
-	
-	public User(String email, String fullName, int telephone,boolean deleted) {
+
+	public User(String email, String fullName, String telephone, boolean deleted) {
 		super();
 		this.email = email;
 		this.fullName = fullName;
@@ -45,13 +46,26 @@ public class User {
 		this.deleted = deleted;
 	}
 
-	public User(long id, String email, String fullName, int telephone, boolean deleted) {
+	public User(long id, String email, String fullName, String telephone, boolean deleted) {
 		super();
 		this.id = id;
 		this.email = email;
 		this.fullName = fullName;
 		this.telephone = telephone;
 		this.deleted = deleted;
+	}
+
+	public User(long id, String email, String fullName, String telephone) {
+		this.id = id;
+		this.email = email;
+		this.fullName = fullName;
+		this.telephone = telephone;
+	}
+
+	public User(String email, String fullName, String telephone) {
+		this.email = email;
+		this.fullName = fullName;
+		this.telephone = telephone;
 	}
 	
 	
