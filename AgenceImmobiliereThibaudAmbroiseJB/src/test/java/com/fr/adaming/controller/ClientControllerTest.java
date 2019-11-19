@@ -10,12 +10,14 @@ import java.io.UnsupportedEncodingException;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fr.adaming.AgenceImmobiliereThibaudAmbroiseJbApplicationTests;
 import com.fr.adaming.entity.enume.TypeClient;
 import com.fr.adaming.web.dto.ClientDto;
 
 @SpringBootTest
+@RequestMapping(path = "api/client")
 public class ClientControllerTest extends AgenceImmobiliereThibaudAmbroiseJbApplicationTests{
 
 	
@@ -27,11 +29,12 @@ public class ClientControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppl
 		ClientDto dto = new ClientDto("email@123456.fr", "fullName", 1122334455, TypeClient.ACHETEUR );
 		
 		//invoquer la methode
-		String result = mvc.perform(post("/api/client/create_client")
+		String result = mvc.perform(post("/create_client")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(mapper.writeValueAsString(dto)))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		
+		//on peut trouver une methode andDoPrint qui peut etre pratique
 		
 		ClientDto dtoResult = mapper.readValue(result, ClientDto.class);
 		
