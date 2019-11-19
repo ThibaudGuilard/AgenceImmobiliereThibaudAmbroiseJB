@@ -44,12 +44,14 @@ public class AgentControllerImpl implements IAgentController {
 	
 	@Override
 	@PostMapping(path = "/delete_agent")
-	public String deleteAgent(@RequestBody AgentDto dto) {
+	public AgentDto deleteAgent(@RequestBody AgentDto dto) {
 		Agent agent = AgentConverter.convertToClass(dto) ;
-		if (service.deleteAgent(agent) == null) {
-			return "Agent does not exist";
+		Agent deletedAgent = service.deleteAgent(agent);
+		if (deletedAgent != null) {
+			AgentDto deletedDto = AgentConverter.convertToDto(deletedAgent);
+			return deletedDto;
 		} else {
-			return "Agent deleted";
+			return null;
 		}
 		
 	}
@@ -67,7 +69,7 @@ public class AgentControllerImpl implements IAgentController {
 	}
 	
 	@Override
-	@GetMapping(path = "/print-agents")
+	@GetMapping(path = "/print_agents")
 	public List<Agent> printAgents() {
 		return service.findAll();
 	}

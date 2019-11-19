@@ -9,7 +9,7 @@ public interface IAgentController {
 	
 	public AgentDto createAgent(AgentDto dto);
 	
-	public String deleteAgent(AgentDto dto);
+	public AgentDto deleteAgent(AgentDto dto);
 	
 	public String updateAgent(AgentDto dto);
 	
