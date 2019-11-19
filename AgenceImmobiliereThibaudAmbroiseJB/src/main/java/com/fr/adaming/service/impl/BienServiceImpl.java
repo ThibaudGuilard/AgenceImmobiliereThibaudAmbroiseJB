@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.entity.Bien;
@@ -21,26 +20,12 @@ public class BienServiceImpl implements IBienService{
 	private BienRepository repository;
 	
 
-	/*
-	 * (non-Javadoc)
-	 * @see com.fr.adaming.entity.service.IBienService#save()
-	 */
-	
 	public Bien saveBien(Bien bien) {
-		
-		// Vérifier si le bien existe dans la BD (email)
-//		Bien c = dao.findByEmail(bien.getEmail());
-		
-		Bien b = new Bien();
-		b.setId(bien.getId());
-		
-		
-		if(repository.exists(Example.of(b))) {
-			//Le bien existe dans la BD (FAIL)
-			return null;
-		}else {
-			//Le bien n'existe pas (SUCCESS) : enregistrer le bien dans la BD et retourner le bien
+
+		if (repository.existsById(bien.getId())==false) {
 			return repository.save(bien);
+		}else {
+			return null;
 		}
 		
 	}
@@ -63,20 +48,21 @@ public class BienServiceImpl implements IBienService{
 
 	public Bien deleteBien(Bien bien) {
 		// Changer la valeur de l'attribut "deleted"
-		if (FindParId(bien.getId()) != null) {
-			 repository.supprimerBien(bien.getId());
-			 return bien;
+		if (FindById(bien.getId()) != null) {
+			bien.setDeleted(true);
+			 return repository.save(bien);
 		} else {
 			return null;
 		}
 	}
 
-	public Bien FindParId(Long id) {
+	public Bien FindById(Long id) {
 		try {
-			return repository.findId(id).get();
+			return repository.findById(id).get();
 		} catch (NoSuchElementException e) {
 			return null;
 		}
 	}
+
 
 }

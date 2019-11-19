@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.fr.adaming.entity.Bien;
 
-public interface IBienService {
+public interface IBienService{
 
 	/**Saves a given bien in the database
 	 * @param bien - the given entity
@@ -43,6 +43,6 @@ public interface IBienService {
 	 * @param id
 	 * @return Bien related with the id
 	 */
-	public Bien FindParId(Long id);
+	public Bien FindById(Long id);
 	
 }

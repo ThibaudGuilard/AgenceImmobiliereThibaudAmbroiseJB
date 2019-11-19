@@ -2,8 +2,8 @@ package com.fr.adaming.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -110,23 +110,49 @@ public class BienControllerTest extends AgenceImmobiliereThibaudAmbroiseJbApplic
 
 	@Test
 	@Sql(statements = "insert into bien (id, deleted, prix,vendu) values (444,false,55.12,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	public void deleteValidBien_shouldReturnStatus200AndDtoNull() throws UnsupportedEncodingException, Exception {
+	public void deleteValidBien_shouldReturnDeletedTrue() throws UnsupportedEncodingException, Exception {
 
 		// Prepare inputs
 		BienDto dto = new BienDto(444,55.12, false);
 
 		// invoquer la methode
 		String result = mvc
-				.perform(post("/api/bien/delete").contentType(MediaType.APPLICATION_JSON)
+				.perform(post("/api/bien/444/delete").contentType(MediaType.APPLICATION_JSON)
 						.content(mapper.writeValueAsString(dto)))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 		BienDto dtoResult = mapper.readValue(result, BienDto.class);
 
-		assertNotNull(dtoResult);
 		assertTrue(dtoResult.isDeleted());
-		
+	}
+	
+	@Test
+	@Sql(statements = "insert into bien (id, deleted, prix,vendu) values (444,false,55.12,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into bien (id, deleted, prix,vendu) values (445,false,55.12,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	public void findAllValidBien_shouldReturnList() throws UnsupportedEncodingException, Exception {
 
-		System.out.println("DEBUG CREATE VALID CLIENT : " + result);
+		// invoquer la methode
+		String result = mvc
+				.perform(get("/api/bien/print").contentType(MediaType.APPLICATION_JSON))
+						.andReturn().getResponse().getContentAsString();
+
+		assertNotNull(result);
+		assertEquals("[]", result);
+	}
+	@Test
+	@Sql(statements = "insert into bien (id, deleted, prix,vendu) values (444,false,55.12,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	public void SearchById_shouldReturnBien() throws UnsupportedEncodingException, Exception {
+
+		// Prepare inputs
+		BienDto dto = new BienDto(444,55.12, false);
+
+		// invoquer la methode
+		String result = mvc
+				.perform(post("/api/bien/444/searchbyid").contentType(MediaType.APPLICATION_JSON)
+						.content(mapper.writeValueAsString(dto)))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+		BienDto dtoResult = mapper.readValue(result, BienDto.class);
+
 	}
 }
