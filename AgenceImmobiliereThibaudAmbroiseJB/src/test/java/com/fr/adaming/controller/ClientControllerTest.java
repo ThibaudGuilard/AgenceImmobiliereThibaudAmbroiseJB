@@ -172,7 +172,7 @@ public class ClientControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppl
 	@Test
 	@Sql(statements = { "insert into client(id, deleted,email,full_name,telephone,type) values (112, false, 'client@mail.com', 'John Doe', '8888888', 1)" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = {"delete from client where id=112"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	public void DeleteClientExistant_shouldReturnClientRetourEtDeletedTrue() throws UnsupportedEncodingException, JsonProcessingException, Exception {
+	public void deleteClientExistant_shouldReturnClientRetourEtDeletedTrue() throws UnsupportedEncodingException, JsonProcessingException, Exception {
 		//Prepare inputs
 				ClientDto dto = new ClientDto(112, "client@mail.com", "John Doe", "8888888", TypeClient.ACHETEUR, false);
 				
