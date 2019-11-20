@@ -164,7 +164,7 @@ public class BienControllerTest extends AgenceImmobiliereThibaudAmbroiseJbApplic
 	public void updateNBienWithoutPrix_shouldReturnError() throws UnsupportedEncodingException, Exception {
 
 		// Prepare inputs
-		BienDto dto = new BienDto( false, false);
+		BienDto dto = new BienDto(false, false);
 		
 		// invoquer la methode
 		exception.expect(MismatchedInputException.class);

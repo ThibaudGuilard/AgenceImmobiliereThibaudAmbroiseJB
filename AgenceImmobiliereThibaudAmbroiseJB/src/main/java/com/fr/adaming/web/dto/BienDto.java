@@ -15,11 +15,9 @@ public class BienDto {
 	
 	private long id;
 	
-	@NotNull
 	@Positive
 	private double prix;
 	
-	@NotNull
 	private boolean vendu;
 	
 	private boolean deleted;
