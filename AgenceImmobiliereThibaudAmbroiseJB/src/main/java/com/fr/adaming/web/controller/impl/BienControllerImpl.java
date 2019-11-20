@@ -5,8 +5,6 @@ package com.fr.adaming.web.controller.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fr.adaming.entity.Bien;
@@ -16,11 +14,10 @@ import com.fr.adaming.web.dto.BienDto;
 import com.fr.adaming.web.dto.converters.BienConverter;
 
 @RestController
-@CrossOrigin
 public class BienControllerImpl implements IBienController {
+
 	@Autowired
 	private IBienService service;
-
 	
 	public Bien createBien(BienDto dto) {
 		Bien bien = BienConverter.convertToClass(dto);
