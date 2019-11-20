@@ -192,7 +192,7 @@ public class AgentControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppli
 	}
 	
 	@Test
-	public void deleteAgentThatDoesNotExist_shouldReturn() throws JsonProcessingException, Exception {
+	public void deleteAgentThatDoesNotExist_shouldReturnEmptyString() throws JsonProcessingException, Exception {
 		
 		AgentDto dto = new AgentDto();
 		
@@ -202,6 +202,34 @@ public class AgentControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppli
 		String result = sendHttpRequestInJson.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		
 		assertTrue(result.isEmpty());
+		
+	}
+	
+	@Test
+	@Sql(statements = "insert into agent values (55555, 0, 'bla@bla.com', 'Jean Claude', 1122334455, '2007-05-15', 'azertyuiop')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from agent where email like 'bla@bla.com' ", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void updateValidAgentWithEntirelyNewValues_shouldReturnStatus200AndUpdatedAgent() throws JsonProcessingException, Exception {
+		
+		AgentDto dto = new AgentDto(55555L, "blo@blo.com", "Jean Marc", "1122334466", false, "azertyuiop2",
+				LocalDate.parse("2017-05-16"), null);
+		
+		ResultActions sendHttpRequestInJson = mvc.perform(post("/api/agent/update_agent")
+				.contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(dto)));
+		
+		String result = sendHttpRequestInJson.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		
+		AgentDto dtoResult = mapper.readValue(result, AgentDto.class);
+		
+		assertNotNull(dtoResult);
+		assertEquals("blo@blo.com", dtoResult.getEmail());
+		assertEquals("Jean Marc", dtoResult.getFullName());
+		assertEquals("1122334466", dtoResult.getTelephone());
+		assertEquals(false, dtoResult.isDeleted());
+		assertEquals("azertyuiop2", dtoResult.getPwd());
+		assertEquals(LocalDate.parse("2017-05-16"), dtoResult.getDateRecrutement());
+		
+		
+		
 		
 	}
 
