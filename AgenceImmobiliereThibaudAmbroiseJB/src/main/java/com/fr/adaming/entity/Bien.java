@@ -22,7 +22,7 @@ public class Bien {
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	private Long id;
+	private long id;
 	
 	@Column(nullable = false )
 	private double prix;
@@ -35,7 +35,7 @@ public class Bien {
 	@JoinColumn(name = "id_client")
 	private Client clients;
 
-	public Bien(Long id, double prix, boolean vendu, boolean deleted, Client clients) {
+	public Bien(long id, double prix, boolean vendu, boolean deleted, Client clients) {
 		this.id = id;
 		this.prix = prix;
 		this.vendu = vendu;
@@ -63,7 +63,7 @@ public class Bien {
 		this.prix = prix;
 		this.vendu = vendu;
 	}
-	public Bien(Long id, double prix, boolean vendu, boolean deleted) {
+	public Bien(long id, double prix, boolean vendu, boolean deleted) {
 		super();
 		this.id = id;
 		this.prix = prix;

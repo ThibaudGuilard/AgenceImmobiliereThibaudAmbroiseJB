@@ -80,7 +80,7 @@ public class BienServiceTest {
 	@Sql(statements = "delete from bien where id=1234567",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void deleteBienThatExists_shouldReturnTrue() {
-		Bien bien = service.FindParId(1234567L);
+		Bien bien = service.FindById(1234567L);
 		service.deleteBien(bien);
 		assertTrue(bien.isDeleted());
 	}
