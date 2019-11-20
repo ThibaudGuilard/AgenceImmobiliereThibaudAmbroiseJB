@@ -10,7 +10,9 @@ import com.fr.adaming.web.dto.BienDto;
 public class BienConverter {
 
 	public static Bien convertToClass(BienDto dto) {
-
+		if(dto == null){
+			return null;
+		}else {
 		long id = dto.getId();
 		double prix = dto.getPrix();
 		boolean vendu = dto.isVendu();
@@ -18,9 +20,13 @@ public class BienConverter {
 		Client clients = dto.getClients();
 		Bien bien = new Bien(id, prix, vendu, deleted, clients);
 		return bien;
+		}
 	}
 
 	public static BienDto convertToDto(Bien bien) {
+		if(bien == null){
+			return null;
+		}else {
 		long id = bien.getId();
 		double prix = bien.getPrix();
 		boolean vendu = bien.isVendu();
@@ -28,6 +34,7 @@ public class BienConverter {
 		Client clients = bien.getClients();
 		BienDto dto = new BienDto(id, prix, vendu, deleted, clients);
 		return dto;
+		}
 	}
 
 	public static List<Bien> convertListToClass(List<BienDto> dtos) {
