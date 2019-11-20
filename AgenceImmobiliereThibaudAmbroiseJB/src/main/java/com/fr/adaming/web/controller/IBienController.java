@@ -4,11 +4,13 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.fr.adaming.entity.Bien;
 import com.fr.adaming.web.dto.BienDto;
 
+@CrossOrigin
 public interface IBienController {
 
 	public Bien createBien (@RequestBody @Valid BienDto dto);

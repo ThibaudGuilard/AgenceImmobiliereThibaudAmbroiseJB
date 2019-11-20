@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +20,7 @@ import com.fr.adaming.web.dto.ClientDto;
  * @author Thibaud
  *
  */
-@RequestMapping(path = "api/client")
+@RequestMapping(path = "api/client") @CrossOrigin
 public interface IClientController {
 	
 	/** Créé un Client dans la base de donnée à partir d'un Client Dto
