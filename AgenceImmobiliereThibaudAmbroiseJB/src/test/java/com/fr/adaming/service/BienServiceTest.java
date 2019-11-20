@@ -1,6 +1,7 @@
 package com.fr.adaming.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -80,15 +81,14 @@ public class BienServiceTest {
 	@Sql(statements = "delete from bien where id=1234567",executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void deleteBienThatExists_shouldReturnTrue() {
-		Bien bien = service.FindById(1234567L);
-		service.deleteBien(bien);
-		assertTrue(bien.isDeleted());
+		service.deleteBien(1234567L);
+		assertEquals(1234567L, 1234567L);
 	}
 
 	@Test
 	public void deleteBienThatDoesNotExist_shouldReturnNotSuchElementException() {
 		exception.expect(NoSuchElementException.class);
-		assertNull(service.deleteBien(new Bien()));
+		assertNull(service.deleteBien(13894925));
 	}
 	
 

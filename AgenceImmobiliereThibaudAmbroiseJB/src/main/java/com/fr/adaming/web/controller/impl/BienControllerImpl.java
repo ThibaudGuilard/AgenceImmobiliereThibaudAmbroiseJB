@@ -50,7 +50,7 @@ public class BienControllerImpl implements IBienController {
 
 	@PostMapping(path="{id}/delete")
 	public Bien deleteBien(@PathVariable(name ="id") long id) {
-		return service.deleteBien(service.FindById(id));	
+		return service.deleteBien(id);	
 	}
 	
 }
