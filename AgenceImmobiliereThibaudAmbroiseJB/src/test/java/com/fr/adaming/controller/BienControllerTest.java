@@ -29,11 +29,11 @@ public class BienControllerTest extends AgenceImmobiliereThibaudAmbroiseJbApplic
 	public ExpectedException exception = ExpectedException.none();
 	
 	@Test
-	@Sql(statements = "delete from bien where prix = 55.12", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from bien where prix = 55.123", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void addValidBien_shouldReturnStatus200AndDtoNotNull() throws UnsupportedEncodingException, Exception {
 
 		// Prepare inputs
-		BienDtoAdd dto = new BienDtoAdd(55.12, false, false);
+		BienDtoAdd dto = new BienDtoAdd(55.123, false, false);
 
 		// invoquer la methode
 		String result = mvc
@@ -65,6 +65,23 @@ public class BienControllerTest extends AgenceImmobiliereThibaudAmbroiseJbApplic
 				.perform(post("/api/bien/add").contentType(MediaType.APPLICATION_JSON)
 						.content(mapper.writeValueAsString(dto)))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+		assertEquals("", result);
+
+	}
+	
+	@Test
+	public void addNonValidBienwitEmptyObject_shouldReturnError() throws UnsupportedEncodingException, Exception {
+
+		// Prepare inputs
+		BienDto dto = new BienDto();
+		
+		// invoquer la methode
+
+		String result = mvc
+				.perform(post("/api/bien/add").contentType(MediaType.APPLICATION_JSON)
+						.content(mapper.writeValueAsString(dto)))
+				.andExpect(status().is(400)).andReturn().getResponse().getContentAsString();
 
 		assertEquals("", result);
 
@@ -215,6 +232,26 @@ public class BienControllerTest extends AgenceImmobiliereThibaudAmbroiseJbApplic
 		assertEquals("", result);
 	}
 	
+	@Test
+	@Sql(statements = "insert into bien (id, deleted, prix,vendu) values (337,false,55.12,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from bien where id =337", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void updateNBienWithNullObject_shouldReturnError() throws UnsupportedEncodingException, Exception {
+
+		// Prepare inputs
+		BienDto dto = new BienDto();
+		
+		// invoquer la methode
+		exception.expect(MismatchedInputException.class);
+
+		String result = mvc
+				.perform(post("/api/bien/update").contentType(MediaType.APPLICATION_JSON)
+						.content(mapper.writeValueAsString(dto)))
+				.andExpect(status().is(400)).andReturn().getResponse().getContentAsString();
+
+		assertEquals("", result);
+	}
+	
+	
 
 	@Test
 	@Sql(statements = "insert into bien (id, deleted, prix,vendu) values (444,false,55.12,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -236,6 +273,21 @@ public class BienControllerTest extends AgenceImmobiliereThibaudAmbroiseJbApplic
 	}
 	
 	@Test
+	public void deleteBienWithWrongId_shouldReturnDeletedTrue() throws UnsupportedEncodingException, Exception {
+
+		// Prepare inputs
+		BienDto dto = new BienDto(999,55.12,false, false);
+
+		// invoquer la methode
+		String result = mvc
+				.perform(post("/api/bien/999/delete").contentType(MediaType.APPLICATION_JSON)
+						.content(mapper.writeValueAsString(dto)))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+		assert(result.isEmpty());
+	}
+	
+	@Test
 	@Sql(statements = "insert into bien (id, deleted, prix,vendu) values (555,false,55.12,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into bien (id, deleted, prix,vendu) values (556,false,55.12,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from bien where id =555", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -250,6 +302,8 @@ public class BienControllerTest extends AgenceImmobiliereThibaudAmbroiseJbApplic
 		assertNotNull(result);
 		assertEquals("[{\"id\":555,\"prix\":55.12,\"vendu\":false,\"deleted\":false,\"clients\":null},{\"id\":556,\"prix\":55.12,\"vendu\":false,\"deleted\":false,\"clients\":null}]", result);
 	}
+	
+	
 	@Test
 	@Sql(statements = "insert into bien (id, deleted, prix,vendu) values (666,false,55.12,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from bien where id =666", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -267,6 +321,6 @@ public class BienControllerTest extends AgenceImmobiliereThibaudAmbroiseJbApplic
 		BienDto dtoResult = mapper.readValue(result, BienDto.class);
 
 		assertNotNull(dtoResult);
-		
+		assertEquals("[{\"id\":666,\"prix\":55.12,\"vendu\":false,\"deleted\":false,\"clients\":null}]", result);
 	}
 }
