@@ -26,7 +26,7 @@ public interface IAgentService {
 	 * @param agent - the given entity
 	 * @return true if the given agent has been modified - else, returns false
 	 */
-	public boolean updateAgent(Agent agent);
+	public Agent updateAgent(Agent agent);
 
 	/**
 	 * Modifies attribute "deleted" from given agent in database

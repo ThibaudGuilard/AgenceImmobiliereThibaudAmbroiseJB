@@ -11,7 +11,7 @@ public interface IAgentController {
 	
 	public AgentDto deleteAgent(AgentDto dto);
 	
-	public String updateAgent(AgentDto dto);
+	public AgentDto updateAgent(AgentDto dto);
 	
 	public List<Agent> printAgents();
 		

@@ -7,6 +7,8 @@ import javax.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionSystemException;
+import org.springframework.web.util.NestedServletException;
 
 import com.fr.adaming.entity.Agent;
 import com.fr.adaming.repository.AgentRepository;
@@ -48,15 +50,24 @@ public class AgentServiceImpl implements IAgentService{
 	
 
 	@Override
-	public boolean updateAgent(Agent agent) {
+	public Agent updateAgent(Agent agent) {
 		
 		// Chercher agent par id
 		if(repository.existsById(agent.getId())) {
-			repository.save(agent);
-			return true;
+			try {
+				return repository.save(agent) ;
+				
+			}catch (ConstraintViolationException e ) {
+				return null;
+				
+			}catch (DataIntegrityViolationException e) {
+				return null;
+			}catch (TransactionSystemException e) {
+				return null;
+			}			
 		}else {
 			System.out.println("DEBUG l'agent à modifier n'existe pas ");
-			return false;
+			return null;
 		}
 	}
 

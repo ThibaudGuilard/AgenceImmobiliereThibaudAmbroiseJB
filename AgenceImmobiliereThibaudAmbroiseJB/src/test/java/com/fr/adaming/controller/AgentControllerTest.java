@@ -86,7 +86,7 @@ public class AgentControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppli
 
 	@Test
 	@Sql(statements = "delete from agent where email like 'email123@email.fr'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	public void createAgentWithPwdLengthInferiorTo8_shouldReturnEmptyString()
+	public void createAgentWithPwdLengthInferiorTo8_shouldReturnStatus200AndEmptyString()
 			throws JsonProcessingException, Exception {
 
 		AgentDto dto = new AgentDto("email123@email.fr", "Jean Claude", "1122334455", false, "1234567",
@@ -207,7 +207,7 @@ public class AgentControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppli
 	
 	@Test
 	@Sql(statements = "insert into agent values (55555, 0, 'bla@bla.com', 'Jean Claude', 1122334455, '2007-05-15', 'azertyuiop')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "delete from agent where email like 'bla@bla.com' ", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from agent where email like 'blo@blo.com' ", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void updateValidAgentWithEntirelyNewValues_shouldReturnStatus200AndUpdatedAgent() throws JsonProcessingException, Exception {
 		
 		AgentDto dto = new AgentDto(55555L, "blo@blo.com", "Jean Marc", "1122334466", false, "azertyuiop2",
@@ -228,8 +228,105 @@ public class AgentControllerTest extends AgenceImmobiliereThibaudAmbroiseJbAppli
 		assertEquals("azertyuiop2", dtoResult.getPwd());
 		assertEquals(LocalDate.parse("2017-05-16"), dtoResult.getDateRecrutement());
 		
+	}
+	
+	@Test
+	public void updateAgentThatDoesNotExist_shouldReturnStatus200AndEmptyString() throws JsonProcessingException, Exception {
 		
+		AgentDto dto = new AgentDto(55556L, "bli@bli.com", "Jean Marc", "1122334466", false, "azertyuiop2",
+				LocalDate.parse("2017-05-16"), null);
 		
+		ResultActions sendHttpRequestInJson = mvc.perform(post("/api/agent/update_agent")
+				.contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(dto)));
+		
+		String result = sendHttpRequestInJson.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		
+		assertTrue(result.isEmpty());
+		
+	}
+	
+	@Test
+	@Sql(statements = "insert into agent values (666666, 0, 'bla@bla.com', 'Jean Claude', 1122334455, '2007-05-15', 'azertyuiop')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from agent where email like 'bla@bla.com' ", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void updateValidAgentWithEmailNull_shouldReturnStatus400AndEmptyString() throws JsonProcessingException, Exception {
+		
+		AgentDto dto = new AgentDto(null, "Jean Marc", "1122334466", false, "azertyuiop2",
+				LocalDate.parse("2017-05-16"), null);
+		
+		ResultActions sendHttpRequestInJson = mvc.perform(post("/api/agent/update_agent")
+				.contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(dto)));
+		
+		String result = sendHttpRequestInJson.andExpect(status().is(400)).andReturn().getResponse().getContentAsString();
+		
+		assertTrue(result.isEmpty());
+		
+	}
+	
+	@Test
+	@Sql(statements = "insert into agent values (666666, 0, 'bla@bla.com', 'Jean Claude', 1122334455, '2007-05-15', 'azertyuiop')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from agent where email like 'bla@bla.com' ", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void updateValidAgentWithEmailNotValid_shouldReturnStatus400AndEmptyString() throws JsonProcessingException, Exception {
+		
+		AgentDto dto = new AgentDto(666666L, "bla", "Jean Marc", "1122334466", false, "azertyuiop2",
+				LocalDate.parse("2017-05-16"), null);
+		
+		ResultActions sendHttpRequestInJson = mvc.perform(post("/api/agent/update_agent")
+				.contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(dto)));
+		
+		String result = sendHttpRequestInJson.andExpect(status().is(400)).andReturn().getResponse().getContentAsString();
+		
+		assertTrue(result.isEmpty());
+		
+	}
+	
+	@Test
+	@Sql(statements = "insert into agent values (666666, 0, 'bla@bla.com', 'Jean Claude', 1122334455, '2007-05-15', 'azertyuiop')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from agent where email like 'bla@bla.com' ", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void updateValidAgentWithPwdLengthInferiorTo8_shouldReturnStatus200AndEmptyString() throws JsonProcessingException, Exception {
+		
+		AgentDto dto = new AgentDto(666666L, "bla@bla.com", "Jean Marc", "1122334466", false, "1234567",
+				LocalDate.parse("2017-05-16"), null);
+		
+		ResultActions sendHttpRequestInJson = mvc.perform(post("/api/agent/update_agent")
+				.contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(dto)));
+		
+		String result = sendHttpRequestInJson.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		
+		assertTrue(result.isEmpty());
+		
+	}
+	
+	@Test
+	@Sql(statements = "insert into agent values (666666, 0, 'bla@bla.com', 'Jean Claude', 1122334455, '2007-05-15', 'azertyuiop')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from agent where email like 'bla@bla.com' ", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void updateValidAgentWithPwdLengthSuperiorTo16_shouldReturnStatus200AndEmptyString() throws JsonProcessingException, Exception {
+		
+		AgentDto dto = new AgentDto(666666L, "bla@bla.com", "Jean Marc", "1122334466", false, "12345678901234567",
+				LocalDate.parse("2017-05-16"), null);
+		
+		ResultActions sendHttpRequestInJson = mvc.perform(post("/api/agent/update_agent")
+				.contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(dto)));
+		
+		String result = sendHttpRequestInJson.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		
+		assertTrue(result.isEmpty());
+		
+	}
+	
+	@Test
+	@Sql(statements = "insert into agent values (666666, 0, 'bla@bla.com', 'Jean Claude', 1122334455, '2007-05-15', 'azertyuiop')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from agent where email like 'bla@bla.com' ", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void updateValidAgentWithDateRecrutementInTheFuture_shouldReturnStatus200AndEmptyString() throws JsonProcessingException, Exception {
+		
+		AgentDto dto = new AgentDto(666666L, "bla@bla.com", "Jean Marc", "1122334466", false, "123456789",
+				LocalDate.parse("2020-05-16"), null);
+		
+		ResultActions sendHttpRequestInJson = mvc.perform(post("/api/agent/update_agent")
+				.contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(dto)));
+		
+		String result = sendHttpRequestInJson.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		
+		assertTrue(result.isEmpty());
 		
 	}
 

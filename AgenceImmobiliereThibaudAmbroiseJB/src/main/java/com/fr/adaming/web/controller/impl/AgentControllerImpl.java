@@ -58,12 +58,14 @@ public class AgentControllerImpl implements IAgentController {
 	
 	@Override
 	@PostMapping(path = "/update_agent")
-	public String updateAgent(@RequestBody AgentDto dto) {
+	public AgentDto updateAgent(@Valid @RequestBody AgentDto dto) {
 		Agent agent = AgentConverter.convertToClass(dto);
-		if(service.updateAgent(agent)) {
-			return "Agent updated";	
+		Agent updatedAgent = service.updateAgent(agent);
+		if(updatedAgent != null) {
+			AgentDto updatedDto = AgentConverter.convertToDto(updatedAgent);
+			return updatedDto;	
 		}else {
-			return "Agent does not exist";
+			return null;
 		}
 		
 	}
