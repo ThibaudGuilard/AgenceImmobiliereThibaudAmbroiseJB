@@ -3,8 +3,6 @@ package com.fr.adaming.web.dto;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-import com.fr.adaming.entity.Client;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,7 +21,6 @@ public class BienDtoAdd {
 
 	private boolean deleted;
 
-	private Client clients;
 
 	public BienDtoAdd( double prix, boolean vendu, boolean deleted) {
 		super();

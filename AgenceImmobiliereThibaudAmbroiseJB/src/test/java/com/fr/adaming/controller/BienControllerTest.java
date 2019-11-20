@@ -2,7 +2,6 @@ package com.fr.adaming.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -20,10 +19,8 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.fr.adaming.AgenceImmobiliereThibaudAmbroiseJbApplicationTests;
-import com.fr.adaming.entity.Bien;
 import com.fr.adaming.web.dto.BienDto;
 import com.fr.adaming.web.dto.BienDtoAdd;
-import com.fr.adaming.web.dto.converters.BienConverter;
 
 @SpringBootTest
 public class BienControllerTest extends AgenceImmobiliereThibaudAmbroiseJbApplicationTests {
@@ -164,7 +161,7 @@ public class BienControllerTest extends AgenceImmobiliereThibaudAmbroiseJbApplic
 	public void updateNBienWithoutId_shouldReturnError() throws UnsupportedEncodingException, Exception {
 
 		// Prepare inputs
-		BienDto dto = new BienDto(500, false, false);
+		BienDto dto = new BienDto(500.1, false, false);
 		
 		// invoquer la methode
 		exception.expect(MismatchedInputException.class);

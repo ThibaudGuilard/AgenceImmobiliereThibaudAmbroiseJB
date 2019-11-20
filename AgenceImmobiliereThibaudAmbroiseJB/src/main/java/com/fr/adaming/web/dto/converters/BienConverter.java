@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fr.adaming.entity.Bien;
-import com.fr.adaming.entity.Client;
 import com.fr.adaming.web.dto.BienDto;
 
 public class BienConverter {
@@ -17,8 +16,7 @@ public class BienConverter {
 		double prix = dto.getPrix();
 		boolean vendu = dto.isVendu();
 		boolean deleted = dto.isDeleted();
-		Client clients = dto.getClients();
-		Bien bien = new Bien(id, prix, vendu, deleted, clients);
+		Bien bien = new Bien(id, prix, vendu, deleted);
 		return bien;
 		}
 	}
@@ -31,8 +29,7 @@ public class BienConverter {
 		double prix = bien.getPrix();
 		boolean vendu = bien.isVendu();
 		boolean deleted = bien.isDeleted();
-		Client clients = bien.getClients();
-		BienDto dto = new BienDto(id, prix, vendu, deleted, clients);
+		BienDto dto = new BienDto(id, prix, vendu, deleted);
 		return dto;
 		}
 	}
