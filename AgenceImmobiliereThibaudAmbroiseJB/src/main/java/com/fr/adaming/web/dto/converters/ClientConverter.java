@@ -16,6 +16,7 @@ import com.fr.adaming.web.dto.ClientDto;
 public class ClientConverter {
 	
 	public static Client convertToClass (ClientDto dto) {
+		if (dto!= null) {
 		String email = dto.getEmail();
 		long id = dto.getId();
 		String fullName = dto.getFullName();
@@ -25,9 +26,14 @@ public class ClientConverter {
 		List<Bien> biens = dto.getBiens();
 		Client client = new Client(id, email, fullName, telephone, type, agent, biens);
 		return client;
+		}
+		else {
+			return null;
+		}
 	}
 	
 	public static ClientDto convertToDto (Client client) {
+		if (client != null) {
 		String email = client.getEmail();
 		long id = client.getId();
 		String fullName = client.getFullName();
@@ -37,28 +43,9 @@ public class ClientConverter {
 		List<Bien> biens = client.getBiens();
 		ClientDto dto = new ClientDto(id, email, fullName, telephone, (TypeClient) type, agent, biens);
 		return dto;
-	}
-	
-	public static Client convertToClass1 (ClientDto dto) {
-		String email = dto.getEmail();
-		String fullName = dto.getFullName();
-		String telephone = dto.getTelephone();
-		TypeClient type = dto.getType();
-		Agent agent = dto.getAgent();
-		List<Bien> biens = dto.getBiens();
-		Client client = new Client( email, fullName, telephone, type, agent, biens);
-		return client;
-	}
-	
-	public static ClientDto convertToDto1 (Client client) {
-		String email = client.getEmail();
-		String fullName = client.getFullName();
-		String telephone = client.getTelephone();
-		Enum<TypeClient> type = client.getType();
-		Agent agent = client.getAgent();
-		List<Bien> biens = client.getBiens();
-		ClientDto dto = new ClientDto( email, fullName, telephone, (TypeClient) type, agent, biens);
-		return dto;
+		} else {
+			return null;
+		}
 	}
 	
 	
