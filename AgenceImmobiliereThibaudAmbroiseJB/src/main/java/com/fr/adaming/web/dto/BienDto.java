@@ -54,6 +54,11 @@ public class BienDto {
 		this.vendu = vendu;
 		this.deleted = deleted;
 	}
+	public BienDto(double prix, boolean deleted) {
+		super();
+		this.prix = prix;
+		this.deleted = deleted;
+	}
 
 
 	public BienDto(long id, double prix, boolean vendu,boolean deleted) {
@@ -69,6 +74,13 @@ public class BienDto {
 		this.id = id;
 		this.prix = prix;
 		this.vendu = vendu;
+	}
+
+
+	public BienDto(@NotNull boolean vendu, boolean deleted) {
+		super();
+		this.vendu = vendu;
+		this.deleted = deleted;
 	}
 	
 }
