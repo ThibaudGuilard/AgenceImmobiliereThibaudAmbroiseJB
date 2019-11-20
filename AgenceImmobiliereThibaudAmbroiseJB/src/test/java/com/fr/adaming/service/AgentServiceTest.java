@@ -1,5 +1,6 @@
 package com.fr.adaming.service;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -37,26 +38,26 @@ public class AgentServiceTest {
 	
 	@Test
 	@Sql(statements = "delete from agent where full_name like 'jj' and pwd like 'azertyuiop' and email like 'a@a.fr'", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	public void addValideAgent_shouldReturnClientWithIdNotNull() {
-		Agent a = new Agent();
+	public void addValideAgent_shouldReturnSavedAgent() {
+		Agent agent = new Agent();
 		
-		a.setFullName("jj");
-		a.setPwd("azertyuiop");
-		a.setTelephone("1234567890");
-		a.setEmail("a@a.fr");
-		a.setDeleted(false);
-		a.setDateRecrutement(LocalDate.parse("2017-05-15"));
+		agent.setFullName("jj");
+		agent.setPwd("azertyuiop");
+		agent.setTelephone("1234567890");
+		agent.setEmail("a@a.fr");
+		agent.setDeleted(false);
+		agent.setDateRecrutement(LocalDate.parse("2017-05-15"));
 		
-		Agent retourned = service.save(a);
+		Agent retour = service.save(agent);
 
-		assertNotNull(retourned);
+		assertEquals(agent, retour);
 	}
 	
 	
 	@org.junit.jupiter.api.Test
 	@Sql(statements = "insert into agent values (555, 0, 'a@aaa.com', 'JPP', 1234567890, '2007-05-15', 'azertyuiop')",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from agent where id = 555" ,executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	public void addNotValidAgentWithSameEmail_shouldReturnError() {
+	public void addNotValidAgentWithSameEmail_shouldReturnNull() {
 		Agent a = new Agent();
 		
 		a.setId(55);
@@ -66,31 +67,40 @@ public class AgentServiceTest {
 		a.setTelephone("1234567809");
 		a.setPwd("azertyuiop");
 		
-		Agent retourned = service.save(a);
+		Agent retour = service.save(a);
 		
-		assertNull(retourned);	
+		assertNull(retour);	
 	
 	}
 
 	// ATTENTION A L'ORDRE LORS DE L'ENVOIE D4UNE REQUETE SQL !!
-	@Sql(statements = { "insert into agent values (112,false, 'agent@mail.com', 'John Doe', 88888888, '2009-12-10','azertyuiop')" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = { "insert into agent values (112,false, 'agent@mail.fr', 'John Doe', '1122334455', '2009-12-10','azertyuiop')" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = {"delete from agent where id=112","delete from agent where id=110"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
-	public void updateAgentServiceExistant_shouldReturnTrue() {
+	public void updateAgentExistant_shouldReturnUpdatedAgent() {
 		//preparer les inputs
 		Agent agent = new Agent();
 		agent.setId(112L);
+		agent.setDeleted(false);
 		agent.setEmail("agent@mail.fr");
-		agent.setFullName("Jane Doe");
-		agent.setPwd("abcd1234");
+		agent.setFullName("John Doe");
+		agent.setTelephone("1122334455");
+		agent.setDateRecrutement(LocalDate.parse("2009-12-10"));
+		agent.setPwd("azertyuiop");
 		//invoquer la méthode
-		boolean retour = service.updateAgent(agent);
+		Agent retour = service.updateAgent(agent);
 		//vérifier le résultat
-		assertTrue(retour);
+		assertEquals(agent.getId(), retour.getId());
+		assertEquals(agent.isDeleted(), retour.isDeleted());
+		assertEquals(agent.getEmail(), retour.getEmail());
+		assertEquals(agent.getFullName(), retour.getFullName());
+		assertEquals(agent.getTelephone(), retour.getTelephone());
+		assertEquals(agent.getDateRecrutement(), retour.getDateRecrutement());
+		assertEquals(agent.getPwd(), retour.getPwd());
 	}
 	
 	@Test
-	public void updateAgentServicePasEnregistre_shouldReturnFalse() {
+	public void updateAgentServicePasEnregistre_shouldReturnNull() {
 		//preparer les inputs
 		Agent agent = new Agent();
 		agent.setId(1120L);
@@ -98,13 +108,13 @@ public class AgentServiceTest {
 		agent.setFullName("Jane Doe");
 		agent.setPwd("abcd1234");
 		//invoquer la méthode
-		boolean retour = service.updateAgent(agent);
+		Agent retour = service.updateAgent(agent);
 		//vérifier le résultat
-		assertFalse(retour);
+		assertNull(retour);
 	}
 	
 	@Test
-	public void updateAgentServiceEnregistreNomNul_shouldThrowException() {
+	public void updateAgentServiceEnregistreNomNul_shouldReturnNull() {
 		//preparer les inputs
 		Agent agent = new Agent();
 		agent.setId(112L);
@@ -112,13 +122,13 @@ public class AgentServiceTest {
 		agent.setFullName("");
 		agent.setPwd("abcd1234");
 		//invoquer la méthode
-		boolean retour = service.updateAgent(agent);
+		Agent retour = service.updateAgent(agent);
 		//vérifier le résultat
-		assertFalse(retour);
+		assertNull(retour);
 	}
 	
 	@Test
-	public void updateAgentServiceEnregistrePwdNul_shouldThrowException() {
+	public void updateAgentServiceEnregistrePwdNul_shouldReturnNull() {
 		//preparer les inputs
 		Agent agent = new Agent();
 		agent.setId(112L);
@@ -126,13 +136,13 @@ public class AgentServiceTest {
 		agent.setFullName("Truc");
 		agent.setPwd("");
 		//invoquer la méthode
-		boolean retour = service.updateAgent(agent);
+		Agent retour = service.updateAgent(agent);
 		//vérifier le résultat
-		assertFalse(retour);
+		assertNull(retour);
 	}
 	
 	@Test
-	public void updateAgentServiceEnregistrePwdPasConforme_shouldThrowException() {
+	public void updateAgentServiceEnregistrePwdPasConforme_shouldReturnNull() {
 		//preparer les inputs
 		Agent agent = new Agent();
 		agent.setId(112L);
@@ -140,13 +150,13 @@ public class AgentServiceTest {
 		agent.setFullName("Bidule");
 		agent.setPwd("abcd14");
 		//invoquer la méthode
-		boolean retour = service.updateAgent(agent);
+		Agent retour = service.updateAgent(agent);
 		//vérifier le résultat
-		assertFalse(retour);
+		assertNull(retour);
 	}
 	
 	@Test
-	public void updateAgentServiceEnregistreEmailExistant_shouldThrowException() {
+	public void updateAgentServiceEnregistreEmailExistant_shouldReturnNull() {
 		//preparer les inputs
 		Agent agent = new Agent();
 		agent.setId(112L);
@@ -154,13 +164,13 @@ public class AgentServiceTest {
 		agent.setFullName("Machin");
 		agent.setPwd("abcd1234");
 		//invoquer la méthode
-		boolean retour = service.updateAgent(agent);
+		Agent retour = service.updateAgent(agent);
 		//vérifier le résultat
-		assertFalse(retour);
+		assertNull(retour);
 	}
 	
 	@Test
-	public void updateAgentServiceEnregistreEmailPasValide_shouldThrowException() {
+	public void updateAgentServiceEnregistreEmailPasValide_shouldReturnNull() {
 		//preparer les inputs
 		Agent agent = new Agent();
 		agent.setId(112L);
@@ -168,13 +178,13 @@ public class AgentServiceTest {
 		agent.setFullName("Machin");
 		agent.setPwd("abcd1234");
 		//invoquer la méthode
-		boolean retour = service.updateAgent(agent);
+		Agent retour = service.updateAgent(agent);
 		//vérifier le résultat
-		assertFalse(retour);
+		assertNull(retour);
 	}
 	
 	@Test
-	public void updateAgentServiceEnregistreEmailNul_shouldThrowException() {
+	public void updateAgentServiceEnregistreEmailNul_shouldReturnNull() {
 		//preparer les inputs
 		Agent agent = new Agent();
 		agent.setId(112L);
@@ -182,13 +192,13 @@ public class AgentServiceTest {
 		agent.setFullName("Machin");
 		agent.setPwd("abcd1234");
 		//invoquer la méthode
-		boolean retour = service.updateAgent(agent);
+		Agent retour = service.updateAgent(agent);
 		//vérifier le résultat
-		assertFalse(retour);
+		assertNull(retour);
 	}
 	
 	@Test
-	public void updateAgentServiceEnregistreTelephonePasConforme_shouldThrowException() {
+	public void updateAgentServiceEnregistreTelephonePasConforme_shouldReturnNull() {
 		//preparer les inputs
 		Agent agent = new Agent();
 		agent.setId(112L);
@@ -197,9 +207,9 @@ public class AgentServiceTest {
 		agent.setPwd("abcd1234");
 		agent.setTelephone("8888");
 		//invoquer la méthode
-		boolean retour = service.updateAgent(agent);
+		Agent retour = service.updateAgent(agent);
 		//vérifier le résultat
-		assertFalse(retour);
+		assertNull(retour);
 	}
 	
 	@Test
@@ -213,9 +223,9 @@ public class AgentServiceTest {
 		LocalDate dateRecrutement = LocalDate.now().plusDays(10);
 		agent.setDateRecrutement(dateRecrutement);
 		//invoquer la méthode
-		boolean retour = service.updateAgent(agent);
+		Agent retour = service.updateAgent(agent);
 		//vérifier le résultat
-		assertFalse(retour);
+		assertNull(retour);
 	}
 	
 	@Sql(statements = "insert into agent (id, deleted, email, full_name, telephone) values (1, false, 'agent@mail.com', 'John Doe',1122334455)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
