@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,12 +18,17 @@ import com.fr.adaming.web.controller.IAgentController;
 import com.fr.adaming.web.dto.AgentDto;
 import com.fr.adaming.web.dto.converters.AgentConverter;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 /**
  * @author Jean-Baptiste
  *
  */
 @RestController
 @RequestMapping(path = "api/agent")
+@CrossOrigin
+@Api(description = "API pour les opérations sur les agents")
 public class AgentControllerImpl implements IAgentController {
 
 	@Autowired
@@ -30,6 +36,7 @@ public class AgentControllerImpl implements IAgentController {
 	
 	@Override
 	@PostMapping(path = "/create_agent")
+	@ApiOperation(value = "Crée un agent (même si l'adresse email")
 	public AgentDto createAgent(@Valid @RequestBody AgentDto dto) {
 		Agent agent = AgentConverter.convertToClass(dto);
 		Agent savedAgent = service.save(agent);

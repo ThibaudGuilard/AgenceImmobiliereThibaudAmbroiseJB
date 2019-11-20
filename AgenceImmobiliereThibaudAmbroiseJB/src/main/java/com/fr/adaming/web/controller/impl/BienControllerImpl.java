@@ -19,9 +19,12 @@ import com.fr.adaming.web.controller.IBienController;
 import com.fr.adaming.web.dto.BienDto;
 import com.fr.adaming.web.dto.converters.BienConverter;
 
+import io.swagger.annotations.Api;
+
 @RestController
 @CrossOrigin
 @RequestMapping(path = "api/bien")
+@Api(description = "API pour les opérations sur les biens")
 public class BienControllerImpl implements IBienController {
 	@Autowired
 	private IBienService service;

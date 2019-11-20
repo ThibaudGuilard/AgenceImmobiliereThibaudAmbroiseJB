@@ -3,6 +3,7 @@ package com.fr.adaming.web.controller.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fr.adaming.entity.Client;
@@ -11,11 +12,15 @@ import com.fr.adaming.web.controller.IClientController;
 import com.fr.adaming.web.dto.ClientDto;
 import com.fr.adaming.web.dto.converters.ClientConverter;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 /**
  * @author Thibaud
  *
  */
 @RestController
+@Api(description = "API pour les opérations sur les clients")
 public class ClientControllerImpl implements IClientController {
 
 	@Autowired
